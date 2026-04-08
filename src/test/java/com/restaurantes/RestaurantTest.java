@@ -6,6 +6,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Clase para probar métodos de Restaurant
+ * constructor
+ * getter
+ * setter
+ * tostring
+ */
 class RestaurantTest {
 
 
@@ -26,6 +33,33 @@ class RestaurantTest {
             assertEquals("prueba", res2.getName());
             assertEquals(10.0, res2.getAveragePrice());
     }
+
+    @Test
+    void setNameTest(){
+        Restaurant restaurante = new Restaurant();
+        restaurante.setName("Pacos Bar");
+        assertNotNull(restaurante.getName());
+        assertEquals("Pacos Bar", restaurante.getName());
+    }
+
+    @Test
+    void checkActiveTrue() {
+        Restaurant restaurant = new Restaurant();
+        assertTrue(restaurant.getActive()); // CUIDADO es Boolean con mayúscula
+    }
+
+
+
+
+
+
+//    @Test
+//    void saveRestaurant() {
+//
+//        // INSERT INTO restaurantes
+//        // RestaurantRepository restaurantRepository = ...
+//        restaurantRepository.save(new Restaurant())
+//    }
 
 //    @Test
 //    void restaurantIsActiveTrueTest(){
