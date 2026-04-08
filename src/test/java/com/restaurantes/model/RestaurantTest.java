@@ -1,6 +1,5 @@
-package com.restaurantes;
+package com.restaurantes.model;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -48,12 +47,40 @@ class RestaurantTest {
         assertTrue(restaurant.getActive()); // CUIDADO es Boolean con mayúscula
     }
 
+    @Test
+    void toStringTest() {
+        Restaurant restaurant = new Restaurant();
+        restaurant.setName("Pacos Bar");
+        System.out.println(restaurant);
+    }
+
+    @Test
+    void emptyConstructorTest() {
+        Restaurant restaurant = new Restaurant();
+    }
+
+    @Test
+    void allArgsConstructorTest() {
+        Restaurant r = new Restaurant(1L, "paco", 4.1, true);
+    }
+
+    @Test
+    void builderTest() {
+        // Builder es un patrón de diseño que ayuda a construir objetos con la información exacta que queramos
+        // Empieza con builder()
+        // atributos que quieras
+        // build()
+
+        Restaurant restaurante = Restaurant.builder().name("paco").averagePrice(9.99).build();
+
+        assertEquals("paco", restaurante.getName());
+        assertEquals(9.99, restaurante.getAveragePrice());
+    }
 
 
 
 
-
-//    @Test
+    //    @Test
 //    void saveRestaurant() {
 //
 //        // INSERT INTO restaurantes

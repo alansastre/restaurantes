@@ -1,9 +1,8 @@
-package com.restaurantes;
+package com.restaurantes.model;
+
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.*;
 
 // agregar las anotaciones como en Book
 /*
@@ -14,10 +13,13 @@ update restaurantes set average_price = 43.21;
 select * from restaurantes;
 delete from restaurantes where id = 1;
  */
-
 @Entity
 @Getter // lombok
 @Setter // lombok
+@ToString // lombok
+@NoArgsConstructor // lombok: crea el constructor vacío sin argumentos
+@AllArgsConstructor // lombok: crea el constructor con todos los params
+@Builder
 @Table(name = "restaurantes")
 public class Restaurant {
 
@@ -41,9 +43,6 @@ public class Restaurant {
 
     public Restaurant(String name) {
         this.name = name;
-    }
-
-    public Restaurant() {
     }
 
 }

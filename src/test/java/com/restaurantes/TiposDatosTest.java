@@ -13,7 +13,7 @@ public class TiposDatosTest {
 
 
 
-        //        boolean hola = null;
+//                boolean hola = null;
 //        Boolean hola2 = null;
 //        int edad = null;
 //        Integer edad2 = null;
