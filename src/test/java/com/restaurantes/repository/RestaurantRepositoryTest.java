@@ -51,6 +51,7 @@ class RestaurantRepositoryTest {
         assertNotNull(restaurant.getId());
         assertEquals("Restaurante", restaurant.getName());
     }
+
     @Test
     void buscarRestaurantes_Vacio() {
         // Probar a hacer una consulta y traer todos los restaurantes de la base de datos
@@ -95,9 +96,9 @@ class RestaurantRepositoryTest {
         assertEquals("Restaurante 2", restaurantsFromDatabase.get(1).getName()); // segundo elemento
     }
 
-
-
-    /*
+    @Test
+    void borrarRestaurantePorId() {
+        /*
     Tipos número entero en Java:
     byte
     short
@@ -106,8 +107,6 @@ class RestaurantRepositoryTest {
 
     Por defecto usamos Long en clave primaria por eso al hacer findById o deleteById nos pide L
      */
-    @Test
-    void borrarRestaurantePorId() {
         // DELETE FROM restaurantes WHERE id = x;
         Restaurant restaurant = new Restaurant("Restaurante 1", 20.6);
         restaurant = restaurantRepository.save(restaurant);
@@ -137,7 +136,6 @@ class RestaurantRepositoryTest {
 
         assertEquals(0, restaurantRepository.count());
     }
-
 
     @Test
     @DisplayName("Buscar restaurante por id que NO EXISTE")
@@ -179,11 +177,36 @@ class RestaurantRepositoryTest {
         assertEquals(20.6, restaurantFromDatabase.getAveragePrice());
     }
 
-
-
-    // update
-
-    // saveAll con builder
-
     // exist devuelve boolean
+    @Test
+    void existByIdTest() {
+
+        // buscar un restaurante que no existe
+        // false
+        // opción 1: assert directo
+        assertFalse(restaurantRepository.existsById(1L));
+        // opción 2: lo guardo en una variable primero, por si lo quiero usar en más sitios de mi programa
+        boolean restauranteExiste = restaurantRepository.existsById(1L);
+        assertFalse(restauranteExiste);
+
+
+
+
+        // ----------------------------------------------
+        // buscar un restaurante que sí existe
+        // true
+        Restaurant restaurant = new Restaurant("Restaurante 1", 20.6);
+        restaurant = restaurantRepository.save(restaurant);
+
+        // Que hago aquí ???? para comprobar si existe el restaurante 1 que acabo de crear usando exists
+        assertTrue(restaurantRepository.existsById(1L));
+        assertTrue(restaurantRepository.existsById(restaurant.getId()));
+
+        if (restaurantRepository.existsById(1L)) {
+            System.out.println("Hola crack, estamos abiertos, qué quieres comer hoy");
+        } else {
+            System.out.println("Lo siento, hacienda nos ha cerrado el chiringuito.");
+        }
+
+    }
 }
