@@ -3,6 +3,15 @@ package com.restaurantes.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+/*
+insert into employees (nif, level) values ('11A', 'JUNIOR');
+insert into employees (nif, level) values ('22B', 'SENIOR');
+insert into employees (nif, level) values ('33C', 'INVENT');
+
+SELECT * FROM employees;
+ */
+
+
 @Getter
 @Setter
 @Builder
@@ -22,6 +31,11 @@ public class Employee {
 
     @Column(name = "active")
     private Boolean active;
+
+    // Tipo de empleado: JUNIOR o SENIOR con enum
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('JUNIOR', 'SENIOR') DEFAULT 'SENIOR'")
+    private WorkLevel level = WorkLevel.SENIOR;
 
     @ManyToOne
     private Restaurant restaurant;
