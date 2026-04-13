@@ -3,6 +3,8 @@ package com.restaurantes.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 /*
 insert into employees (nif, level) values ('11A', 'JUNIOR');
 insert into employees (nif, level) values ('22B', 'SENIOR');
@@ -36,6 +38,10 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM('JUNIOR', 'SENIOR') DEFAULT 'SENIOR'")
     private WorkLevel level = WorkLevel.SENIOR;
+
+    // birthDate
+
+    private LocalDate startDate = LocalDate.now(); // 2026-04-13
 
     @ManyToOne
     private Restaurant restaurant;

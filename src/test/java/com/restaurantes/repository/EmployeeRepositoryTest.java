@@ -136,4 +136,12 @@ class EmployeeRepositoryTest {
         // PROBAR A QUITAR LO DE QUE SEA SENIOR POR DEFECTO PARA VER CÓMO FALLA LA COMPARACIÓN
         assertEquals(WorkLevel.SENIOR, seniorGuardado.getLevel());
     }
+
+    @Test
+    void startDate() {
+
+        // probar fecha por defecto
+
+        // Probar a cambiar fecha y ver si funciona
+    }
 }
