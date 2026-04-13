@@ -35,6 +35,10 @@ public class Restaurant {
     @Column(columnDefinition = "BOOLEAN DEFAULT true") // por defecto será true
     private Boolean active = true;
 
+    // Tipo comida: SPANISH, JAPANESE, MEXICAN
+    @Enumerated(EnumType.STRING)
+    private FoodType foodType;
+
     public Restaurant(String name, Double averagePrice) {
         this.name = name;
         this.averagePrice = averagePrice;
