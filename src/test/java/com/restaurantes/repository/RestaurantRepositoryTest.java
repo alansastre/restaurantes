@@ -25,6 +25,7 @@ Métodos habituales comunes en repositorios de Spring Data JPA:
  * deleteAll: borra todos, genera una sentencia delete por cada uno
  * deleteAllInBatch: borra todos, genera una sola sentencia delete sin cargar las entidades en memoria
  * existsById: devuelve boolean si existe un registro con ese id
+ * count()
 
  HTML (navegador) --> Controller --> Repository
 
