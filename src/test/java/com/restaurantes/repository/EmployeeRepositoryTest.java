@@ -1,6 +1,7 @@
 package com.restaurantes.repository;
 
 import com.restaurantes.model.Employee;
+import com.restaurantes.model.WorkLevel;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -116,5 +117,23 @@ class EmployeeRepositoryTest {
         long numeroEmpleadosDespues = repository.count();
         assertEquals(numeroEmpleadosAntes - 1, numeroEmpleadosDespues);
 
+    }
+
+    @Test
+    void workLevelEnum() {
+        // junior
+        Employee empleado = new Employee();
+        empleado.setLevel(WorkLevel.JUNIOR);
+
+        Employee empleadoGuardado = repository.save(empleado);
+        assertNotNull(empleadoGuardado.getLevel()); // compruebo que level no es null
+        assertEquals(WorkLevel.JUNIOR, empleadoGuardado.getLevel()); // compruebo que el level es JUNIOR
+
+
+        // senior por defecto
+        Employee empleadoSenior = new Employee();
+        Employee seniorGuardado = repository.save(empleadoSenior);
+        // PROBAR A QUITAR LO DE QUE SEA SENIOR POR DEFECTO PARA VER CÓMO FALLA LA COMPARACIÓN
+        assertEquals(WorkLevel.SENIOR, seniorGuardado.getLevel());
     }
 }
