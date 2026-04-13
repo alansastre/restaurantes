@@ -1,13 +1,13 @@
 package com.restaurantes.repository;
 
 import com.restaurantes.model.Employee;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,7 +31,6 @@ class EmployeeRepositoryTest {
 
         empleado2 = Employee.builder().nif("2B").active(false).build();
         repository.save(empleado2);
-
     }
 
     @Test
@@ -71,20 +70,29 @@ class EmployeeRepositoryTest {
     }
 
 
-
-
-
-
-
-
-
-
-
-
     @Test
     void saveAll() {
-        Employee employee = new Employee();
-        employee.setNif("1A");
+        // opción clásica, crear una lista mutable (new)
+        // Lista de nombres
+        String[] nombres = new String[] {"4C", "5D", "6E"}; // array de nombres
+        List<String> nombresBien = new ArrayList<>();
+        nombresBien.add("Juanito");
+        nombresBien.add("Ruperta");
+
+        List<Double> dineros = new ArrayList<>();
+        dineros.add(5d);
+        dineros.add(6d);
+
+
+        Employee empleado3 = new Employee();
+        Employee empleado4 = new Employee();
+        List<Employee> empleados = new ArrayList<>();
+        empleados.add(empleado3);
+        empleados.add(empleado4);
+        repository.saveAll(empleados);
+
+        assertEquals(4,  repository.count());
+        // Map<String, List<Employee>> map = new HashMap<>();
     }
 
 
@@ -93,5 +101,20 @@ class EmployeeRepositoryTest {
 
     @Test
     void deleteById() {
+
+
+
+    // comprobar que sí existe el empleado 1: existById
+        assertTrue(repository.existsById(1L));
+        long numeroEmpleadosAntes = repository.count();
+
+        // borrarlo: deleteById o delete
+        repository.deleteById(1L);
+
+        // comprobar que NO existe el empleado 1
+        assertFalse(repository.existsById(1L));
+        long numeroEmpleadosDespues = repository.count();
+        assertEquals(numeroEmpleadosAntes - 1, numeroEmpleadosDespues);
+
     }
 }
