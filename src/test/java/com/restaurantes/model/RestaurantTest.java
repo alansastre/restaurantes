@@ -61,7 +61,15 @@ class RestaurantTest {
 
     @Test
     void allArgsConstructorTest() {
-        Restaurant r = new Restaurant(1L, "paco", 4.1, true);
+
+        //  CUIDADO : intnetar no depender del constructor con todos los parametros para que si cambia no afevte a este codigo
+        Restaurant r1 = new Restaurant("paco", 9.99);
+        assertEquals("paco", r1.getName());
+        assertEquals(9.99, r1.getAveragePrice());
+
+        Restaurant r2 = new Restaurant("prueba2");
+        assertEquals("prueba2", r2.getName());
+
     }
 
     @Test

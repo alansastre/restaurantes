@@ -210,4 +210,9 @@ class RestaurantRepositoryTest {
         }
 
     }
+
+    @Test
+    void foodTypeEnum () {
+
+    }
 }
