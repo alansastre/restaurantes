@@ -44,8 +44,10 @@ public class Employee {
     // LocalTime
     // LocalDateTime
 
+    // Se guarda en base de datos en una columna restaurant_id
+    // se guarda solo la clave primaria osea el id
     @ToString.Exclude // lombok
-    @ManyToOne() // JPA
+    @ManyToOne // JPA
     private Restaurant restaurant;
 
 }

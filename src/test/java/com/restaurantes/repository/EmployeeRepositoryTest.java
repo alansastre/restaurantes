@@ -227,8 +227,44 @@ DELETE FROM restaurantes WHERE ID = 1;
     }
 
 
-    // filtros
+    // filtros basico
+    // filtrar empleados por nivel JUNIOR
+    @Test
+    void findByLevel() {
 
+        repository.deleteAll();
+        repository.save(Employee.builder().nif("1").level(WorkLevel.JUNIOR).build());
+        repository.save(Employee.builder().nif("2").level(WorkLevel.JUNIOR).build());
+        repository.save(Employee.builder().nif("3").level(WorkLevel.SENIOR).build());
+        repository.save(Employee.builder().nif("4").level(WorkLevel.SENIOR).build());
+
+
+        List<Employee> juniors = repository.findAllByLevel(WorkLevel.JUNIOR);
+        assertEquals(2, juniors.size());
+
+        // FILTRO CON JAVa NO SERÍA LO MÁS OPTIMO mejor que filtre la base de datos
+//        for (var empleado : repository.findAll())
+//            if(empleado.getLevel() == WorkLevel.JUNIOR)
+//                System.out.println(empleado);
+//
+//        repository.findAll().stream().filter(e -> e.getLevel() == WorkLevel.JUNIOR).forEach(System.out::println);
+//
+    }
+
+
+    // Filtrar employees active = true y trabajen en DominosPizza
+
+
+    @Test
+    void findAllBy_ActiveTrue_And_RestaurantName() {
+        // paso 1: crear dos restaurantes
+
+        // paso 2: crear cuatro empleados, dos cada restaurante
+
+        // paso 3: invocar el nuevo metodo findAllBy......
+
+        // paso 4: assert
+    }
 
     // antiguedad en dias
     @Test
