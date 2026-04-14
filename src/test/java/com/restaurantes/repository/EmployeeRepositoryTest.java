@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -140,8 +141,35 @@ class EmployeeRepositoryTest {
     @Test
     void startDate() {
 
-        // probar fecha por defecto
+        // probar fecha por defecto startDate
+        // crear objeto employee con new o builder
+        // Given
+        Employee empleado = new Employee(); // En la clase Employee tenemos puesta startDate por defecto a now()
+        empleado.setNif("7F");
+
+        // When
+        Employee empleadoGuardado = repository.save(empleado);
+
+        // Then
+        // assert startDate not null
+        assertNotNull(empleadoGuardado.getStartDate());
+        assertEquals(LocalDate.now(), empleadoGuardado.getStartDate());
 
         // Probar a cambiar fecha y ver si funciona
+        empleadoGuardado.setStartDate(LocalDate.of(2026, 6, 24));
+        empleadoGuardado = repository.save(empleadoGuardado);
+        assertEquals(LocalDate.of(2026, 6, 24), empleadoGuardado.getStartDate());
+
+
+        empleadoGuardado.setStartDate(LocalDate.now().plusDays(30));
+        empleadoGuardado = repository.save(empleadoGuardado);
+        assertEquals(LocalDate.now().plusDays(30), empleadoGuardado.getStartDate());
+
+        // CUIDADO con el metodo builder pone a null todos los atributos que no le pasemos
+        // var empleado = Employee.builder().nif("hola").build();
     }
+
+    // asociacion ManyToOne
+
+    // filtros
 }
