@@ -257,13 +257,36 @@ DELETE FROM restaurantes WHERE ID = 1;
 
     @Test
     void findAllBy_ActiveTrue_And_RestaurantName() {
+        repository.deleteAll();
         // paso 1: crear dos restaurantes
+        Restaurant restaurant1 = new Restaurant();
+        restaurant1.setName("El Buen Sabor");
+        restaurantRepository.save(restaurant1);
+
+        Restaurant restaurant2 = restaurantRepository.save(Restaurant.builder().name("El Mal Sabor").build());
 
         // paso 2: crear cuatro empleados, dos cada restaurante
+        Employee empleado1 = new Employee();
+        empleado1.setNif("1");
+        empleado1.setActive(true);
+        empleado1.setRestaurant(restaurant1);
+        repository.save(empleado1);
+
+        Employee empleado2 = repository.save(
+                Employee.builder().nif("2").active(true).restaurant(restaurant1).build()
+        );
+        Employee empleado3 = repository.save(
+                Employee.builder().nif("3").active(true).restaurant(restaurant2).build()
+        );
+        Employee empleado4 = repository.save(
+                Employee.builder().nif("4").active(false).restaurant(restaurant2).build()
+        );
 
         // paso 3: invocar el nuevo metodo findAllBy......
+        List<Employee> empleadosActivosDelMalSabor = repository.findAllByActiveTrueAndRestaurantName("El Mal Sabor");
 
         // paso 4: assert
+        assertEquals(1, empleadosActivosDelMalSabor.size());
     }
 
     // antiguedad en dias
