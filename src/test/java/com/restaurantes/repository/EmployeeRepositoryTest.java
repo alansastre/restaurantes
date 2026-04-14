@@ -1,14 +1,19 @@
 package com.restaurantes.repository;
 
 import com.restaurantes.model.Employee;
+import com.restaurantes.model.Restaurant;
 import com.restaurantes.model.WorkLevel;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 
+import javax.swing.text.html.Option;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,10 +22,19 @@ import static org.junit.jupiter.api.Assertions.*;
 class EmployeeRepositoryTest {
 
     @Autowired
+    RestaurantRepository restaurantRepository;
+    @Autowired
     EmployeeRepository repository;
+
+    // Spring Data JPA ( Repository) --> EntityManager --> JDBC --> Base de datos
+    // Agregamos EntityManager para poder limpiar la memoria y forzar consultas a base de datos
+    @Autowired
+    EntityManager entityManager;
+
     // declarar datos para el test
     Employee empleado1 ;
     Employee empleado2;
+
 
     @BeforeEach // se ejecuta antes de cada test
     void setUp() {
@@ -170,6 +184,65 @@ class EmployeeRepositoryTest {
     }
 
     // asociacion ManyToOne
+    /*
+    probar en h2-console:
+
+    INSERT INTO restaurantes (name) values ('pizza');
+
+INSERT INTO employees (nif, restaurant_id) values ('1A', 1);
+
+SELECT * FROM employees;
+
+DELETE FROM restaurantes WHERE ID = 1;
+
+     */
+
+    @Test
+    void manyToOneRestaurantTest() {
+        // paso 1: crear un restaurante y guardarlo
+        Restaurant restaurant = new Restaurant();
+        restaurant.setName("Pizza Hut");
+        restaurantRepository.save(restaurant);
+
+
+        // paso 2: crear un empleado y asociarle el restaurante
+        Employee empleado = new Employee();
+        empleado.setNif("8G");
+        empleado.setRestaurant(restaurant);
+        Employee empleadoGuardado = repository.save(empleado);
+
+        assertNotNull(empleadoGuardado.getRestaurant());
+
+        // limpiar la memoria para forzar la consulta de findById a base de datos
+        // si no hace esto, entonces nos devuelve el empleado que ya tiene en memoria sin hacer el select
+        entityManager.flush(); // sincronizar cambios pendientes con la base de datos
+        entityManager.clear(); // limpiar la memoria
+
+        // buscar el empleado de la base datos para ver si viene con el Restaurante
+        // Optional<Employee> empleadoOptional = repository.findById(empleadoGuardado.getId());
+        Employee empleadoDB = repository.findById( empleado.getId() ).get();
+        assertNotNull(empleadoDB.getRestaurant());
+        System.out.println(empleadoDB);
+        System.out.println(empleadoDB.getRestaurant());
+    }
+
 
     // filtros
+
+
+    // antiguedad en dias
+    @Test
+    void antiguedadEnDiasTest() {
+        Employee empleado = new Employee();
+        empleado.setNif("11A");
+        empleado.setStartDate(LocalDate.of(2026, 1, 1));
+        repository.save(empleado);
+
+        Duration days = repository.findWorkDaysByNif("11A");
+        System.out.println(days.toDays());
+
+        long antiguedadEnDias = ChronoUnit.DAYS.between(empleado.getStartDate(), LocalDate.now());
+        System.out.println(antiguedadEnDias);
+
+    }
 }

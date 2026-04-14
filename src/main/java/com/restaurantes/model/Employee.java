@@ -39,11 +39,13 @@ public class Employee {
     @Column(columnDefinition = "ENUM('JUNIOR', 'SENIOR') DEFAULT 'SENIOR'")
     private WorkLevel level = WorkLevel.SENIOR;
 
-    // birthDate
-
     private LocalDate startDate = LocalDate.now(); // 2026-04-13
+    // LocalDate
+    // LocalTime
+    // LocalDateTime
 
-    @ManyToOne
+    @ToString.Exclude // lombok
+    @ManyToOne() // JPA
     private Restaurant restaurant;
 
 }
