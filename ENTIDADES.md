@@ -23,10 +23,10 @@ estado: PENDIENTE, ENPROGRESO, COMPLETADO
     * String name
     * Double price
     * Boolean active
-    * String description
-    * String imageUrl (Byte[] o Blob para imagen en base de datos, pero es más complejo)
+    * String description (poner longitud 500)
+    * String imageUrl
     * Asociaciones:
-      * Restaurant restaurant (ManyToOne)
+      * Restaurant restaurant (@ManyToOne)
 
 * Paso 2: 
   * crear repositorio DishRepository
