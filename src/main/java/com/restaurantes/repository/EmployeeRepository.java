@@ -29,6 +29,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     List<Employee> findAllByActiveTrue();
 
+    // Tested in EmployeeRepositoryTest.findAllBy_ActiveTrue_And_RestaurantName
     List<Employee> findAllByActiveTrueAndRestaurantName(String name);
 
 }
