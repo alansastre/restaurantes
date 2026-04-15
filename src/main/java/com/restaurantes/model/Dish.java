@@ -29,6 +29,9 @@ public class Dish {
     // https://img.hosting.com/pepe.jpg
     private String imageUrl;
 
+    @Enumerated(EnumType.STRING)
+    private FoodType foodType;
+
     @ManyToOne
     private Restaurant restaurant;
 
