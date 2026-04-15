@@ -16,8 +16,8 @@ estado: PENDIENTE, ENPROGRESO, COMPLETADO
   * Asociaciones:
     * Restaurant restaurant (ManyToOne)
     
-* Paso 1: en el paquete model crear un nuevo archivo class Dish desde Intellij IDEA
-  * Dish [NUEVA]
+* Paso 1: en el paquete model crear un nuevo archivo class Dish desde Intellij IDEA [OK]
+  * Dish [OK]
     * Long id
     * DishType dishType: enum (STARTER, MAIN_COURSE, DESSERT)
     * String name
@@ -28,18 +28,21 @@ estado: PENDIENTE, ENPROGRESO, COMPLETADO
     * Asociaciones:
       * Restaurant restaurant (@ManyToOne)
 
-* Paso 2: 
+* Paso 2:  [OK]
   * crear repositorio DishRepository
     * métodos nuevos de consulta:
       * Filtrar los platos de un restaurante por id de restaurante
       * Filtrar los platos de precio menor que
       * Traer platos ordenados por precio ASCendente
 
-+ Paso 3: 
++ Paso 3: [OK]
   + crear test DishRepositoryTest
   + beforeEach para crear 4 platos de prueba
   + test para los nuevos métodos de consulta
 
+* Customer [NUEVA]
+  * Long id
+  * String username
 
 * Order [NUEVA]
   * Long id
@@ -57,3 +60,23 @@ estado: PENDIENTE, ENPROGRESO, COMPLETADO
   * Asociaciones:
     * Dish dish (ManyToOne)
     * Order order (ManyToOne)
+
+
+## Pasos 
+
+* Entidad Order (en paquete model)
+* Repositorio OrderRepository (en paquete repository)
+  * opcionalmente: métodos de consulta personalizados
+* Test OrderRepositoryTest
+
+
+* OrderController (en paquete controller, Controlador MVC HTML)
+  * localhost:8080/pedidos --> @GetMappint("/pedidos") --> finAll() --> H2
+* HTML: pedidos.html
+
+
+* OrderService (en paquete service)
+  * lógica de negocio para crear un pedido nuevo, añadir platos a un pedido, cerrar un pedido, etc.
+  * OrderServiceTest
+
+* OrderRestController (controlador API REST JSON)
