@@ -1,6 +1,7 @@
 package com.restaurantes.repository;
 
 import com.restaurantes.model.Dish;
+import com.restaurantes.model.Restaurant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 @DataJpaTest
 class DishRepositoryTest {
 
@@ -18,14 +20,21 @@ class DishRepositoryTest {
     @Autowired
     DishRepository dishRepository;
 
-
-
     @BeforeEach
     void setUp() {
         // dos restaurantes
+        var restaurant1 = Restaurant.builder().name("Restaurante 1").active(true).build();
+        var restaurant2 = Restaurant.builder().name("Restaurante 2").active(true).build();
+        restaurantRepository.saveAll(List.of(restaurant1, restaurant2));
 
         // añadir precio a Dish, poner precios desordenados
-
+        var plato1 = Dish.builder().name("Plato 1").price(92.0).restaurant(restaurant1).build();
+        var plato2 = Dish.builder().name("Plato 2").price(73.0).restaurant(restaurant1).build();
+        var plato3 = Dish.builder().name("Plato 3").price(6.0).restaurant(restaurant2).build();
+        var plato4 = Dish.builder().name("Plato 4").price(12.0).restaurant(restaurant2).build();
+        var plato5 = Dish.builder().name("Plato 5").price(45.0).restaurant(restaurant2).build();
+        var plato6 = Dish.builder().name("Plato 6").price(3.99).restaurant(restaurant2).build();
+        dishRepository.saveAll(List.of(plato1, plato2, plato3, plato4, plato5, plato6));
     }
 
     @Test
