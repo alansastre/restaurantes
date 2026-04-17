@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -45,6 +46,7 @@ class OrderRepositoryTest {
     }
     @Test
     void findAllByRestaurant() {
-
+        List<Order> pedidos = orderRepository.findByRestaurantId(restaurant1.getId());
+        assertEquals(1, pedidos.size());
     }
 }
