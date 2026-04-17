@@ -20,6 +20,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Builder.Default // permite que lombok lea el valor que asignamos a esta propiedad
     private LocalDateTime date = LocalDateTime.now();
 
     private Integer tableNumber;
@@ -30,6 +31,7 @@ public class Order {
     private Double totalPrice;
 
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     private OrderStatus status = OrderStatus.PENDIENTE;
 
     // asociaicon con restaurante?
