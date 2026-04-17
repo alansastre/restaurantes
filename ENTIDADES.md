@@ -44,22 +44,24 @@ estado: PENDIENTE, ENPROGRESO, COMPLETADO
   * Long id
   * String username
 
-* Order [NUEVA]
+* Order [NUEVA] + OrderRepository
   * Long id
   * LocalDateTime date
   * Integer tableNumber
+  * Integer numPeople
   * OrderStatus: enum (OPEN, CLOSED, PAID, CANCELLED)
-  * Double totalPrice (default 0.0)
+  * Double totalPrice
   * Asociaciones:
     * Restaurant restaurant (ManyToOne)
 
-* OrderLine [NUEVA]
+* OrderLine [NUEVA] + OrderLineRepository
   * Long id
   * Integer quantity
-  * Double priceAtOrder (precio congelado en el momento del pedido)
   * Asociaciones:
     * Dish dish (ManyToOne)
     * Order order (ManyToOne)
+
+* OrderRepositoryTest
 
 
 ## Pasos 
