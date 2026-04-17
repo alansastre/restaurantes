@@ -44,7 +44,7 @@ estado: PENDIENTE, ENPROGRESO, COMPLETADO
   * Long id
   * String username
 
-* Order [NUEVA] + OrderRepository
+* Order [OK] + OrderRepository [OK]
   * Long id
   * LocalDateTime date
   * Integer tableNumber
@@ -54,14 +54,16 @@ estado: PENDIENTE, ENPROGRESO, COMPLETADO
   * Asociaciones:
     * Restaurant restaurant (ManyToOne)
 
-* OrderLine [NUEVA] + OrderLineRepository
+* OrderRepositoryTest [OK]
+  * repasar el calculateTotalPrice [PENDIENTE TESTEAR CON DATOS REALES]
+
+* OrderLine [OK] + OrderLineRepository [OK]
   * Long id
   * Integer quantity
   * Asociaciones:
     * Dish dish (ManyToOne)
     * Order order (ManyToOne)
 
-* OrderRepositoryTest
 
 
 ## Pasos 

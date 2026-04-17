@@ -34,6 +34,9 @@ class OrderRepositoryTest {
         restaurant1 = restaurantRepository.save(Restaurant.builder().name("Restaurante 1").build());
         // crear y guardar un pedido en base de datos
         order1 = orderRepository.save(Order.builder().restaurant(restaurant1).numPeople(2).tableNumber(1).build());
+        // platos
+
+        // lineas pedido OrderLine
     }
 
     @Test
@@ -48,5 +51,10 @@ class OrderRepositoryTest {
     void findAllByRestaurant() {
         List<Order> pedidos = orderRepository.findByRestaurantId(restaurant1.getId());
         assertEquals(1, pedidos.size());
+    }
+    @Test
+    void calculateTotalPrice() {
+        Double totalPrice = orderRepository.calculateTotalPrice(order1.getId()); // calcula el precio total del pedido
+        assertEquals(50.0, totalPrice);
     }
 }
