@@ -1,6 +1,7 @@
 package com.restaurantes.model;
 
 
+import com.restaurantes.model.enums.FoodType;
 import jakarta.persistence.*;
 import lombok.*;
 

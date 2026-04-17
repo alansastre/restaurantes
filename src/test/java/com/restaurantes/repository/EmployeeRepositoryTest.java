@@ -2,15 +2,13 @@ package com.restaurantes.repository;
 
 import com.restaurantes.model.Employee;
 import com.restaurantes.model.Restaurant;
-import com.restaurantes.model.WorkLevel;
+import com.restaurantes.model.enums.WorkLevel;
 import jakarta.persistence.EntityManager;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 
-import javax.swing.text.html.Option;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

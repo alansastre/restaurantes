@@ -1,5 +1,6 @@
 package com.restaurantes.model;
 
+import com.restaurantes.model.enums.DishType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,7 +31,7 @@ public class Dish {
     private String imageUrl;
 
     @Enumerated(EnumType.STRING)
-    private FoodType foodType;
+    private DishType type;
 
     @ManyToOne
     private Restaurant restaurant;
