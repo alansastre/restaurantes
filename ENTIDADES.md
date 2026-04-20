@@ -116,9 +116,14 @@ Ejemplo conceptual primero:
   * spring-boot-starter-thymeleaf
     * spring-boot-starter-webmvc
 
-2. [] Crear clase RestaurantController
-   * [] Anotarla con @Controller
-   * [] Inyectar el RestaurantRepository con constructor
-   * [] Crear método findAll() con @GetMapping("/restaurants")
-   * [] En el método findAll(), usar el Model para guardar la lista de restaurantes y
-   * [] Devolver el nombre del template HTML (restaurant-list)
+2. [ok] Crear clase RestaurantController
+   * [ok] Anotarla con @Controller
+   * [ok] Inyectar el RestaurantRepository con constructor
+   * [ok] Crear método findAll() con @GetMapping("/restaurants")
+   * [ok] En el método findAll(), usar el Model para guardar la lista de restaurantes y
+   * [ok] Devolver el nombre del template HTML (restaurant-list)
+
+
+Documentación de Thymeleaf
+
+https://www.thymeleaf.org/doc/tutorials/3.1/usingthymeleaf.html#standard-expression-syntax
