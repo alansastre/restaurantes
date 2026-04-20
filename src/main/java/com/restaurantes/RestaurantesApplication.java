@@ -12,6 +12,8 @@ public class RestaurantesApplication {
         var context = SpringApplication.run(RestaurantesApplication.class, args);
         RestaurantRepository restaurantRepository = context.getBean(RestaurantRepository.class);
         restaurantRepository.save(Restaurant.builder().name("Restaurante 1").averagePrice(20.5).build());
+        restaurantRepository.save(Restaurant.builder().name("Restaurante 2").averagePrice(30.5).build());
+        restaurantRepository.save(Restaurant.builder().name("Restaurante 3").averagePrice(40.5).build());
     }
 
 }

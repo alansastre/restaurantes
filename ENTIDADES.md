@@ -122,13 +122,32 @@ Ejemplo conceptual primero:
    * [ok] Crear método findAll() con @GetMapping("/restaurants")
    * [ok] En el método findAll(), usar el Model para guardar la lista de restaurantes y
    * [ok] Devolver el nombre del template HTML (restaurant-list)
+   * [ok] Crear el HTML y poner un bucle con th:each para mostrar los restaurantes en una tabla
 
 
 3. Insertar datos demo:
-* Vía SQL
-* Vía CommandLineRunner
-* Vía Main
+* Vía SQL []
+* Vía CommandLineRunner []
+* Vía Main [ok]
+
+
+4. Crear test RestaurantControllerTest
+* Desde el controller, clic derecho y Generate y Test
+* @SpringBootTest
+* @AutoConfigureMockMvc
+
+
 
 Documentación de Thymeleaf
 
 https://www.thymeleaf.org/doc/tutorials/3.1/usingthymeleaf.html#standard-expression-syntax
+
+
+
+## Repaso controladores:
+
+* RestaurantController
+ * @GetMapping("/restaurants")
+* templates/restaurant-list.html
+* Crear datos demo: en Main o CommandLineRunner
+* RestaurantControllerTest

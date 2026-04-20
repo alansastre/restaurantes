@@ -9,12 +9,12 @@
 
 <p th:text="|${#lists.size(restaurants)} resultados|"></p>
 
-<ol>
+<ul>
    <li th:each="restaurant : ${restaurants}">
        <span th:text="${restaurant.name}"></span>
        <span th:text="${restaurant.averagePrice}"></span>
    </li>
-</ol>
+</ul>
 
 
 

@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class RestaurantController {
 
+//    @Autowired
     private RestaurantRepository restaurantRepository;
 
     // Usando Lombok @AllArgsConstructor no hace falta añadir manualmente el constructor, lo genera automáticamente
