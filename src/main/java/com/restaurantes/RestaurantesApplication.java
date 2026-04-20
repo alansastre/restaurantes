@@ -1,5 +1,7 @@
 package com.restaurantes;
 
+import com.restaurantes.model.Restaurant;
+import com.restaurantes.repository.RestaurantRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,7 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class RestaurantesApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(RestaurantesApplication.class, args);
+        var context = SpringApplication.run(RestaurantesApplication.class, args);
+        RestaurantRepository restaurantRepository = context.getBean(RestaurantRepository.class);
+        restaurantRepository.save(Restaurant.builder().name("Restaurante 1").averagePrice(20.5).build());
     }
 
 }

@@ -124,6 +124,11 @@ Ejemplo conceptual primero:
    * [ok] Devolver el nombre del template HTML (restaurant-list)
 
 
+3. Insertar datos demo:
+* Vía SQL
+* Vía CommandLineRunner
+* Vía Main
+
 Documentación de Thymeleaf
 
 https://www.thymeleaf.org/doc/tutorials/3.1/usingthymeleaf.html#standard-expression-syntax
