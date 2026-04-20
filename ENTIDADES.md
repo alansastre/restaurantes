@@ -110,7 +110,11 @@ Ejemplo conceptual primero:
 * [ok] Crear método hello() con @GetMapping("/hello")
 * [ok] En el método hello(), devolver el nombre del template HTML (hello)
 
-
+* Si queremos ver los cambios hay que reiniciar la aplicación spring boot.
+* Si la carpeta src/main/resources/templates no existe, hay que crearla.
+* IMPORTANTE: tenemos que tener en el pom.xml
+  * spring-boot-starter-thymeleaf
+    * spring-boot-starter-webmvc
 
 2. [] Crear clase RestaurantController
    * [] Anotarla con @Controller
