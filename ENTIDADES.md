@@ -84,3 +84,37 @@ estado: PENDIENTE, ENPROGRESO, COMPLETADO
   * OrderServiceTest
 
 * OrderRestController (controlador API REST JSON)
+
+
+## Controladores MVC
+
+Los controladores MVC son clases que reciben peticiones HTTP del navegador, consultan datos en la base de datos y los muestran en una página HTML.
+
+Tipos de mapping:
+
+* @GetMapping("/ruta") — para mostrar datos (HTTP GET)
+* @PostMapping("/ruta") — para enviar datos (HTTP POST)
+* @GetMapping("/ruta/{id}") — para mostrar datos de un elemento específico (HTTP GET con path variable)
+* @PutMapping("/ruta/{id}") — para actualizar datos de un elemento específico (HTTP PUT con path variable)
+* @DeleteMapping("/ruta/{id}") — para eliminar un elemento específico (HTTP DELETE con path variable)
+
+### Paso 1: Crear clase Controller
+
+Ejemplo conceptual primero:
+
+[ok] Crear paquete controller en com.restaurantes
+
+
+* [ok] Crear clase HelloController
+* [ok] Anotarla con @Controller
+* [ok] Crear método hello() con @GetMapping("/hello")
+* [ok] En el método hello(), devolver el nombre del template HTML (hello)
+
+
+
+2. [] Crear clase RestaurantController
+   * [] Anotarla con @Controller
+   * [] Inyectar el RestaurantRepository con constructor
+   * [] Crear método findAll() con @GetMapping("/restaurants")
+   * [] En el método findAll(), usar el Model para guardar la lista de restaurantes y
+   * [] Devolver el nombre del template HTML (restaurant-list)
