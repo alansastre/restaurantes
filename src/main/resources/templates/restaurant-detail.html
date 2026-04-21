@@ -9,8 +9,14 @@
 <h1 th:text="${'Restaurante ' + restaurant.id}"></h1>
 <!-- otros atributos: name, averagePrice, active, foodType -->
 
+<p th:text="'Nombre: ' + ${restaurant.name}"></p>
 
+<p th:text="'Precio: ' + ${restaurant.averagePrice != null ? restaurant.averagePrice + ' €' : 'Sin precio, GRATIS'}"></p>
 
+<p th:if="${restaurant.active}" >Estado: <span style="color: green;">Abierto</span></p>
+<p th:unless="${restaurant.active}" >Estado: <span style="color: red;">Cerrado</span></p>
+
+<p th:text="${restaurant.foodType.label}"></p>
 
 </body>
 </html>
