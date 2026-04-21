@@ -119,6 +119,7 @@ Ejemplo conceptual primero:
 2. [ok] Crear clase RestaurantController
    * [ok] Anotarla con @Controller
    * [ok] Inyectar el RestaurantRepository con constructor
+   * [] Inyectar el DishRepository en constructor para poder mostrar los platos
    * [ok] Crear método findAll() con @GetMapping("/restaurants")
    * [ok] En el método findAll(), usar el Model para guardar la lista de restaurantes y
    * [ok] Devolver el nombre del template HTML (restaurant-list)
