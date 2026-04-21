@@ -12,8 +12,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest // Activa Spring
 @AutoConfigureMockMvc // Activa MockMvc para testing de controller
@@ -41,7 +43,13 @@ class RestaurantControllerTest {
     @Test
     void restaurantsFull() throws Exception {
         // invocar endpoint http://localhost:8080/restaurants
-         mockMvc.perform(get("/restaurants"));
+        // se lanza una petición HTTP GET al controlador /restaurants
+        // y verificamos que devuelve un status 200 OK
+         mockMvc.perform(get("/restaurants"))
+                 .andExpect(status().isOk())
+                 .andExpect(view().name("restaurant-list"))
+                 .andExpect(model().attributeExists("restaurants"))
+                 .andExpect(model().attribute("restaurants", hasSize(3)));
     }
     @Test
     void restaurantsEmpty() {
