@@ -1,7 +1,10 @@
 package com.restaurantes;
 
+import com.restaurantes.model.Dish;
 import com.restaurantes.model.Restaurant;
+import com.restaurantes.model.enums.DishType;
 import com.restaurantes.model.enums.FoodType;
+import com.restaurantes.repository.DishRepository;
 import com.restaurantes.repository.RestaurantRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,7 +14,10 @@ public class RestaurantesApplication {
 
     public static void main(String[] args) {
         var context = SpringApplication.run(RestaurantesApplication.class, args);
+
+        // INTRODUCIR DATOS DE PRUEBA PARA LA INTERFAZ DE USUARIO HTML
         RestaurantRepository restaurantRepository = context.getBean(RestaurantRepository.class);
+        DishRepository dishRepository = context.getBean(DishRepository.class);
 
         restaurantRepository.save(
         Restaurant.builder().name("Restaurante 1").averagePrice(null).active(false).foodType(FoodType.SPANISH).build()
@@ -22,8 +28,18 @@ public class RestaurantesApplication {
         restaurantRepository.save(
         Restaurant.builder().name("Restaurante 3").averagePrice(40.5).foodType(FoodType.JAPANESE).build()
         );
-        restaurantRepository.save(
+        Restaurant restaurant4 = restaurantRepository.save(
                 Restaurant.builder().name("Restaurante 4").averagePrice(40.5).foodType(null).build()
+        );
+        dishRepository.save(
+                Dish.builder()
+                        .name("Dish 1")
+                        .price(10.5)
+                        .restaurant(restaurant4)
+                        .active(true)
+                        .imageUrl("https://es.wikipedia.org/wiki/Pizza#/media/Archivo:Eataly_Las_Vegas_-_Feb_2019_-_Sarah_Stierch_12.jpg")
+                        .type(DishType.MAIN_COURSE)
+                        .build()
         );
     }
 

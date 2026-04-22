@@ -1,5 +1,6 @@
 package com.restaurantes.controller;
 
+import com.restaurantes.model.Dish;
 import com.restaurantes.model.Employee;
 import com.restaurantes.model.Restaurant;
 import com.restaurantes.repository.DishRepository;
@@ -19,7 +20,10 @@ import java.util.Optional;
 public class RestaurantController {
 
 //    @Autowired
+
     private RestaurantRepository restaurantRepository;
+    private DishRepository dishRepository;
+
     // DishRepository
     // OrderRepository
     // EmployeeRepository
@@ -55,6 +59,11 @@ public class RestaurantController {
         if (restauranteOptional.isPresent()) {
             Restaurant restaurant = restauranteOptional.get();
             model.addAttribute("restaurant", restaurant);
+            List<Dish> platos = dishRepository.findByRestaurant_Id(id);
+            model.addAttribute("dishes", platos);
+            // TODO - traer y cargar employees
+            // TODO - traer y cargar las Review
+            // TODO - traer y cargar los Order (Pedidos)
             return "restaurant-detail";
         }
 

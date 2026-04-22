@@ -27,6 +27,51 @@
  <span th:case="*">Sin definir, de todo un poco.</span>
 </p>
 
+<h2>Carta de platos</h2>
+
+<p th:if="${dishes.isEmpty()}">No hay platos en este restaurante.</p>
+
+
+<!-- bucle para mostrar los platos en una tabla -->
+<table th:unless="${dishes.isEmpty()}">
+
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Estado</th>
+            <th>Imagen</th>
+            <th>Tipo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+       <tr th:each="dish : ${dishes}">
+            <td th:text="${dish.id}"></td>
+            <td th:text="${dish.name}"></td>
+            <td th:text="${dish.description != null ? dish.description : 'Sin descripción.'}"></td>
+            <td th:text="${dish.price + ' €'}"></td>
+
+            <td th:if="${dish.active}">Disponible</td>
+            <td th:unless="${dish.active}">Agotado</td>
+
+           <td>
+               <img
+                   th:src="${dish.imageUrl != null ? dish.imageUrl : 'https://dummyjson.com/image/100'}"
+                   alt="Imagen del plato"
+                   width="100"/>
+           </td>
+
+           <td th:text="${dish.type}"></td>
+           <td></td>
+
+       </tr>
+    </tbody>
+
+</table>
 
 </body>
 </html>
