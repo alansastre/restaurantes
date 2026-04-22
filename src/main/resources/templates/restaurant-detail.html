@@ -16,7 +16,17 @@
 <p th:if="${restaurant.active}" >Estado: <span style="color: green;">Abierto</span></p>
 <p th:unless="${restaurant.active}" >Estado: <span style="color: red;">Cerrado</span></p>
 
-<p th:text="${restaurant.foodType.label}"></p>
+<!-- enum, con label para mostrar mejor su texto  -->
+<p th:text="${restaurant.foodType != null ? restaurant.foodType.label : 'Sin definir.'}"></p>
+
+<!-- Opcional: switch para el enum, más flexible para poder añadirle etiquetas html para cada opción -->
+<p th:switch="${restaurant.foodType}">
+ <span th:case="${ T(com.restaurantes.model.enums.FoodType).SPANISH }">🐂 Cocina <b>española</b></span>
+ <span th:case="${ T(com.restaurantes.model.enums.FoodType).MEXICAN }">🌶️ Cocina <b>mexicana wey</b></span>
+ <span th:case="${ T(com.restaurantes.model.enums.FoodType).JAPANESE }">🍙🍤 Cocina <b>japonesa</b></span>
+ <span th:case="*">Sin definir, de todo un poco.</span>
+</p>
+
 
 </body>
 </html>

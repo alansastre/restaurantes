@@ -22,6 +22,9 @@ public class RestaurantesApplication {
         restaurantRepository.save(
         Restaurant.builder().name("Restaurante 3").averagePrice(40.5).foodType(FoodType.JAPANESE).build()
         );
+        restaurantRepository.save(
+                Restaurant.builder().name("Restaurante 4").averagePrice(40.5).foodType(null).build()
+        );
     }
 
 }
