@@ -1,7 +1,10 @@
 package com.restaurantes.controller;
 
+import com.restaurantes.model.Dish;
 import com.restaurantes.model.Restaurant;
+import com.restaurantes.repository.DishRepository;
 import com.restaurantes.repository.RestaurantRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +22,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest // Activa Spring
 @AutoConfigureMockMvc // Activa MockMvc para testing de controller
+@Transactional // deshace los cambios al final de cada test para no afectar al siguiente test
 class RestaurantControllerTest {
 
     @Autowired
     RestaurantRepository restaurantRepository;
 
     @Autowired
+    DishRepository dishRepository;
+
+    @Autowired
     MockMvc mockMvc;
+
 
     @BeforeEach
     void setUp() {
@@ -37,6 +45,7 @@ class RestaurantControllerTest {
            Restaurant.builder().name("La taberna 2").averagePrice(30.5).build(),
            Restaurant.builder().name("La taberna 3").averagePrice(40.5).build()
         ));
+        // crear platos demo si se fueran a usar en varios métodos de test
 
     }
 
@@ -89,5 +98,34 @@ class RestaurantControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/restaurants"));
     }
+
+    // restaurantes con platos
+
+    @Test
+    void restaurantDetailWithDishes() throws Exception {
+
+        // Crear platos y asignarlos a dos restaurantes
+        List<Restaurant> restaurants = restaurantRepository.findAll();
+        Restaurant restaurant1 = restaurants.get(0);
+        Restaurant restaurant2 = restaurants.get(1);
+
+        dishRepository.saveAll(List.of(
+                Dish.builder().name("Plato 1").restaurant(restaurant1).build(),
+                Dish.builder().name("Plato 2").restaurant(restaurant1).build(),
+
+                Dish.builder().name("Plato 3").restaurant(restaurant2).build(),
+                Dish.builder().name("Plato 4").restaurant(restaurant2).build(),
+                Dish.builder().name("Plato 5").restaurant(restaurant2).build()
+        ));
+
+        // Comprobar que el detalle del restaurante 1 muestra sus platos
+        mockMvc.perform(get("/restaurants/" + restaurant1.getId()))
+                .andExpect(model().attribute("dishes", hasSize(2)));
+
+        mockMvc.perform(get("/restaurants/" + restaurant2.getId()))
+                .andExpect(model().attribute("dishes", hasSize(3)));
+
+    }
+
 
 }
