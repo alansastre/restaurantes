@@ -37,7 +37,7 @@ public class RestaurantesApplication {
                         .price(10.5)
                         .restaurant(restaurant4)
                         .active(true)
-                        .imageUrl("https://es.wikipedia.org/wiki/Pizza#/media/Archivo:Eataly_Las_Vegas_-_Feb_2019_-_Sarah_Stierch_12.jpg")
+                        .imageUrl("https://placehold.co/100")
                         .type(DishType.MAIN_COURSE)
                         .build()
         );
