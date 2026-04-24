@@ -80,8 +80,14 @@ class RestaurantControllerTest {
     }
 
     @Test
-    void restaurantDetailIsPresentFalse() {
+    void restaurantDetailIsPresentFalse()  throws Exception{
+        // buscar un restaurante que no exista y comprobar que hace un redirect
 
+        Long idInexistente = 99999L;
+
+        mockMvc.perform(get("/restaurants/" + idInexistente))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/restaurants"));
     }
 
 }
