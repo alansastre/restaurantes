@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle Plato</title>
+</head>
+<body>
+
+<!-- Mostrar la info del plato -->
+<h1 th:text="${'Plato ' + dish.id}"></h1>
+
+<p th:text="${'Nombre: ' + dish.name}"></p>
+
+<!-- Mostrar asociaciones: -->
+<!-- dish.restaurant.id-->
+
+<a th:href="@{/restaurants/{id}(id=${dish.restaurant.id})}">Ver restaurante</a>
+
+
+<!-- TODO Añadir lista de opiniones -->
+
+<!-- TODO Añadir lista de alérgenos -->
+
+<!-- TODO Añadir botón de Pedir plato que lo añada al pedido -->
+
+
+</body>
+</html>
