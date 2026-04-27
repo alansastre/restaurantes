@@ -56,7 +56,7 @@ class RestaurantControllerTest {
         // y verificamos que devuelve un status 200 OK
          mockMvc.perform(get("/restaurants"))
                  .andExpect(status().isOk())
-                 .andExpect(view().name("restaurant-list"))
+                 .andExpect(view().name("restaurants/restaurant-list"))
                  .andExpect(model().attributeExists("restaurants"))
                  .andExpect(model().attribute("restaurants", hasSize(3)));
     }
@@ -67,7 +67,7 @@ class RestaurantControllerTest {
 
         mockMvc.perform(get("/restaurants"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("restaurant-list"))
+                .andExpect(view().name("restaurants/restaurant-list"))
                 .andExpect(model().attributeExists("restaurants"))
                 .andExpect(model().attribute("restaurants", hasSize(0)));
     }
@@ -81,7 +81,7 @@ class RestaurantControllerTest {
 
         mockMvc.perform(get("/restaurants/" + restaurantId))
                 .andExpect(status().isOk())
-                .andExpect(view().name("restaurant-detail"))
+                .andExpect(view().name("restaurants/restaurant-detail"))
                 .andExpect(model().attributeExists("restaurant"))
                 .andExpect(model().attributeExists("dishes"))
                 .andExpect(model().attribute("restaurant", hasProperty("id", is(restaurantId))))

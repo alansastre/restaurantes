@@ -45,7 +45,7 @@ public class RestaurantController {
         // MODEL donde se cargan datos
         model.addAttribute("restaurants", restaurantRepository.findAll());
         model.addAttribute("saludo", "Bienvenido a la lista de restaurantes");
-        return "restaurant-list"; // VISTA HTML
+        return "restaurants/restaurant-list"; // VISTA HTML
     }
 
     // Metodo para ver el detalle de un restaurante por id
@@ -64,7 +64,7 @@ public class RestaurantController {
             // TODO - traer y cargar employees
             // TODO - traer y cargar las Review
             // TODO - traer y cargar los Order (Pedidos)
-            return "restaurant-detail";
+            return "restaurants/restaurant-detail";
         }
 
         return "redirect:/restaurants";
