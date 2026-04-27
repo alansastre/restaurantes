@@ -67,13 +67,15 @@
 
            <td th:text="${dish.type}"></td>
            <td>
-               <!-- TODO Añadir enlace <a th:href> que apunte a Detalle de Plato /platos/{id} -->
+               <!-- TODO Añadir enlace <a th:href> que apunte a Detalle de Plato /platos/{id}
+               requiere crear DishController y dish-detail.html y DishControllerTest -->
+               <a th:href="@{/dishes/{id}(id=${dish.id})}">Ver plato</a>
            </td>
-
        </tr>
     </tbody>
-
 </table>
+
+<h2>Opiniones de nuestros clientes:</h2>
 
 </body>
 </html>
