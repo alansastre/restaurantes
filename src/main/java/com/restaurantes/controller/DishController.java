@@ -14,6 +14,7 @@ public class DishController {
 
     // inyectar repositorios
     private final DishRepository dishRepository;
+    // TODO inyectar repositorio de ReviewRepository
 
 
     // mapping
@@ -21,6 +22,8 @@ public class DishController {
     public String dishDetail(Model model, @PathVariable Long id) {
 
         model.addAttribute("dish", dishRepository.findById(id).orElseThrow());
+
+        // TODO traer reviews de este dish por dish id
 
         return "dishes/dish-detail";
     }

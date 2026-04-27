@@ -23,6 +23,7 @@ public class RestaurantController {
 
     private RestaurantRepository restaurantRepository;
     private DishRepository dishRepository;
+    // TODO private ReviewRepository
 
     // DishRepository
     // OrderRepository
@@ -63,6 +64,7 @@ public class RestaurantController {
             model.addAttribute("dishes", platos);
             // TODO - traer y cargar employees
             // TODO - traer y cargar las Review
+            // reviewRepository.findByRestaurantId
             // TODO - traer y cargar los Order (Pedidos)
             return "restaurants/restaurant-detail";
         }
