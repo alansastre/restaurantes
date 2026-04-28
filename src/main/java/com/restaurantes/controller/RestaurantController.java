@@ -3,8 +3,10 @@ package com.restaurantes.controller;
 import com.restaurantes.model.Dish;
 import com.restaurantes.model.Employee;
 import com.restaurantes.model.Restaurant;
+import com.restaurantes.model.Review;
 import com.restaurantes.repository.DishRepository;
 import com.restaurantes.repository.RestaurantRepository;
+import com.restaurantes.repository.ReviewRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,28 +21,10 @@ import java.util.Optional;
 @AllArgsConstructor
 public class RestaurantController {
 
-//    @Autowired
-
     private RestaurantRepository restaurantRepository;
     private DishRepository dishRepository;
-    // TODO private ReviewRepository
+    private ReviewRepository reviewRepository;
 
-    // DishRepository
-    // OrderRepository
-    // EmployeeRepository
-
-    // Usando Lombok @AllArgsConstructor no hace falta añadir manualmente el constructor, lo genera automáticamente
-//    public RestaurantController(RestaurantRepository restaurantRepository) {
-//        this.restaurantRepository = restaurantRepository;
-//    }
-
-    // alternativa sería crear un index.html para la home ya la lee automático
-    // al entrar a localhost:8080
-//    @GetMapping("/")
-//    public String index() {
-//        return "redirect:/restaurants";
-//    }
-    // PATRÓN MVC
     @GetMapping("restaurants") // CONTROLADOR
     public String restaurants(Model model) {
         // MODEL donde se cargan datos
@@ -49,9 +33,6 @@ public class RestaurantController {
         return "restaurants/restaurant-list"; // VISTA HTML
     }
 
-    // Metodo para ver el detalle de un restaurante por id
-    // /restaurants/{id}
-    // findById
     @GetMapping("restaurants/{id}")
     public String restaurantDetail(@PathVariable Long id, Model model) {
 
@@ -62,10 +43,8 @@ public class RestaurantController {
             model.addAttribute("restaurant", restaurant);
             List<Dish> platos = dishRepository.findByRestaurant_Id(id);
             model.addAttribute("dishes", platos);
-            // TODO - traer y cargar employees
-            // TODO - traer y cargar las Review
-            // reviewRepository.findByRestaurantId
-            // TODO - traer y cargar los Order (Pedidos)
+            List<Review> reviews = reviewRepository.findByRestaurant_IdOrderByCreationDateDesc(id);
+            model.addAttribute("reviews", reviews);
             return "restaurants/restaurant-detail";
         }
 

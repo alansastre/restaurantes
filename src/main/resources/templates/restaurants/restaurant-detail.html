@@ -98,8 +98,22 @@
     <h2 class="mt-5">
         <i class="fa-regular fa-comments text-primary me-2"></i> Opiniones de nuestros clientes
     </h2>
-    <div class="alert alert-light border">
-        Próximamente.
+    <div class="alert alert-light border" th:if="${reviews.isEmpty()}">
+        <i class="fa-solid fa-circle-exclamation me-1"></i>
+        No hay opiniones para este restaurante, sé el primero en escribir una reseña.
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3" th:unless="${reviews.isEmpty()}">
+        <div class="col" th:each="review : ${reviews}">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title" th:text="${review.title}"></h3>
+
+                </div>
+
+            </div>
+
+        </div>
     </div>
 
 </main>
