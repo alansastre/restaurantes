@@ -28,6 +28,12 @@
                                     <i class="fa-solid fa-euro-sign me-1"></i>
                                     <span th:text="${restaurant.averagePrice}">0</span>
                                 </span>
+
+                                <span class="badge bg-warning text-dark ml-2">
+                                    <i class="fa-solid fa-burger me-1/2"></i>
+                                    <span th:text="${restaurant.foodType != null ? restaurant.foodType.label : 'Todo tipo'}">TODO</span>
+                                </span>
+
                             </p>
                         </div>
                         <div class="card-footer bg-transparent border-0 pt-0">

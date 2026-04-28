@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Pantalla Hola</title>
-</head>
-<body>
-<h1>Salu2 desde la pantalla hola.</h1>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/head :: head('Hola')}"></head>
+<body class="d-flex flex-column min-vh-100">
+
+<nav th:replace="~{layout/navbar :: navbar}"></nav>
+
+<main class="container flex-grow-1">
+    <div class="text-center py-5">
+        <i class="fa-solid fa-hand-spock fa-3x text-primary mb-3"></i>
+        <h1 class="display-5">Salu2 desde la pantalla hola.</h1>
+        <a class="btn btn-primary mt-3" th:href="@{/restaurants}">
+            <i class="fa-solid fa-store me-1"></i> Ver restaurantes
+        </a>
+    </div>
+</main>
+
+<footer th:replace="~{layout/footer :: footer}"></footer>
+<script th:replace="~{layout/footer :: scripts}"></script>
+
 </body>
 </html>

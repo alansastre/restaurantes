@@ -1,15 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Adios</title>
-</head>
-<body>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/head :: head('Adiós')}"></head>
+<body class="d-flex flex-column min-vh-100">
 
-<h1 >Pantalla adios</h1>
-<p th:text="${mensaje}">  </p>
-<p th:text="${dinerito}">  </p>
+<nav th:replace="~{layout/navbar :: navbar}"></nav>
 
+<main class="container flex-grow-1">
+    <h1 class="mb-4">Pantalla adios</h1>
+
+    <div class="alert alert-info">
+        <i class="fa-regular fa-hand me-2"></i>
+        <span th:text="${mensaje}">Mensaje</span>
+    </div>
+
+    <div class="alert alert-success">
+        <i class="fa-solid fa-coins me-2"></i>
+        <span th:text="${dinerito}">Dinero</span>
+    </div>
+</main>
+
+<footer th:replace="~{layout/footer :: footer}"></footer>
+<script th:replace="~{layout/footer :: scripts}"></script>
 
 </body>
 </html>

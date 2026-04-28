@@ -1,28 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Detalle Plato</title>
-</head>
-<body>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/head :: head('Detalle Plato')}"></head>
+<body class="d-flex flex-column min-vh-100">
 
-<!-- Mostrar la info del plato -->
-<h1 th:text="${'Plato ' + dish.id}"></h1>
+<nav th:replace="~{layout/navbar :: navbar}"></nav>
 
-<p th:text="${'Nombre: ' + dish.name}"></p>
+<main class="container flex-grow-1">
 
-<!-- Mostrar asociaciones: -->
-<!-- dish.restaurant.id-->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h1 class="card-title mb-3" th:text="${'Plato ' + dish.id}">Plato</h1>
 
-<a th:href="@{/restaurants/{id}(id=${dish.restaurant.id})}">Ver restaurante</a>
+            <dl class="row mb-0">
+                <dt class="col-sm-3"><i class="fa-solid fa-tag me-1"></i> Nombre</dt>
+                <dd class="col-sm-9" th:text="${dish.name}"></dd>
+            </dl>
+        </div>
 
+        <div class="card-footer bg-transparent" th:if="${dish.restaurant != null}">
+            <i class="fa-solid fa-store text-primary me-1"></i>
+            Pertenece al restaurante
+            <a class="fw-semibold"
+               th:href="@{/restaurants/{id}(id=${dish.restaurant.id})}"
+               th:text="${dish.restaurant.name != null ? dish.restaurant.name : 'Ver restaurante'}">Ver restaurante</a>
+        </div>
+    </div>
 
-<!-- TODO Añadir lista de opiniones -->
+    <!-- TODO Añadir lista de opiniones -->
+    <!-- TODO Añadir lista de alérgenos -->
+    <!-- TODO Añadir botón de Pedir plato que lo añada al pedido -->
 
-<!-- TODO Añadir lista de alérgenos -->
+</main>
 
-<!-- TODO Añadir botón de Pedir plato que lo añada al pedido -->
-
+<footer th:replace="~{layout/footer :: footer}"></footer>
+<script th:replace="~{layout/footer :: scripts}"></script>
 
 </body>
 </html>
