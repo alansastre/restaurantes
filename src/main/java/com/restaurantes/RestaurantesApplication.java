@@ -2,12 +2,16 @@ package com.restaurantes;
 
 import com.restaurantes.model.Dish;
 import com.restaurantes.model.Restaurant;
+import com.restaurantes.model.Review;
 import com.restaurantes.model.enums.DishType;
 import com.restaurantes.model.enums.FoodType;
 import com.restaurantes.repository.DishRepository;
 import com.restaurantes.repository.RestaurantRepository;
+import com.restaurantes.repository.ReviewRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.List;
 
 @SpringBootApplication
 public class RestaurantesApplication {
@@ -18,6 +22,7 @@ public class RestaurantesApplication {
         // INTRODUCIR DATOS DE PRUEBA PARA LA INTERFAZ DE USUARIO HTML
         RestaurantRepository restaurantRepository = context.getBean(RestaurantRepository.class);
         DishRepository dishRepository = context.getBean(DishRepository.class);
+        ReviewRepository reviewRepository =context.getBean(ReviewRepository.class);
 
         restaurantRepository.save(
         Restaurant.builder().name("Restaurante 1").averagePrice(null).active(false).foodType(FoodType.SPANISH).build()
@@ -41,6 +46,13 @@ public class RestaurantesApplication {
                         .type(DishType.MAIN_COURSE)
                         .build()
         );
+
+        reviewRepository.saveAll(List.of(
+                Review.builder().title("Majestuoso").content("No tengo palabras").rating(5).restaurant(restaurant4).build(),
+                Review.builder().title("Puaj").content("Mejor no te cuento").rating(1).restaurant(restaurant4).build(),
+                Review.builder().title("OK").content("Hola soy Hilario.").rating(3).restaurant(restaurant4).build(),
+                Review.builder().title("Está bueno xd").content("LOL").rating(4).restaurant(restaurant4).build()
+        ));
     }
 
 }
