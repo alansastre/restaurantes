@@ -55,7 +55,10 @@
                 <th>Id</th>
                 <th>Nombre</th>
                 <th>Descripción</th>
-                <th>Precio</th>
+                <th>
+                    <i class="fa-solid fa-euro"></i>
+                    Precio
+                </th>
                 <th>Estado</th>
                 <th>Imagen</th>
                 <th>Tipo</th>
@@ -69,7 +72,7 @@
                 <td class="text-muted small"
                     th:text="${dish.description != null ? dish.description : 'Sin descripción.'}"></td>
                 <td>
-                    <span class="badge bg-success" th:text="${dish.price + ' €'}"></span>
+                    <span class="badge bg-success" th:text="${#numbers.formatDecimal(dish.price, 1, 2)}"></span>
                 </td>
                 <td>
                     <span th:if="${dish.active}" class="badge bg-success">Disponible</span>
@@ -117,7 +120,7 @@
                 </div>
                 <div class="card-footer">
                     <i class="fa-solid fa-calendar"></i>
-                    <span th:text="${review.creationDate}"></span>
+                    <span th:text="${#temporals.format(review.creationDate, 'dd/MM/yy HH:mm')}"></span>
                 </div>
 
             </div>

@@ -21,10 +21,8 @@ public class DishController {
     // mapping
     @GetMapping("dishes/{id}")
     public String dishDetail(Model model, @PathVariable Long id) {
-
         model.addAttribute("dish", dishRepository.findById(id).orElseThrow());
-
-       model.addAttribute("reviews", reviewRepository.findByDish_IdOrderByCreationDateDesc(id));
+        model.addAttribute("reviews", reviewRepository.findByDish_IdOrderByCreationDateDesc(id));
        // alergenos
         // ingredientes
         // photos
