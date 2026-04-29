@@ -17,6 +17,11 @@ public class DishController {
     private final DishRepository dishRepository;
     private final ReviewRepository reviewRepository;
 
+    @GetMapping("dishes") // CONTROLADOR
+    public String dishes(Model model) {
+        model.addAttribute("dishes", dishRepository.findAll());
+        return "dishes/dish-list"; // VISTA
+    }
 
     // mapping
     @GetMapping("dishes/{id}")
