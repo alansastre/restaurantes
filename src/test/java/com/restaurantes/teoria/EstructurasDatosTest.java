@@ -1,4 +1,4 @@
-package com.restaurantes;
+package com.restaurantes.teoria;
 
 public class EstructurasDatosTest {
 

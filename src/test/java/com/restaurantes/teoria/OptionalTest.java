@@ -1,4 +1,4 @@
-package com.restaurantes;
+package com.restaurantes.teoria;
 
 import com.restaurantes.model.Employee;
 import org.junit.jupiter.api.Test;
