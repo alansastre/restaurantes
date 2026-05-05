@@ -34,20 +34,35 @@ class RestaurantControllerTest {
     @Autowired
     MockMvc mockMvc;
 
+    Restaurant restaurantToDeactivate;
 
     @BeforeEach
     void setUp() {
-
-        // crear restaurantes demo
         restaurantRepository.deleteAll();
         restaurantRepository.saveAll(List.of(
            Restaurant.builder().name("La taberna 1").averagePrice(20.5).build(),
            Restaurant.builder().name("La taberna 2").averagePrice(30.5).build(),
            Restaurant.builder().name("La taberna 3").averagePrice(40.5).build()
         ));
-        // crear platos demo si se fueran a usar en varios métodos de test
-
+        restaurantToDeactivate = restaurantRepository.save(
+                Restaurant.builder().active(true).name("El bar de Moe").build()
+        );
     }
+    @Test
+    void deactivateRestaurant() throws Exception {
+        assertTrue(restaurantToDeactivate.getActive());
+
+        Long id = restaurantToDeactivate.getId();
+
+        mockMvc.perform(get("/restaurants/deactivate/" + id))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/restaurants"));
+
+        // traer restaurant de base de datos y comprobar que active es false
+        Restaurant restaurantDB = restaurantRepository.findById(id).orElseThrow();
+        assertFalse(restaurantDB.getActive());
+    }
+
 
     @Test
     void restaurantsFull() throws Exception {
@@ -71,7 +86,6 @@ class RestaurantControllerTest {
                 .andExpect(model().attributeExists("restaurants"))
                 .andExpect(model().attribute("restaurants", hasSize(0)));
     }
-
     @Test
     void restaurantDetailIsPresentTrue() throws Exception {
 
@@ -87,7 +101,6 @@ class RestaurantControllerTest {
                 .andExpect(model().attribute("restaurant", hasProperty("id", is(restaurantId))))
                 .andExpect(model().attribute("restaurant", hasProperty("name", is(restaurant.getName()))));
     }
-
     @Test
     void restaurantDetailIsPresentFalse()  throws Exception{
         // buscar un restaurante que no exista y comprobar que hace un redirect
@@ -98,9 +111,6 @@ class RestaurantControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/restaurants"));
     }
-
-    // restaurantes con platos
-
     @Test
     void restaurantDetailWithDishes() throws Exception {
 
@@ -126,6 +136,5 @@ class RestaurantControllerTest {
                 .andExpect(model().attribute("dishes", hasSize(3)));
 
     }
-
 
 }
