@@ -2,6 +2,7 @@ package com.restaurantes.controller;
 
 import com.restaurantes.model.Dish;
 import com.restaurantes.model.Restaurant;
+import com.restaurantes.model.enums.FoodType;
 import com.restaurantes.repository.DishRepository;
 import com.restaurantes.repository.RestaurantRepository;
 import jakarta.transaction.Transactional;
@@ -40,14 +41,36 @@ class RestaurantControllerTest {
     void setUp() {
         restaurantRepository.deleteAll();
         restaurantRepository.saveAll(List.of(
-           Restaurant.builder().name("La taberna 1").averagePrice(20.5).build(),
-           Restaurant.builder().name("La taberna 2").averagePrice(30.5).build(),
-           Restaurant.builder().name("La taberna 3").averagePrice(40.5).build()
+           Restaurant.builder().name("KFC").averagePrice(15.5).foodType(FoodType.SPANISH).build(),
+           Restaurant.builder().name("MacDonals Burguer").averagePrice(8.5).foodType(FoodType.SPANISH).build(),
+           Restaurant.builder().name("BurguerKing").averagePrice(7.5).foodType(FoodType.SPANISH).build(),
+           Restaurant.builder().name("Tagliatella Pizza").averagePrice(29.99).foodType(FoodType.SPANISH).build(),
+           Restaurant.builder().name("Sitio Pijo").averagePrice(60.5).foodType(FoodType.JAPANESE).build(),
+           Restaurant.builder().name("Sitio Ultra Pijo").averagePrice(80.5).foodType(FoodType.MEXICAN).build()
         ));
         restaurantToDeactivate = restaurantRepository.save(
-                Restaurant.builder().active(true).name("El bar de Moe").build()
+                Restaurant.builder().active(true).averagePrice(90d).name("El bar de Moe").build()
         );
     }
+    @Test void filterRestaurantsByPrice() throws Exception {
+        mockMvc.perform(get("/restaurants").param("price", "30"))
+                .andExpect(model().attribute("restaurants", hasSize(4)));
+    }
+    @Test void filterRestaurantsByTitle() throws Exception {
+        mockMvc.perform(get("/restaurants").param("title", "burguer"))
+                .andExpect(model().attribute("restaurants", hasSize(2)));
+    }
+    @Test void filterRestaurantsByFoodType() throws Exception {
+        mockMvc.perform(get("/restaurants").param("foodType", "MEXICAN"))
+                .andExpect(model().attribute("restaurants", hasSize(1)));
+    }
+    @Test void filterRestaurantsByPriceAndTitle() throws Exception {
+        mockMvc.perform(get("/restaurants").param("title", "burguer").param("price", "8"))
+                .andExpect(model().attribute("restaurants", hasSize(1)));
+    }
+
+
+
     @Test
     void deactivateRestaurant() throws Exception {
         assertTrue(restaurantToDeactivate.getActive());
@@ -136,5 +159,6 @@ class RestaurantControllerTest {
                 .andExpect(model().attribute("dishes", hasSize(3)));
 
     }
+
 
 }
