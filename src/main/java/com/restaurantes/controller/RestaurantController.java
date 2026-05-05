@@ -27,17 +27,14 @@ public class RestaurantController {
 
     @GetMapping("restaurants") // CONTROLADOR
     public String restaurants(Model model) {
-        // MODEL donde se cargan datos
-        model.addAttribute("restaurants", restaurantRepository.findAll());
+        model.addAttribute("restaurants", restaurantRepository.findAllByActiveTrue());
         model.addAttribute("saludo", "Bienvenido a la lista de restaurantes");
         return "restaurants/restaurant-list"; // VISTA HTML
     }
 
     @GetMapping("restaurants/{id}")
     public String restaurantDetail(@PathVariable Long id, Model model) {
-
-        Optional<Restaurant> restauranteOptional = restaurantRepository.findById(id);
-
+        Optional<Restaurant> restauranteOptional = restaurantRepository.findByIdAndActiveTrue(id);
         if (restauranteOptional.isPresent()) {
             Restaurant restaurant = restauranteOptional.get();
             model.addAttribute("restaurant", restaurant);
