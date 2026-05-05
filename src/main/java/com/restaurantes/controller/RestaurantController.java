@@ -53,5 +53,25 @@ public class RestaurantController {
             // get
     }
 
+
+    @GetMapping("restaurants/deactivate/{id}")
+    public String deactivateRestaurant(@PathVariable Long id, Model model) {
+
+        // forma 1:
+//        Optional<Restaurant> restaurantOptional = restaurantRepository.findById(id);
+//        if (restaurantOptional.isPresent()) {
+//            Restaurant restaurant = restaurantOptional.get();
+//            restaurant.setActive(false);
+//            restaurantRepository.save(restaurant);
+//        }
+//        return "redirect:/restaurants";
+
+        // forma 2 (opcional):
+        restaurantRepository.findById(id).ifPresent(restaurant -> {
+            restaurant.setActive(false);
+            restaurantRepository.save(restaurant);
+        });
+        return "redirect:/restaurants";
+    }
 }
 
