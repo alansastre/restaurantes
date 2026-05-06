@@ -18,8 +18,12 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
         select r from Restaurant r
         where r.active = true
         and (:price IS NULL OR r.averagePrice <= :price)
+        and (:title IS NULL OR LOWER(r.name) LIKE LOWER(CONCAT('%', :title, '%')))
         """)
-    List<Restaurant> findActiveFiltering(@Param("price") Double price);
+    List<Restaurant> findActiveFiltering(
+            @Param("price") Double price,
+            @Param("title") String title
+    );
 
 
 }

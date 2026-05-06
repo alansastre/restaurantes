@@ -29,9 +29,10 @@ public class RestaurantController {
     @GetMapping("restaurants") // CONTROLADOR
     public String restaurants(
             Model model,
-            @RequestParam(required = false) Double price
+            @RequestParam(required = false) Double price,
+            @RequestParam(required = false) String title
     ) {
-        model.addAttribute("restaurants", restaurantRepository.findActiveFiltering(price));
+        model.addAttribute("restaurants", restaurantRepository.findActiveFiltering(price, title));
         model.addAttribute("saludo", "Bienvenido a la lista de restaurantes");
         return "restaurants/restaurant-list"; // VISTA HTML
     }
