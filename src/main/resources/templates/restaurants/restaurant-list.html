@@ -9,29 +9,32 @@
         <nav th:replace="~{layout/navbar :: navbar}"></nav>
 
         <main class="container flex-grow-1">
-            <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
                 <h1 class="mb-0" th:text="${saludo}">Restaurantes</h1>
                 <span class="badge bg-secondary fs-6"
                       th:text="|${#lists.size(restaurants)} resultados|">0 resultados</span>
             </div>
 
-            <div>
-                <h5>Filtros rápidos</h5>
+            <div class="mb-3">
                     <a th:href="@{/restaurants(price=15)}" class="btn btn-primary btn-sm">Hasta 15 €</a>
                     <a th:href="@{/restaurants(price=30)}" class="btn btn-primary btn-sm">Hasta 30 €</a>
 
                     <a th:href="@{/restaurants(title='pizza')}" class="btn btn-secondary btn-sm">
                         <i class="fa-solid fa-pizza-slice"></i> Pizza
                     </a>
+<!--                <a th:href="@{/restaurants(title='pizza',price=30)}" class="btn btn-secondary btn-sm">-->
+<!--                    <i class="fa-solid fa-pizza-slice"></i> Pizza premium-->
+<!--                </a>-->
                     <a th:href="@{/restaurants(title='burguer')}" class="btn btn-secondary btn-sm">
                         <i class="fa-solid fa-burger"></i> Burguer
                     </a>
                     <a th:href="@{/restaurants(title='sushi')}" class="btn btn-secondary btn-sm">
                         <i class="fa-solid fa-fish"></i> Sushi
                     </a>
-
-
-                <h5>Filtros avanzados</h5>
+                    <!-- Filtro por foodType tipo de comida: SPANISH, JAPANESE, MEXICAN -->
+                    <a th:href="@{/restaurants(foodType='SPANISH')}" class="btn btn-light btn-sm">Española</a>
+                    <a th:href="@{/restaurants(foodType='JAPANESE')}" class="btn btn-light btn-sm">Japonesa</a>
+                    <a th:href="@{/restaurants(foodType='MEXICAN')}" class="btn btn-light btn-sm">Mexicana</a>
             </div>
 
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">

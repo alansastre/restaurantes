@@ -4,6 +4,7 @@ import com.restaurantes.model.Dish;
 import com.restaurantes.model.Employee;
 import com.restaurantes.model.Restaurant;
 import com.restaurantes.model.Review;
+import com.restaurantes.model.enums.FoodType;
 import com.restaurantes.repository.DishRepository;
 import com.restaurantes.repository.RestaurantRepository;
 import com.restaurantes.repository.ReviewRepository;
@@ -30,9 +31,10 @@ public class RestaurantController {
     public String restaurants(
             Model model,
             @RequestParam(required = false) Double price,
-            @RequestParam(required = false) String title
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) FoodType foodType
     ) {
-        model.addAttribute("restaurants", restaurantRepository.findActiveFiltering(price, title));
+        model.addAttribute("restaurants", restaurantRepository.findActiveFiltering(price, title, foodType));
         model.addAttribute("saludo", "Bienvenido a la lista de restaurantes");
         return "restaurants/restaurant-list"; // VISTA HTML
     }
