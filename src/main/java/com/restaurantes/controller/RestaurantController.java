@@ -1,7 +1,6 @@
 package com.restaurantes.controller;
 
 import com.restaurantes.model.Dish;
-import com.restaurantes.model.Employee;
 import com.restaurantes.model.Restaurant;
 import com.restaurantes.model.Review;
 import com.restaurantes.model.enums.FoodType;
@@ -9,12 +8,13 @@ import com.restaurantes.repository.DishRepository;
 import com.restaurantes.repository.RestaurantRepository;
 import com.restaurantes.repository.ReviewRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,7 +59,7 @@ public class RestaurantController {
 
 
     @GetMapping("restaurants/deactivate/{id}")
-    public String deactivateRestaurant(@PathVariable Long id, Model model) {
+    public String deactivateRestaurant(@PathVariable Long id) {
 
         // forma 1:
 //        Optional<Restaurant> restaurantOptional = restaurantRepository.findById(id);
@@ -75,6 +75,21 @@ public class RestaurantController {
             restaurant.setActive(false);
             restaurantRepository.save(restaurant);
         });
+        return "redirect:/restaurants";
+    }
+
+
+    // PASO 1: NAVEGAR A FORMULARIO DE CREACIÓN DE RESTAURANTE
+    @GetMapping("restaurants/new")
+    public String navigateToForm(Model model) {
+         model.addAttribute("restaurant", new Restaurant());
+        return "restaurants/restaurant-form";
+    }
+
+    // RECIBIR LOS DATOS DEL FORMULARIO DE RESTAURANTE
+    @PostMapping("restaurants")
+    public String createRestaurant(@ModelAttribute Restaurant restaurant) {
+        restaurantRepository.save(restaurant);
         return "redirect:/restaurants";
     }
 }

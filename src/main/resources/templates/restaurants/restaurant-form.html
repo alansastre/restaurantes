@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="~{layout/head :: head('Nuevo Restaurante')}">
+    </head>
+
+    <body class="d-flex flex-column min-vh-100">
+
+        <nav th:replace="~{layout/navbar :: navbar}"></nav>
+
+        <main class="container flex-grow-1">
+            <h1>Crear Nuevo Restaurante</h1>
+
+            <form th:action="@{/restaurants}" method="post" th:object="${restaurant}">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="name" th:field="*{name}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="averagePrice" class="form-label">Precio Promedio</label>
+                    <input type="number" step="5" class="form-control" id="averagePrice" th:field="*{averagePrice}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="foodType" class="form-label">Tipo de Comida</label>
+                    <select class="form-select" id="foodType" th:field="*{foodType}">
+                        <option value="">Seleccionar tipo</option>
+                        <option
+                                th:each="type : ${T(com.restaurantes.model.enums.FoodType).values()}"
+                                th:value="${type}"
+                                th:text="${type.label}">
+                        </option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Crear Restaurante</button>
+                <a href="/restaurants" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </main>
+
+        <footer th:replace="~{layout/footer :: footer}"></footer>
+        <script th:replace="~{layout/footer :: scripts}"></script>
+
+    </body>
+</html>
