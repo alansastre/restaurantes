@@ -15,6 +15,15 @@
                       th:text="|${#lists.size(restaurants)} resultados|">0 resultados</span>
             </div>
 
+            <div>
+                <h5>Filtros rápidos</h5>
+                    <a th:href="@{/restaurants(price=15)}" class="btn btn-primary btn-sm">Hasta 15 €</a>
+                    <a th:href="@{/restaurants(price=30)}" class="btn btn-primary btn-sm">Hasta 30 €</a>
+
+
+                <h5>Filtros avanzados</h5>
+            </div>
+
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
                 <div class="col" th:each="restaurant : ${restaurants}">
                     <div class="card card-restaurant h-100 shadow-sm">

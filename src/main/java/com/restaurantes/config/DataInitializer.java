@@ -31,6 +31,7 @@ public class DataInitializer implements CommandLineRunner {
         var res1 = restaurantRepo.save(Restaurant.builder().name("Restaurante 1").foodType(FoodType.SPANISH).averagePrice(12.50).build());
         var res2 = restaurantRepo.save(Restaurant.builder().name("Restaurante 2").foodType(FoodType.JAPANESE).averagePrice(15.50).build());
         var res3 = restaurantRepo.save(Restaurant.builder().name("Restaurante 3").foodType(FoodType.MEXICAN).averagePrice(19.50).build());
+        var res4 = restaurantRepo.save(Restaurant.builder().name("Restaurante 4").foodType(FoodType.SPANISH).averagePrice(60d).build());
 
         // platos
         var dish1 = dishRepo.save(Dish.builder().type(DishType.MAIN_COURSE).name("Plato1").price(9.99).restaurant(res1).build());

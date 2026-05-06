@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,8 +27,11 @@ public class RestaurantController {
     private ReviewRepository reviewRepository;
 
     @GetMapping("restaurants") // CONTROLADOR
-    public String restaurants(Model model) {
-        model.addAttribute("restaurants", restaurantRepository.findAllByActiveTrue());
+    public String restaurants(
+            Model model,
+            @RequestParam(required = false) Double price
+    ) {
+        model.addAttribute("restaurants", restaurantRepository.findActiveFiltering(price));
         model.addAttribute("saludo", "Bienvenido a la lista de restaurantes");
         return "restaurants/restaurant-list"; // VISTA HTML
     }
