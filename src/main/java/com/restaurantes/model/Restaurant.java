@@ -31,6 +31,10 @@ public class Restaurant {
     @Column(unique = true)
     private String name;
 
+    // String descripcion
+
+    // LocalDate fecha apertura
+
     private Double averagePrice;
 
     @Builder.Default

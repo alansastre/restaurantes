@@ -161,4 +161,23 @@ class RestaurantControllerTest {
     }
 
 
+    @Test
+    void createNewRestaurante() throws Exception {
+
+        // count restaurantes
+        long before = restaurantRepository.count();
+
+        // mockmvc perform enviar restaurante nuevo a controller
+        mockMvc.perform(post("/restaurants")
+                .param("name", "Restaurante Test")
+                .param("averagePrice", "20.5")
+                .param("foodType", "SPANISH")
+        ).andExpect(status().is3xxRedirection())
+        .andExpect(redirectedUrl("/restaurants"));
+
+        // count restaurantes tiene que haber un nuevo restaurant en base de datos
+        long after = restaurantRepository.count();
+
+        assertEquals(before + 1, after);
+    }
 }
