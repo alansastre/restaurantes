@@ -4,6 +4,9 @@ package com.restaurantes.model;
 import com.restaurantes.model.enums.FoodType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 
 // agregar las anotaciones como en Book
 /*
@@ -31,9 +34,13 @@ public class Restaurant {
     @Column(unique = true)
     private String name;
 
-    // String descripcion
+    @Column(length = 500)
+    private String description;
 
-    // LocalDate fecha apertura
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) // yyyy-MM-dd
+    private LocalDate date = LocalDate.now();
+
+    private String city;
 
     private Double averagePrice;
 

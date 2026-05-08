@@ -97,6 +97,7 @@ public class RestaurantController {
     // GUARDAR: RECIBIR LOS DATOS DEL FORMULARIO DE RESTAURANTE
     @PostMapping("restaurants")
     public String createRestaurant(@ModelAttribute Restaurant restaurant) {
+        // TODO validar si nombre ocupado
         restaurantRepository.save(restaurant);
         return "redirect:/restaurants";
     }
