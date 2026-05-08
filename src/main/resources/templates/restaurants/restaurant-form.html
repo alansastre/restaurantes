@@ -8,12 +8,12 @@
 
         <nav th:replace="~{layout/navbar :: navbar}"></nav>
 
-        <main class="container flex-grow-1">
-            <h1 th:text="${restaurant.id != null ? 'Editar restaurante' : 'Crear restaurante'}">Crear Nuevo Restaurante</h1>
+        <main class="container flex-grow-1" th:with="isEdition=${restaurant.id != null}">
+            <h1 th:text="${isEdition ? 'Editar restaurante' : 'Crear restaurante'}">Crear Nuevo Restaurante</h1>
 
             <form th:action="@{/restaurants}" method="post" th:object="${restaurant}">
 
-                <div class="mb-3" th:if="${restaurant.id != null}">
+                <div class="mb-3" th:if="${isEdition}">
                     <label class="form-label" for="id">Identificador</label>
                     <input type="text" class="form-control" id="id" th:field="*{id}" readonly>
                 </div>
@@ -46,7 +46,7 @@
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-primary" th:text="${restaurant.id != null ? 'Actualizar restaurante' : 'Crear restaurante'}">Crear Restaurante</button>
+                <button type="submit" class="btn btn-primary" th:text="${isEdition ? 'Actualizar restaurante' : 'Crear restaurante'}">Crear Restaurante</button>
                 <a href="/restaurants" class="btn btn-secondary">Cancelar</a>
             </form>
         </main>
