@@ -9,10 +9,14 @@
         <nav th:replace="~{layout/navbar :: navbar}"></nav>
 
         <main class="container flex-grow-1">
-            <h1>Crear Nuevo Restaurante</h1>
+            <h1 th:text="${restaurant.id != null ? 'Editar restaurante' : 'Crear restaurante'}">Crear Nuevo Restaurante</h1>
 
             <form th:action="@{/restaurants}" method="post" th:object="${restaurant}">
-                <!-- hidden id -->
+
+                <div class="mb-3" th:if="${restaurant.id != null}">
+                    <label class="form-label" for="id">Identificador</label>
+                    <input type="text" class="form-control" id="id" th:field="*{id}" readonly>
+                </div>
 
                 <div class="mb-3">
                     <label for="name" class="form-label">Nombre</label>
@@ -21,7 +25,7 @@
 
                 <div class="mb-3">
                     <label for="averagePrice" class="form-label">Precio Promedio</label>
-                    <input type="number" step="5" class="form-control" id="averagePrice" th:field="*{averagePrice}" required>
+                    <input type="number" step="1" class="form-control" id="averagePrice" th:field="*{averagePrice}" required>
                 </div>
 
                 <!-- active -->
@@ -42,7 +46,7 @@
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Crear Restaurante</button>
+                <button type="submit" class="btn btn-primary" th:text="${restaurant.id != null ? 'Actualizar restaurante' : 'Crear restaurante'}">Crear Restaurante</button>
                 <a href="/restaurants" class="btn btn-secondary">Cancelar</a>
             </form>
         </main>

@@ -96,8 +96,12 @@
                 </td>
                 <td>
                     <a th:href="@{/dishes/{id}(id=${dish.id})}"
-                       class="btn btn-sm btn-outline-primary">
-                        <i class="fa-regular fa-eye me-1"></i> Ver
+                       class="btn btn-sm btn-primary">
+                        <i class="fa-solid fa-eye me-1"></i> Ver
+                    </a>
+                    <a th:href="@{/dishes/edit/{id}(id=${dish.id})}"
+                       class="btn btn-sm btn-success">
+                        <i class="fa-solid fa-pencil me-1"></i> Editar
                     </a>
                 </td>
             </tr>

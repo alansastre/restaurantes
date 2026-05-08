@@ -65,8 +65,12 @@
                         </div>
                         <div class="card-footer bg-transparent border-0 pt-0">
                             <a th:href="@{/restaurants/{id}(id=${restaurant.id})}"
-                               class="btn btn-outline-primary btn-sm w-100">
-                                <i class="fa-regular fa-eye me-1"></i> Ver restaurante
+                               class="btn btn-outline-primary btn-sm">
+                                <i class="fa-solid fa-eye me-1"></i> Ver
+                            </a>
+                            <a th:href="@{/restaurants/edit/{id}(id=${restaurant.id})}"
+                               class="btn btn-outline-success btn-sm">
+                                <i class="fa-solid fa-pencil me-1"></i> Editar
                             </a>
                         </div>
                     </div>

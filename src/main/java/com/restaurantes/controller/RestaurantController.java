@@ -79,14 +79,22 @@ public class RestaurantController {
     }
 
 
-    // PASO 1: NAVEGAR A FORMULARIO DE CREACIÓN DE RESTAURANTE
+    // NAVEGAR: A FORMULARIO DE CREACIÓN DE RESTAURANTE
     @GetMapping("restaurants/new")
     public String navigateToForm(Model model) {
-         model.addAttribute("restaurant", new Restaurant());
+          model.addAttribute("restaurant", new Restaurant());
         return "restaurants/restaurant-form";
     }
 
-    // RECIBIR LOS DATOS DEL FORMULARIO DE RESTAURANTE
+    // NAVEGAR: A FORMULARIO DE EDICIÓN DE RESTAURANTE EXISTENTE
+    @GetMapping ("restaurants/edit/{id}")
+    public String editRestaurant(@PathVariable Long id, Model model) {
+        model.addAttribute("restaurant", restaurantRepository.findById(id).orElseThrow());
+        return "restaurants/restaurant-form";
+    }
+
+
+    // GUARDAR: RECIBIR LOS DATOS DEL FORMULARIO DE RESTAURANTE
     @PostMapping("restaurants")
     public String createRestaurant(@ModelAttribute Restaurant restaurant) {
         restaurantRepository.save(restaurant);
