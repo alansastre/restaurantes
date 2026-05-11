@@ -2,6 +2,7 @@ package com.restaurantes.controller;
 
 import com.restaurantes.model.Dish;
 import com.restaurantes.model.Restaurant;
+import com.restaurantes.model.enums.DishType;
 import com.restaurantes.model.enums.FoodType;
 import com.restaurantes.repository.DishRepository;
 import com.restaurantes.repository.RestaurantRepository;
@@ -37,6 +38,7 @@ class RestaurantControllerTest {
     MockMvc mockMvc;
 
     Restaurant restaurantToDeactivate;
+    Restaurant restaurantToEdit;
 
     @BeforeEach
     void setUp() {
@@ -51,6 +53,9 @@ class RestaurantControllerTest {
         ));
         restaurantToDeactivate = restaurantRepository.save(
                 Restaurant.builder().active(true).averagePrice(90d).name("El bar de Moe").build()
+        );
+        restaurantToEdit = restaurantRepository.save(
+                Restaurant.builder().active(true).averagePrice(90d).name("Restaurant to edit").build()
         );
     }
     @Test void filterRestaurantsByPrice() throws Exception {
@@ -183,7 +188,26 @@ class RestaurantControllerTest {
     }
 
     @Test
-    void editRestaurante() {
-        Assertions.fail("Pendiente test editar restaurante");
+    void editRestaurante() throws Exception{
+        Long restaurantId = restaurantToEdit.getId();
+        long countBefore = restaurantRepository.count();
+        mockMvc.perform(post("/restaurants")
+                        .param("id",  restaurantId.toString())
+                        .param("name", "editado")
+                        .param("averagePrice", "1")
+                        .param("description", "editado")
+                        .param("city", "Madrid")
+                        .param("foodType", FoodType.SPANISH.toString())
+                ).andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/restaurants"));
+
+        assertEquals(countBefore, restaurantRepository.count());
+        var editedRestaurant = restaurantRepository.findById(restaurantId).orElseThrow();
+        assertEquals(restaurantId,  editedRestaurant.getId());
+        assertEquals("editado", editedRestaurant.getName());
+        assertEquals(restaurantToEdit.getAveragePrice(), editedRestaurant.getAveragePrice());
+        assertEquals("editado", editedRestaurant.getDescription());
+        assertEquals("Madrid", editedRestaurant.getCity());
+        assertEquals(FoodType.SPANISH, editedRestaurant.getFoodType());
     }
 }
