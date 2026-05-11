@@ -47,7 +47,12 @@ public class DishController {
         return "dishes/dish-form";
     }
 
-    // TODO  @GetMapping ("dishes/edit/{id}")
+    @GetMapping("dishes/edit/{id}")
+    public String edit(Model model, @PathVariable Long id) {
+        model.addAttribute("dish", dishRepository.findById(id).orElseThrow());
+        model.addAttribute("restaurants", restaurantRepository.findAll());
+        return "dishes/dish-form";
+    }
 
 
     @PostMapping("dishes")

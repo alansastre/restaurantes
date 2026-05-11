@@ -24,8 +24,41 @@
                            th:field="*{name}" placeholder="Lentejas" maxlength="255" required>
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label" for="description">Descripción del plato</label>
+                    <textarea class="form-control" id="description"
+                              th:field="*{description}" rows="3" maxlength="500"></textarea>
+                </div>
 
+                <div class="mb-3">
+                    <label class="form-label" for="price">Precio</label>
+                    <input id="price" type="number" class="form-control"
+                    th:field="*{price}" min="0" required>
+                </div>
 
+                <!-- DishType  type -->
+                <div>
+                    <label class="form-label" for="type">Tipo de plato</label>
+                    <select id="type" th:field="*{type}" class="form-select">
+                        <option value=""></option>
+                        <option
+                                th:each="type : ${T(com.restaurantes.model.enums.DishType).values()}"
+                                th:value="${type}"
+                                th:text="${type}">
+                        ></option>
+                    </select>
+                </div>
+                <!-- Restaurant  restaurant -->
+                <div>
+                    <label class="form-label" for="restaurant">Restaurante</label>
+                    <select id="restaurant" class="form-select" th:field="*{restaurant}">
+                        <option value=""></option>
+                        <option
+                                th:each="restaurant: ${restaurants}"
+                                th:value="${restaurant.id}"
+                                th:text="${restaurant.id + ' - ' + restaurant.name}">
+                    </select>
+                </div>
 
                 <button type="submit" class="btn btn-success">
                     <i class="fa-solid fa-floppy-disk"></i>
