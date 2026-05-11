@@ -24,7 +24,8 @@ public class Dish {
 
     private Double price;
 
-    private Boolean active;
+    @Builder.Default
+    private Boolean active = true;
 
     // "/2026/04/15/profile-pepe.jpg
     // https://img.hosting.com/pepe.jpg

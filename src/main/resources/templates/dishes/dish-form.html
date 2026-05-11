@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="~{layout/head :: head('Formulario plato')}">
+    </head>
+
+    <body class="d-flex flex-column min-vh-100">
+
+        <nav th:replace="~{layout/navbar :: navbar}"></nav>
+
+        <main class="container flex-grow-1">
+            <h1>Formulario plato</h1>
+
+
+            <!-- TODO formulario plato -->
+            <form th:action="@{/dishes}" method="post" th:object="${dish}">
+
+                <input type="hidden" th:field="*{id}">
+                    <!-- TODO mostrar pero gris deshabilitado -->
+
+                <div class="mb-3">
+                    <label class="form-label" for="name">Nombre del plato</label>
+                    <input id="name" type="text" class="form-control"
+                           th:field="*{name}" placeholder="Lentejas" maxlength="255" required>
+                </div>
+
+
+
+
+                <button type="submit" class="btn btn-success">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Guardar
+                </button>
+
+            </form>
+
+        </main>
+
+        <footer th:replace="~{layout/footer :: footer}"></footer>
+        <script th:replace="~{layout/footer :: scripts}"></script>
+
+    </body>
+</html>
+
