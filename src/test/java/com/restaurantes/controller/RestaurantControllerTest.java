@@ -6,6 +6,7 @@ import com.restaurantes.model.enums.FoodType;
 import com.restaurantes.repository.DishRepository;
 import com.restaurantes.repository.RestaurantRepository;
 import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,7 +97,7 @@ class RestaurantControllerTest {
                  .andExpect(status().isOk())
                  .andExpect(view().name("restaurants/restaurant-list"))
                  .andExpect(model().attributeExists("restaurants"))
-                 .andExpect(model().attribute("restaurants", hasSize(3)));
+                 .andExpect(model().attribute("restaurants", hasSize(7)));
     }
     @Test
     void restaurantsEmpty() throws Exception {
@@ -179,5 +180,10 @@ class RestaurantControllerTest {
         long after = restaurantRepository.count();
 
         assertEquals(before + 1, after);
+    }
+
+    @Test
+    void editRestaurante() {
+        Assertions.fail("Pendiente test editar restaurante");
     }
 }

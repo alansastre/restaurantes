@@ -7,6 +7,7 @@ import com.restaurantes.repository.DishRepository;
 import com.restaurantes.repository.RestaurantRepository;
 import com.restaurantes.repository.ReviewRepository;
 import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,6 @@ class ReviewControllerTest {
     @BeforeEach
     void setUp() {
         review1 = reviewRepo.save(Review.builder().title("OK").rating(5).build());
-
     }
 
     @Test
@@ -54,5 +54,14 @@ class ReviewControllerTest {
 
 
         assertFalse(reviewRepo.existsById(id));
+    }
+
+    @Test
+    void createReviewRestaurant() {
+        Assertions.fail("Pendiente createReviewRestaurant");
+    }
+    @Test
+    void createReviewDish() {
+        Assertions.fail("Pendiente createReviewDish");
     }
 }
