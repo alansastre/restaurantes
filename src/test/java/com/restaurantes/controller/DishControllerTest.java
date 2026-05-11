@@ -26,14 +26,18 @@ public class DishControllerTest {
     @Autowired MockMvc mockMvc;
     @Autowired DishRepository dishRepo;
     @Autowired RestaurantRepository restaurantRepo;
+
     Restaurant restaurant;
+    Restaurant restaurant2;
     Dish dish;
+
     @Autowired
     private DishRepository dishRepository;
 
     @BeforeEach
     void setUp() {
         restaurant = restaurantRepo.save(Restaurant.builder().name("Restaurante1").build());
+        restaurant2 = restaurantRepo.save(Restaurant.builder().name("Restaurante2").build());
         dish = dishRepo.save(Dish.builder().name("plato1").restaurant(restaurant).build());
     }
     @Test void create() throws Exception {
@@ -59,14 +63,26 @@ public class DishControllerTest {
 
     }
     @Test
-    void edit() {
-        // save
+    void edit() throws Exception {
+        Long dishId = dish.getId();
+        long countBefore = dishRepo.count();
+        mockMvc.perform(post("/dishes")
+                .param("id",  dishId.toString())
+                .param("name", "plato name test editado")
+                .param("price", "9")
+                .param("description", "plato description test editado")
+                .param("type", DishType.MAIN_COURSE.toString())
+                .param("restaurant", restaurant2.getId().toString())
+        ).andExpect(status().is3xxRedirection())
+        .andExpect(redirectedUrl("/dishes/" + dishId));
 
-        // mockmvc perform post cambiando nombre precio restaurante apuntando al mismo id /dishes
-
-        // findById y comprobar datos
-        // count no debe aumentar
-        Assertions.fail("Pendiente test editar Plato existente");
+        assertEquals(countBefore, dishRepo.count());
+        Dish editedDish = dishRepo.findById(dishId).orElseThrow();
+        assertEquals("plato name test editado", editedDish.getName());
+        assertEquals(9d, editedDish.getPrice());
+        assertEquals("plato description test editado", editedDish.getDescription());
+        assertEquals(DishType.MAIN_COURSE, editedDish.getType());
+        assertEquals(restaurant2.getId(), editedDish.getRestaurant().getId());
     }
 
 //    @Test
