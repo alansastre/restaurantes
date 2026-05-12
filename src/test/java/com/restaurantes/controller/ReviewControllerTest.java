@@ -9,6 +9,7 @@ import com.restaurantes.repository.ReviewRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -88,6 +89,29 @@ class ReviewControllerTest {
         assertNotNull(reviewCreated.getRestaurant());
         assertEquals(restaurant.getId(),  reviewCreated.getRestaurant().getId());
     }
+
+    @Test
+    @DisplayName("Navegar hacia la pantalla de formulario de Review para crear una nueva")
+    void navigateToNew() throws Exception {
+        mockMvc.perform(
+                get("/reviews/new")
+                .param("restaurantId", restaurant.getId().toString())
+        ).andExpect(view().name("reviews/review-form"))
+        .andExpect(status().isOk())
+        .andExpect(model().attributeExists("review"))
+        .andExpect(model().attribute("review", hasProperty("restaurant", hasProperty("id", is(restaurant.getId())))));
+
+        mockMvc.perform(
+                        get("/reviews/new")
+                                .param("dishId", dish.getId().toString())
+                ).andExpect(view().name("reviews/review-form"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("review"))
+                .andExpect(model().attribute("review", hasProperty("dish", hasProperty("id", is(dish.getId())))));
+
+    }
+
+
     @Test
     void deleteReview() throws Exception {
 

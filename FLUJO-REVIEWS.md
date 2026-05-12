@@ -18,3 +18,5 @@
 5. ReviewControllerTest OK
    * create   mockMvc.perform(post("/reviews"))
    * edit   mockMvc.perform(post("/reviews"))
+   * navigateToNew
+   * navigateToEdit
