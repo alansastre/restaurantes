@@ -19,7 +19,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest // Activa Spring
@@ -29,17 +29,47 @@ class ReviewControllerTest {
 
     @Autowired
     ReviewRepository reviewRepo;
+    @Autowired
+    DishRepository dishRepo;
+    @Autowired
+    RestaurantRepository restaurantRepo;
 
     @Autowired
     MockMvc mockMvc;
 
+    Dish dish;
     Review review1;
 
     @BeforeEach
     void setUp() {
         review1 = reviewRepo.save(Review.builder().title("OK").rating(5).build());
+        dish = dishRepo.save(Dish.builder().name("Plato1").price(10d).build());
+    }
+    @Test
+    void createReviewDish() throws Exception {
+        long countBefore = reviewRepo.count();
+        mockMvc.perform(
+                post("/reviews")
+                        .param("title", "OK")
+                        .param("rating", "5")
+                        .param("content", "OKOK")
+                        .param("dish", dish.getId().toString())
+
+                )
+                .andExpect(status().is3xxRedirection());
+        assertEquals(countBefore + 1, reviewRepo.count());
+        Review reviewCreated = reviewRepo.findAll().getLast();
+        assertEquals("OK",  reviewCreated.getTitle());
+        assertEquals(5,  reviewCreated.getRating());
+        assertEquals("OKOK",  reviewCreated.getContent());
+        assertNotNull(reviewCreated.getDish());
+        assertEquals(dish.getId(),  reviewCreated.getDish().getId());
     }
 
+    @Test
+    void createReviewRestaurant() {
+        Assertions.fail("Pendiente createReviewRestaurant");
+    }
     @Test
     void deleteReview() throws Exception {
 
@@ -56,12 +86,6 @@ class ReviewControllerTest {
         assertFalse(reviewRepo.existsById(id));
     }
 
-    @Test
-    void createReviewRestaurant() {
-        Assertions.fail("Pendiente createReviewRestaurant");
-    }
-    @Test
-    void createReviewDish() {
-        Assertions.fail("Pendiente createReviewDish");
-    }
+
+
 }
