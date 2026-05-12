@@ -37,6 +37,7 @@ class ReviewControllerTest {
     @Autowired
     MockMvc mockMvc;
 
+    Restaurant restaurant;
     Dish dish;
     Review review1;
 
@@ -44,6 +45,7 @@ class ReviewControllerTest {
     void setUp() {
         review1 = reviewRepo.save(Review.builder().title("OK").rating(5).build());
         dish = dishRepo.save(Dish.builder().name("Plato1").price(10d).build());
+        restaurant = restaurantRepo.save(Restaurant.builder().name("Restaurante").build());
     }
     @Test
     void createReviewDish() throws Exception {
@@ -67,8 +69,24 @@ class ReviewControllerTest {
     }
 
     @Test
-    void createReviewRestaurant() {
-        Assertions.fail("Pendiente createReviewRestaurant");
+    void createReviewRestaurant() throws Exception{
+        long countBefore = reviewRepo.count();
+        mockMvc.perform(
+                        post("/reviews")
+                                .param("title", "OK")
+                                .param("rating", "5")
+                                .param("content", "OKOK")
+                                .param("restaurant", restaurant.getId().toString())
+
+                )
+                .andExpect(status().is3xxRedirection());
+        assertEquals(countBefore + 1, reviewRepo.count());
+        Review reviewCreated = reviewRepo.findAll().getLast();
+        assertEquals("OK",  reviewCreated.getTitle());
+        assertEquals(5,  reviewCreated.getRating());
+        assertEquals("OKOK",  reviewCreated.getContent());
+        assertNotNull(reviewCreated.getRestaurant());
+        assertEquals(restaurant.getId(),  reviewCreated.getRestaurant().getId());
     }
     @Test
     void deleteReview() throws Exception {

@@ -11,9 +11,10 @@
 
 3. review-form.html: titulo, mensaje, rating (1-5), botón enviar OK
 
-4. ReviewController
-   * @PostMapping("reviews")  reviewRepository.save(review) y redirect a detail
+4. ReviewController 
+   * @PostMapping("reviews")  reviewRepository.save(review) y redirect a detail  OK
+   * Corregido revisar error restaurant Bad Request, problema de conversión estaba enviando el objeto entero Restaurant en vez de solo la clave primaria    id STring --> Long
 
-5. ReviewControllerTest
+5. ReviewControllerTest OK
    * create   mockMvc.perform(post("/reviews"))
    * edit   mockMvc.perform(post("/reviews"))

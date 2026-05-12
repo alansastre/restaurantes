@@ -13,8 +13,8 @@
     <h1>Formulario review</h1>
     <form th:action="@{/reviews}" method="post" th:object="${review}">
         <input type="hidden" th:field="*{id}">
-        <input type="hidden" th:field="*{restaurant}">
-        <input type="hidden" th:field="*{dish}">
+        <input th:if="${review.restaurant != null}" type="hidden" name="restaurant" th:field="*{restaurant.id}">
+        <input th:if="${review.dish != null}"  name="dish" type="hidden" th:field="*{dish.id}">
         <input type="hidden" th:field="*{creationDate}">
 
         <div class="mb-3">
