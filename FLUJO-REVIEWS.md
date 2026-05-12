@@ -2,16 +2,14 @@
 
 ## FUNCIONALIDAD ESCRIBIR RESEÑA SOBRE RESTAURANTE O PLATO
 
-1. Botón Añadir reseña
+1. Botón Añadir reseña OK
    * restaurant-detail.html
    * dish-detail.html
 
-2. ReviewController
-   * @GetMapping  /reviews/new?restaurantId=1
-   * @GetMapping  /reviews/new?dish=1
-   * @GetMapping /reviews/edit/1
+2. ReviewController OK
+   * @GetMapping  /reviews/new?restaurantId=1 o /reviews/new?dishId=1
 
-3. review-form.html: titulo, mensaje, rating (1-5), botón enviar
+3. review-form.html: titulo, mensaje, rating (1-5), botón enviar OK
 
 4. ReviewController
    * @PostMapping("reviews")  reviewRepository.save(review) y redirect a detail
