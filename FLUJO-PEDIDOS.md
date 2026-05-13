@@ -30,3 +30,16 @@ Como cliente de un restaurante quiero iniciar un pedido, pedir platos de la cart
     * añadir platos a pedido
     * finalizar pedido
 
+
+En total:
+OrderController
+* Gestionar pedido Order:
+   * @GetMapping("orders")
+   * @GetMapping("orders/{id}")
+   * @GetMapping("orders/new")
+   * @PostMapping("orders")
+   * @GetMapping("orders/{id}/finish")
+* Gestionar líneas pedido OrderLine;
+   * @PostMapping("orders/{id}/lines")
+   * @GetMapping("orders/{orderId}/lines/{lineId}/delete")
+   * @PostMapping("orders/{orderId}/lines/{lineId}")
