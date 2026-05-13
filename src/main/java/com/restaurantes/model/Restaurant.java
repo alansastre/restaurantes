@@ -36,7 +36,7 @@ public class Restaurant {
 
     @Column(length = 500)
     private String description;
-
+    private Integer numberEmployees;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) // yyyy-MM-dd
     private LocalDate date = LocalDate.now();
 

@@ -51,9 +51,9 @@ public class DataInitializer implements CommandLineRunner {
         var review6 = reviewRepo.save(Review.builder().title("Neutral").rating(3).dish(dish1).build());
 
         // pedidos y lineas pedido
-        var order1 = orderRepo.save(Order.builder().numPeople(2).tableNumber(1).totalPrice(30d).status(OrderStatus.PENDIENTE).restaurant(res1).build());
-        var order2 = orderRepo.save(Order.builder().numPeople(4).tableNumber(2).totalPrice(60d).status(OrderStatus.PAGADO).restaurant(res1).build());
-        var order3 = orderRepo.save(Order.builder().numPeople(6).tableNumber(3).totalPrice(70d).status(OrderStatus.PENDIENTE).restaurant(res1).build());
+        var order1 = orderRepo.save(Order.builder().numPeople(2).tableNumber(1).totalPrice(30d).status(OrderStatus.PENDING).restaurant(res1).build());
+        var order2 = orderRepo.save(Order.builder().numPeople(4).tableNumber(2).totalPrice(60d).status(OrderStatus.FINISHED).restaurant(res1).build());
+        var order3 = orderRepo.save(Order.builder().numPeople(6).tableNumber(3).totalPrice(70d).status(OrderStatus.PENDING).restaurant(res1).build());
 
         var line1 = orderLineRepo.save(OrderLine.builder().quantity(2).dish(dish1).order(order1).build());
         var line2 = orderLineRepo.save(OrderLine.builder().quantity(1).dish(dish2).order(order1).build());
@@ -61,5 +61,6 @@ public class DataInitializer implements CommandLineRunner {
         var line4 = orderLineRepo.save(OrderLine.builder().quantity(3).dish(dish4).order(order2).build());
         var line5 = orderLineRepo.save(OrderLine.builder().quantity(3).dish(dish5).order(order2).build());
         var line6 = orderLineRepo.save(OrderLine.builder().quantity(3).dish(dish6).order(order2).build());
+
     }
 }

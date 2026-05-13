@@ -26,13 +26,15 @@ public class Order {
     private Integer tableNumber;
 
     private Integer numPeople;
-
+    @Column(length = 500)
+    private String userSuggestions;
     // debería calcularse en base a sus OrderLine
     private Double totalPrice;
+    private Double tip;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private OrderStatus status = OrderStatus.PENDIENTE;
+    private OrderStatus status = OrderStatus.PENDING;
 
     // asociaicon con restaurante?
     @ToString.Exclude // lombok

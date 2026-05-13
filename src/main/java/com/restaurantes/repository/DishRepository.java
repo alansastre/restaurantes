@@ -13,6 +13,6 @@ public interface DishRepository extends JpaRepository<Dish, Long> {
 
     @Query("select d from Dish d order by d.price") // asc por defecto
     List<Dish> findOrderedByPriceAsc();
-
+    List<Dish> findByRestaurantIdOrderByPrice(Long id);
 
 }

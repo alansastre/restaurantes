@@ -17,7 +17,13 @@
             <a class="btn btn-danger btn-sm" th:href="@{/restaurants/deactivate/{id}(id=${restaurant.id})}">
                 <i class="fa-solid fa-ban"></i> Desactivar
             </a>
-
+            <a th:href="@{/restaurants/edit/{id}(id=${restaurant.id})}"
+               class="btn btn-success btn-sm mt-2">
+                <i class="fa-solid fa-pencil me-1"></i> Editar
+            </a>
+            <a class="btn btn-success" th:href="@{/orders/new(restaurantId=${restaurant.id})}">
+                <i class="fa-solid fa-hand-point-up"></i> Hacer pedido
+            </a>
 
             <span class="badge bg-success me-1">
                 <i class="fa-solid fa-euro-sign me-1"></i>
