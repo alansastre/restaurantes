@@ -8,6 +8,7 @@ import com.restaurantes.repository.RestaurantRepository;
 import jakarta.transaction.Transactional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,7 +41,8 @@ public class DishControllerTest {
         restaurant2 = restaurantRepo.save(Restaurant.builder().name("Restaurante2").build());
         dish = dishRepo.save(Dish.builder().name("plato1").restaurant(restaurant).build());
     }
-    @Test void create() throws Exception {
+    @Test
+    void create() throws Exception {
         long countBefore = dishRepo.count();
 
         // mockmvc perform post /dishes
@@ -62,6 +64,7 @@ public class DishControllerTest {
         assertEquals(restaurant.getId(), dish.getRestaurant().getId());
 
     }
+
     @Test
     void edit() throws Exception {
         Long dishId = dish.getId();
@@ -85,6 +88,12 @@ public class DishControllerTest {
         assertEquals(restaurant2.getId(), editedDish.getRestaurant().getId());
     }
 
+
+
+//    @Test
+//    void navigateToEdit() {
+//
+//    }
 //    @Test
 //    void list() {
 //        Assertions.fail("Pendiente test detail");

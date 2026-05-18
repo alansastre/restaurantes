@@ -1,6 +1,8 @@
 
 ## PROCESO DE INICIAR Y FINALIZAR UN PEDIDO
 
+## RESTAURANTES 
+
 Como cliente de un restaurante quiero iniciar un pedido, pedir platos de la carta y finalizar pedido.
 
 
@@ -43,3 +45,33 @@ OrderController
    * @PostMapping("orders/{id}/lines")
    * @GetMapping("orders/{orderId}/lines/{lineId}/delete")
    * @PostMapping("orders/{orderId}/lines/{lineId}")
+
+
+## G1 PELICULAS
+
+movie detail
+* sessions
+
+session detail
+* tickets: en cada ticket un botón de compra que envíe al ticket form para terminar de completar los campos y asignar un purchase Time. 
+
+## G2 PRODUCTOS
+
+* product-detail
+   * botón de compra
+
+* /purchase o /carrito (order-detail.html)
+    * mostrar purchase en progreso
+    * mostrar purchase lines
+    * boton finalizar compra
+    * mostrar seguir viendo productos
+
+## G3 RESERVAS
+
+listing detail botón de reserva
+
+booking form 
+    * addons con botón de añadir en cada uno
+
+booking detail
+

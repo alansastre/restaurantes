@@ -119,7 +119,29 @@ public class OrderControllerTest {
     }
     @Test
     @DisplayName("POST /orders/{orderId}/lines?dishId={id}")
-    void createLine() throws Exception{}
+    void createLine() throws Exception{
+
+        long countLines = orderLineRepo.count();
+
+        mockMvc.perform(
+                post("/orders/" + pedidoJuanito.getId() + "/lines")
+                .param("dishId", flan.getId().toString())
+        ).andExpect(status().is3xxRedirection())
+        .andExpect(redirectedUrlPattern("/orders/*"));
+
+        assertEquals(countLines + 1, orderLineRepo.count());
+
+        Order recargado = orderRepo.findById(pedidoJuanito.getId()).orElseThrow();
+        assertEquals(OrderStatus.IN_PROGRESS, recargado.getStatus());
+        assertEquals(30d,  recargado.getTotalPrice());
+
+        OrderLine lineaFlanRecargada = orderLineRepo.findAll().getLast();
+        assertEquals(1, lineaFlanRecargada.getQuantity());
+        assertEquals(flan.getId(), lineaFlanRecargada.getDish().getId());
+        assertEquals(pedidoJuanito.getId(), lineaFlanRecargada.getOrder().getId());
+
+
+    }
     @Test
     @DisplayName("GET /orders/{orderId}/lines/{lineId}/delete")
     void deleteLine() throws Exception{}
@@ -128,5 +150,17 @@ public class OrderControllerTest {
     void updateLine() throws Exception{}
     @Test
     @DisplayName("GET /orders/{orderId}/finish?tip=0")
-    void finishOrder() throws Exception {}
+    void finishOrder() throws Exception {
+
+        mockMvc.perform(
+                get("/orders/" + pedidoJuanito.getId() + "/finish")
+                .param("tip", "1.34")
+        ).andExpect(status().is3xxRedirection())
+        .andExpect(redirectedUrl("/orders/" + pedidoJuanito.getId()));
+
+        Order finalizado =  orderRepo.findById(pedidoJuanito.getId()).orElseThrow();
+        assertEquals(OrderStatus.FINISHED, finalizado.getStatus());
+        assertEquals(1.34d , finalizado.getTip());
+        assertEquals(25d,   finalizado.getTotalPrice());
+    }
 }
