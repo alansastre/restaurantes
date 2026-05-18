@@ -27,20 +27,21 @@ Para esto vamos a usar Spring Security, que es un framework de seguridad para ap
 * model/User.java: id, username, password, role
    * implements UserDetails de Spring Security
 
-## Paso 3: crear repositorio UserRepository
+## Paso 3: crear repositorio UserRepository (OK)
 
 * repository/UserRepository.java:
   * findByUsername(String username)
+  * findByEmail(String email)
   * boolean existsByUsername(String username)
   * boolean existsByEmail(String email)
 
-## Paso 4: crear servicio UserService
+## Paso 4: crear servicio UserService (OK)
 
 * service/UserService.java
     * implements UserDetailsService de Spring Security
     * loadUserByUsername(String username)  sirve para que spring security pueda cargar el usuario a partir del username y comparar la contraseña al hacer login y demás
 
-## Paso 5: crear SecurityConfig (1/2)
+## Paso 5: crear SecurityConfig 
 
 * config/SecurityConfig.java 
   * Creamos dos @Bean para que Spring Security sepa cómo proteger las rutas y cómo cifrar/comprobar passwords:
