@@ -37,6 +37,15 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Role role;
 
+    // firstName
+    // lastName
+    // nif
+    // phone
+    // city
+    // pictureUrl
+    // birthdate
+    // bio
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

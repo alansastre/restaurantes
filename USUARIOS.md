@@ -18,7 +18,8 @@ Para esto vamos a usar Spring Security, que es un framework de seguridad para ap
 
 * spring-boot-starter-security
 * thymeleaf-extras-springsecurity6
-* spring-security-test
+* spring-boot-starter-security-test
+
 * Opcional: spring-boot-starter-validation
 
 ## Paso 2: crear entidad User y enum Role (OK)
@@ -41,7 +42,7 @@ Para esto vamos a usar Spring Security, que es un framework de seguridad para ap
     * implements UserDetailsService de Spring Security
     * loadUserByUsername(String username)  sirve para que spring security pueda cargar el usuario a partir del username y comparar la contraseña al hacer login y demás
 
-## Paso 5: crear SecurityConfig 
+## Paso 5: crear SecurityConfig  (PENDIENTE)
 
 * config/SecurityConfig.java 
   * Creamos dos @Bean para que Spring Security sepa cómo proteger las rutas y cómo cifrar/comprobar passwords:
