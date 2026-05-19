@@ -1,5 +1,6 @@
 package com.restaurantes.controller;
 
+import com.restaurantes.dto.RegisterForm;
 import com.restaurantes.model.User;
 import com.restaurantes.repository.UserRepository;
 import com.restaurantes.service.UserService;
@@ -21,13 +22,14 @@ public class AuthController {
     // navegar a formulario de registro
     @GetMapping("register")
     public String register(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new RegisterForm());
         return "auth/register";
     }
 
     // PostMapping register
     @PostMapping("register")
-    public String register(@ModelAttribute User user) {
+    public String register(@ModelAttribute RegisterForm form) {
+        System.out.println(form);
         //userService.register(user);
         return "redirect:/login";
     }

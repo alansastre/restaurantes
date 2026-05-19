@@ -8,8 +8,8 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     // registro: verificar si email o username están ocupados
-    boolean existByUsername(String username);
-    boolean existByEmail(String email);
+    boolean existsByUsername(String username);
+    boolean existsByEmail(String email);
 
     // login: buscar user
     Optional<User> findByUsername(String username);
