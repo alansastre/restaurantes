@@ -11,5 +11,5 @@ public class RegisterForm {
     private String email;
     private String password;
     private String passwordConfirm;
-    // private Boolean acceptRGPD;
+//     private Boolean acceptRGPD;
 }

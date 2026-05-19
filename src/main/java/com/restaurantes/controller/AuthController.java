@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 // controlador para iniciar sesion y/ registrarse crear User en db
 @Controller
@@ -18,20 +19,22 @@ public class AuthController {
 
     private final UserService userService;
 
-    // GETMapping register
-    // navegar a formulario de registro
     @GetMapping("register")
     public String register(Model model) {
         model.addAttribute("user", new RegisterForm());
         return "auth/register";
     }
 
-    // PostMapping register
     @PostMapping("register")
-    public String register(@ModelAttribute RegisterForm form) {
-        System.out.println(form);
-        //userService.register(user);
-        return "redirect:/login";
+    public String register(@ModelAttribute RegisterForm form, RedirectAttributes redirectAttributes) {
+        try {
+            userService.register(form);
+            redirectAttributes.addFlashAttribute("message", "Cuenta creada correctamente, inicia sesión.");
+            return "redirect:/login";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/register";
+        }
     }
 
 
