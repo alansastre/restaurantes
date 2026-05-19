@@ -23,6 +23,7 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
     }
 
+    // register (crear cuenta)
     // validate
     // send email
     // calculate spent money
