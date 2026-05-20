@@ -1,10 +1,13 @@
 package com.restaurantes.dto;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-
-@Data
+@Getter
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
+@Setter
+@ToString
 public class RegisterForm {
 
     private String username;
