@@ -67,10 +67,32 @@ Para esto vamos a usar Spring Security, que es un framework de seguridad para ap
 * templates/fragments/navbar.html → mostrar enlaces de login/register o logout dependiendo de si el usuario está autenticado o no, usando thymeleaf-extras-springsecurity6
 
 
-## Paso 8 usuarios demo en data initializer
+## Paso 8 usuarios demo en data initializer (ok)
+
+* user
+* admin
 
 
+## Paso 9 securizar botones
 
+revisar botones de crear / editar / desactivar / borrar para asegurarse de restringirlos a los usuarios correctos.
+
+
+## Paso 10: integración de User con Order y Review
+
+* Order.java: añadir campo User user con @ManyToOne
+* Review.java: añadir campo User user con @ManyToOne
+
+En controller OrderController, al crear una orden, asignar el usuario autenticado a la orden.
+
+En controller ReviewController, al crear una review, asignar el usuario autenticado a la review.
+
+
+## Paso 11: Testing
+
+* UserServiceTest
+* AuthControllerTest
+* SecurityConfigTest
 
 
 
@@ -86,11 +108,3 @@ Objetivo: `th:if="${isAuthenticated}` o `th:if=${isAdmin}`.
     * isAdmin()
     * currentUserName()
 
-## Paso 9: integración de User con Order y Review
-
-* Order.java: añadir campo User user con @ManyToOne
-* Review.java: añadir campo User user con @ManyToOne
-
-En controller OrderController, al crear una orden, asignar el usuario autenticado a la orden.
-
-En controller ReviewController, al crear una review, asignar el usuario autenticado a la review.

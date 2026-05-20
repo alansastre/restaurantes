@@ -4,10 +4,12 @@ import com.restaurantes.model.*;
 import com.restaurantes.model.enums.DishType;
 import com.restaurantes.model.enums.FoodType;
 import com.restaurantes.model.enums.OrderStatus;
+import com.restaurantes.model.enums.Role;
 import com.restaurantes.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,6 +22,8 @@ public class DataInitializer implements CommandLineRunner {
     private OrderRepository orderRepo;
     private OrderLineRepository orderLineRepo;
     private ReviewRepository reviewRepo;
+    private UserRepository userRepo;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
@@ -62,5 +66,13 @@ public class DataInitializer implements CommandLineRunner {
         var line5 = orderLineRepo.save(OrderLine.builder().quantity(3).dish(dish5).order(order2).build());
         var line6 = orderLineRepo.save(OrderLine.builder().quantity(3).dish(dish6).order(order2).build());
 
+        // TODO asociar alguna order o review
+        var user = userRepo.save(User.builder()
+                .username("user").email("user@gmail.com").password(passwordEncoder.encode("user")).role(Role.ROLE_USER)
+                .build());
+
+        var admin = userRepo.save(User.builder()
+                .username("admin").email("admin@gmail.com").password(passwordEncoder.encode("admin")).role(Role.ROLE_ADMIN)
+                .build());
     }
 }
