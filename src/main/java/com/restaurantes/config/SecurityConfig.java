@@ -21,6 +21,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // proteger las rutas
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"));
         http.authorizeHttpRequests(
                 auth -> auth
                 .requestMatchers("/register", "/login", "/css/**", "/webjars/**", "/images/**").permitAll()
@@ -33,6 +34,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/restaurants").hasRole("ADMIN")
 
                 .requestMatchers(HttpMethod.POST, "/dishes").hasRole("ADMIN")
+
                 .requestMatchers(HttpMethod.GET, "/dishes/new").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/dishes/edit/*").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/dishes").permitAll()

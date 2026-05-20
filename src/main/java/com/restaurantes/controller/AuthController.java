@@ -37,6 +37,8 @@ public class AuthController {
         }
     }
 
+    // Bloquear tras X intentos de login fallido
+    // https://www.codejava.net/frameworks/spring-boot/spring-security-limit-login-attempts-example
     @GetMapping("login")
     public String login() {
         return "auth/login";

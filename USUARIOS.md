@@ -83,6 +83,17 @@ En los `<head>` poner esto:
 
 revisar botones de crear / editar / desactivar / borrar para asegurarse de restringirlos a los usuarios correctos.
 
+* restaurant-list  ok
+* restaurant-detail  ok
+* dish-list
+* dish-detail
+* review-list
+* review-detail
+
+* order-list
+* order-detail
+
+
 
 ## Paso 10: integración de User con Order y Review
 

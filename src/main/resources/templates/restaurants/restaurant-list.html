@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 
     <head th:replace="~{layout/head :: head('Restaurantes')}">
     </head>
@@ -15,7 +16,7 @@
                       th:text="|${#lists.size(restaurants)} resultados|">0 resultados</span>
             </div>
 
-            <a th:href="@{/restaurants/new}"
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/restaurants/new}"
                class="btn btn-success  btn-sm">
                 <i class="fa-solid fa-plus me-1"></i> Crear restaurante
             </a>
@@ -68,7 +69,7 @@
                                class="btn btn-outline-primary btn-sm">
                                 <i class="fa-solid fa-eye me-1"></i> Ver
                             </a>
-                            <a th:href="@{/restaurants/edit/{id}(id=${restaurant.id})}"
+                            <a sec:authorize="hasRole('ADMIN')" th:href="@{/restaurants/edit/{id}(id=${restaurant.id})}"
                                class="btn btn-outline-success btn-sm">
                                 <i class="fa-solid fa-pencil me-1"></i> Editar
                             </a>
