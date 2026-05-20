@@ -16,6 +16,7 @@
 
                 <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
                 <div th:if="${param.error}" class="alert alert-danger">Credenciales incorrectas.</div>
+                <div th:if="${param.logout}" class="alert alert-success">Cerraste sesión correctamente, un abrazo crack.</div>
 
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="username" name="username"

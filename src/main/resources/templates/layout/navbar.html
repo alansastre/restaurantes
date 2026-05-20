@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark mb-4 shadow-sm">
     <div class="container">
@@ -37,12 +37,24 @@
                 </li>
             </ul>
 
-            <a class="btn btn-secondary me-2" th:href="@{/login}">
+            <a sec:authorize="!isAuthenticated()" class="btn btn-secondary me-2" th:href="@{/login}">
                 <i class="fa-solid fa-sign-in"></i> Login
             </a>
-            <a class="btn btn-secondary" th:href="@{/register}">
+            <a sec:authorize="!isAuthenticated()" class="btn btn-secondary" th:href="@{/register}">
                 <i class="fa-solid fa-circle-user"></i> Registro
             </a>
+
+            <span class="text-light me-2" sec:authorize="isAuthenticated()">
+                <i class="fa-solid fa-user"></i>
+                <span sec:authentication="name"></span>
+            </span>
+
+            <form th:action="@{/logout}" method="post" class="d-inline" sec:authorize="isAuthenticated()">
+                <button class="btn btn-secondary">
+                    <i class="fa-solid fa-sign-out"></i> Salir
+                </button>
+            </form>
+
 
         </div>
     </div>

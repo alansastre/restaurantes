@@ -64,7 +64,13 @@ Para esto vamos a usar Spring Security, que es un framework de seguridad para ap
 * templates/auth/register.html (OK)
 * templates/auth/login.html (OK)
 
-* templates/fragments/navbar.html → mostrar enlaces de login/register o logout dependiendo de si el usuario está autenticado o no, usando thymeleaf-extras-springsecurity6
+* templates/fragments/navbar.html → mostrar enlaces de login/register o logout dependiendo de si el usuario está autenticado o no, usando thymeleaf-extras-springsecurity6  (OK)
+
+En los `<head>` poner esto:
+
+```html
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+```
 
 
 ## Paso 8 usuarios demo en data initializer (ok)
