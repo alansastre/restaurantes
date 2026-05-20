@@ -12,7 +12,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -62,4 +66,39 @@ class UserServiceTest {
     // passwords no coinciden
 
     // find by user name
+    @Test
+    void loadUserByUsernameOK() {
+
+        User pepe = User.builder().username("elpepe").role(Role.ROLE_USER).build();
+        Optional<User> pepeOptional = Optional.of(pepe);
+        when(userRepository.findByUsername("elpepe")).thenReturn(pepeOptional);
+
+        UserDetails userDB = userService.loadUserByUsername("elpepe");
+
+        assertNotNull(userDB);
+        assertEquals("elpepe", userDB.getUsername());
+        userDB.getAuthorities().forEach(auth -> assertEquals("ROLE_USER", auth.getAuthority()));
+        verify(userRepository).findByUsername("elpepe");
+    }
+
+    @Test
+    void loadUserByUsernameException() {
+        when(userRepository.findByUsername("ko")).thenReturn(Optional.empty());
+
+        assertThrows(UsernameNotFoundException.class,
+                () -> userService.loadUserByUsername("ko"));
+
+        verify(userRepository).findByUsername("ko");
+    }
+
+    @Test
+    void registerUsernameNotAvailable() {
+    }
+    @Test
+    void registerEmailNotAvailable() {
+    }
+    @Test
+    void registerPasswordNotMatch() {
+    }
+
 }

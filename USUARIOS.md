@@ -53,7 +53,6 @@ Para esto vamos a usar Spring Security, que es un framework de seguridad para ap
 
 ## Paso 6: controlador AuthController (ok)
 
-
 * controller/AuthController.java
     * GET /login → muestra el formulario de login
     * GET /register → muestra el formulario de registro
@@ -85,13 +84,12 @@ revisar botones de crear / editar / desactivar / borrar para asegurarse de restr
 
 * restaurant-list  ok
 * restaurant-detail  ok
-* dish-list
-* dish-detail
-* review-list
-* review-detail
-
-* order-list
-* order-detail
+* dish-list (pendiente)
+* dish-detail (pendiente)
+* review-list (pendiente)
+* review-detail (pendiente)
+* order-list (pendiente)
+* order-detail (pendiente)
 
 
 
@@ -107,9 +105,12 @@ En controller ReviewController, al crear una review, asignar el usuario autentic
 
 ## Paso 11: Testing
 
-* UserServiceTest
-* AuthControllerTest
-* SecurityConfigTest
+* UserServiceTest (80%)
+
+* AuthControllerTest (mockMvc.perform(get), mockMvc.perfom(post))
+
+* SecurityConfigTest (mockMvc.perform())
+
 
 
 
