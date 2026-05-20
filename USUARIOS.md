@@ -41,6 +41,7 @@ Para esto vamos a usar Spring Security, que es un framework de seguridad para ap
 * service/UserService.java
     * implements UserDetailsService de Spring Security
     * loadUserByUsername(String username)  sirve para que spring security pueda cargar el usuario a partir del username y comparar la contraseña al hacer login y demás
+    * register(RegisterForm) validar y crear un usuario en base de datos
 
 ## Paso 5: crear SecurityConfig  (OK)
 
@@ -50,7 +51,7 @@ Para esto vamos a usar Spring Security, que es un framework de seguridad para ap
       * passwordEncoder() para cifrar las contraseñas
   
 
-## Paso 6: controlador AuthController (PENDIENTE)
+## Paso 6: controlador AuthController (ok)
 
 
 * controller/AuthController.java
@@ -60,9 +61,19 @@ Para esto vamos a usar Spring Security, que es un framework de seguridad para ap
 
 ## Paso 7: vistas Thymeleaf HTML
 
-* templates/auth/register.html
-* templates/auth/login.html
+* templates/auth/register.html (OK)
+* templates/auth/login.html (OK)
+
 * templates/fragments/navbar.html → mostrar enlaces de login/register o logout dependiendo de si el usuario está autenticado o no, usando thymeleaf-extras-springsecurity6
+
+
+## Paso 8 usuarios demo en data initializer
+
+
+
+
+
+
 
 ## Paso 8: opcional ViewSecurityAdvice.java
 
