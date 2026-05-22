@@ -41,7 +41,7 @@ OrderController
      * TODO @GetMapping("orders/{id}/finish")
  */
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false) // desactiva Security
 @Transactional
 public class OrderControllerTest {
 
