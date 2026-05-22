@@ -102,9 +102,41 @@ class UserServiceTest {
     }
     @Test
     void registerEmailNotAvailable() {
+        when(userRepository.existsByUsername("libre")).thenReturn(false);
+        when(userRepository.existsByEmail("ocupado@gmail.com")).thenReturn(true);
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> userService.register(
+                        RegisterForm.builder().username("libre").email("ocupado@gmail.com").build()
+                )
+        );
+
+        assertEquals("email ya existe, elige otro email", exception.getMessage());
+
+        verify(userRepository).existsByUsername("libre");
+        verify(userRepository).existsByEmail("ocupado@gmail.com");
+        verify(userRepository, never()).save(any(User.class));
+        verifyNoInteractions(passwordEncoder);
     }
     @Test
     void registerPasswordNotMatch() {
+        when(userRepository.existsByUsername("libre")).thenReturn(false);
+        when(userRepository.existsByEmail("libre@gmail.com")).thenReturn(false);
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> userService.register(
+                        RegisterForm.builder().username("libre").email("libre@gmail.com")
+                                .password("abcd").passwordConfirm("dcba").build()
+                )
+        );
+        assertEquals("Las contraseñas no coinciden", exception.getMessage());
+
+        verify(userRepository).existsByUsername("libre");
+        verify(userRepository).existsByEmail("libre@gmail.com");
+        verify(userRepository, never()).save(any(User.class));
+        verifyNoInteractions(passwordEncoder);
     }
 
 }
