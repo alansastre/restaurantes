@@ -59,13 +59,6 @@ class UserServiceTest {
         verify(userRepository).save(any(User.class));
     }
 
-    // username ocupado
-
-    // email ocupado
-
-    // passwords no coinciden
-
-    // find by user name
     @Test
     void loadUserByUsernameOK() {
 
@@ -93,6 +86,19 @@ class UserServiceTest {
 
     @Test
     void registerUsernameNotAvailable() {
+        when(userRepository.existsByUsername("ocupado")).thenReturn(true);
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> userService.register(RegisterForm.builder().username("ocupado").build()));
+
+        assertEquals("username ya existe, elige otro username", exception.getMessage());
+
+        verify(userRepository).existsByUsername("ocupado");
+
+        verify(userRepository, never()).save(any(User.class));
+
+        verifyNoInteractions(passwordEncoder);
+
     }
     @Test
     void registerEmailNotAvailable() {
