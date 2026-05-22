@@ -3,6 +3,7 @@ package com.restaurantes.controller;
 
 import com.restaurantes.model.*;
 import com.restaurantes.model.enums.OrderStatus;
+import com.restaurantes.model.enums.Role;
 import com.restaurantes.repository.DishRepository;
 import com.restaurantes.repository.OrderLineRepository;
 import com.restaurantes.repository.OrderRepository;
@@ -27,11 +28,12 @@ public class OrderController {
     private final RestaurantRepository restaurantRepository;
     private final DishRepository dishRepository;
 
-    // @GetMapping orders
-    // filtrar por restaurante, filtrar por usuario
     @GetMapping("orders")
-    public String orders(Model model) {
-        model.addAttribute("orders",  orderRepository.findAll());
+    public String orders(Model model, @AuthenticationPrincipal User user) {
+        if (user.getRole().equals(Role.ROLE_ADMIN))
+            model.addAttribute("orders",  orderRepository.findAll());
+        else
+            model.addAttribute("orders",  orderRepository.findByUser_Id(user.getId()));
         return "orders/order-list";
     }
 

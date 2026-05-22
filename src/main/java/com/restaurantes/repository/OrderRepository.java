@@ -10,6 +10,7 @@ import java.util.List;
 // https://jakarta.ee/learn/docs/jakartaee-tutorial/current/persist/persistence-querylanguage/persistence-querylanguage.html
 public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByRestaurantId(Long id);
+    List<Order> findByUser_Id(Long id);
 
     // Calcular precio total de un pedido en base a sus líneas de pedido
     // calculate total price based on order lines
