@@ -78,14 +78,14 @@ En los `<head>` poner esto:
 * admin
 
 
-## Paso 9 securizar botones
+## Paso 9 securizar botones 
 
 revisar botones de crear / editar / desactivar / borrar para asegurarse de restringirlos a los usuarios correctos.
 
 * restaurant-list  ok
 * restaurant-detail  ok
-* dish-list (pendiente)
-* dish-detail (pendiente)
+* dish-list (ok)
+* dish-detail (ok)
 * review-list (pendiente)
 * review-detail (pendiente)
 * order-list (pendiente)
