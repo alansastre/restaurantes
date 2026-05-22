@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "reviews")
 @AllArgsConstructor
-@ToString(exclude = {"restaurant", "dish"})
+@ToString
 public class Review {
 
     @Id
@@ -29,12 +29,15 @@ public class Review {
     @Builder.Default
     private LocalDateTime creationDate = LocalDateTime.now();
 
+    @ToString.Exclude
     @ManyToOne
     private Restaurant restaurant;
 
+    @ToString.Exclude
     @ManyToOne
     private Dish dish;
 
+    @ToString.Exclude
     @ManyToOne
     private User user;
 }

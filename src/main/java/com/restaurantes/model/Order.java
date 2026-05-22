@@ -36,8 +36,12 @@ public class Order {
     @Builder.Default
     private OrderStatus status = OrderStatus.PENDING;
 
-    // asociaicon con restaurante?
     @ToString.Exclude // lombok
     @ManyToOne // JPA
     private Restaurant restaurant;
+
+    @ToString.Exclude
+    @ManyToOne
+    private User user;
+
 }
