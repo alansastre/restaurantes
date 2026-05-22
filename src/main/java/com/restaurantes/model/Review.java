@@ -31,6 +31,10 @@ public class Review {
 
     @ManyToOne
     private Restaurant restaurant;
+
     @ManyToOne
     private Dish dish;
+
+    @ManyToOne
+    private User user;
 }

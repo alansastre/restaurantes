@@ -96,7 +96,7 @@ revisar botones de crear / editar / desactivar / borrar para asegurarse de restr
 ## Paso 10: integración de User con Order y Review
 
 * Order.java: añadir campo User user con @ManyToOne
-* Review.java: añadir campo User user con @ManyToOne
+* Review.java: añadir campo User user con @ManyToOne (OK)
 
 En controller OrderController, al crear una orden, asignar el usuario autenticado a la orden.
 

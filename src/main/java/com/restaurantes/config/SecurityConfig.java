@@ -20,8 +20,12 @@ public class SecurityConfig {
     // securityFilterChain @Bean proteger rutas
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // proteger las rutas
+
+        // permitir h2-console
         http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"));
+        http.headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
+
+        // proteger rutas:
         http.authorizeHttpRequests(
                 auth -> auth
                 .requestMatchers("/register", "/login", "/css/**", "/webjars/**", "/images/**").permitAll()

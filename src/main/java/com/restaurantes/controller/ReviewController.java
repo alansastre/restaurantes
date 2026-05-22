@@ -3,10 +3,12 @@ package com.restaurantes.controller;
 
 import com.restaurantes.model.Dish;
 import com.restaurantes.model.Review;
+import com.restaurantes.model.User;
 import com.restaurantes.repository.DishRepository;
 import com.restaurantes.repository.RestaurantRepository;
 import com.restaurantes.repository.ReviewRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -60,9 +62,8 @@ public class ReviewController {
     }
 
     @PostMapping("reviews")
-    public String save(@ModelAttribute Review review) {
-        // Analizar - Filtro de moderacion para impedir reviews con palabras prohibidas
-        // findById
+    public String save(@ModelAttribute Review review, @AuthenticationPrincipal User user) {
+        review.setUser(user);
         reviewRepository.save(review);
         if (review.getRestaurant() != null)
             return "redirect:/restaurants/" + review.getRestaurant().getId();
