@@ -95,17 +95,24 @@ revisar botones de crear / editar / desactivar / borrar para asegurarse de restr
 
 ## Paso 10: integración de User con Order y Review
 
-* Order.java: añadir campo User user con @ManyToOne
+* Order.java: añadir campo User user con @ManyToOne (OK)
 * Review.java: añadir campo User user con @ManyToOne (OK)
 
-En controller OrderController, al crear una orden, asignar el usuario autenticado a la orden.
+En controller OrderController, al crear una orden, asignar el usuario autenticado a la orden. (OK)
 
-En controller ReviewController, al crear una review, asignar el usuario autenticado a la review.
+En controller ReviewController, al crear una review, asignar el usuario autenticado a la review. (OK)
 
+En order detail, mostrar los datos del usuario que ha hecho el pedido. (OK)
+
+En order list:
+* Si soy ROLE_ADMIN, ver todos los pedidos
+* Si soy ROLE_USER, ver solo MIS pedidos y no los de otros usuarios
 
 ## Paso 11: Testing
 
 * UserServiceTest (80%)
+  * register 
+  * loadUserByUsername
 
 * AuthControllerTest (mockMvc.perform(get), mockMvc.perfom(post))
 
