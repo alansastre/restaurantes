@@ -3,9 +3,13 @@ package com.restaurantes.controller;
 import com.restaurantes.model.Dish;
 import com.restaurantes.model.Restaurant;
 import com.restaurantes.model.Review;
+import com.restaurantes.model.User;
+import com.restaurantes.model.enums.Role;
 import com.restaurantes.repository.DishRepository;
 import com.restaurantes.repository.RestaurantRepository;
 import com.restaurantes.repository.ReviewRepository;
+import com.restaurantes.repository.UserRepository;
+import com.restaurantes.service.UserService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,12 +18,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.hamcrest.Matchers.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -34,6 +43,12 @@ class ReviewControllerTest {
     DishRepository dishRepo;
     @Autowired
     RestaurantRepository restaurantRepo;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @Autowired
+    UserService userService;
 
     @Autowired
     MockMvc mockMvc;
@@ -41,14 +56,23 @@ class ReviewControllerTest {
     Restaurant restaurant;
     Dish dish;
     Review review1;
+    User user;
 
     @BeforeEach
     void setUp() {
+        user = userRepository.save(
+                User.builder().username("user").email("user@gmail.com")
+                        .password(passwordEncoder.encode("user"))
+                        .role(Role.ROLE_USER)
+                .build());
+
         review1 = reviewRepo.save(Review.builder().title("OK").rating(5).build());
         dish = dishRepo.save(Dish.builder().name("Plato1").price(10d).build());
         restaurant = restaurantRepo.save(Restaurant.builder().name("Restaurante").build());
     }
     @Test
+    @WithUserDetails("user0")
+    @Sql("/test-data.sql")
     void createReviewDish() throws Exception {
         long countBefore = reviewRepo.count();
         mockMvc.perform(
@@ -57,6 +81,7 @@ class ReviewControllerTest {
                         .param("rating", "5")
                         .param("content", "OKOK")
                         .param("dish", dish.getId().toString())
+                        .with(csrf())
 
                 )
                 .andExpect(status().is3xxRedirection());
@@ -70,10 +95,16 @@ class ReviewControllerTest {
     }
 
     @Test
+    @WithUserDetails("user0")
+    @Sql("/test-data.sql") // Carga datos de prueba antes del test, incluyendo un usuario con username "user"
     void createReviewRestaurant() throws Exception{
         long countBefore = reviewRepo.count();
         mockMvc.perform(
                         post("/reviews")
+                                // ACTIVAR LA SEGURIDAD Y SIMULAR UN USUARIO REAL CREADO EN SETUP()
+//                                .with(user(userService.loadUserByUsername("user")))
+//                                .with(user(user))
+                                .with(csrf())
                                 .param("title", "OK")
                                 .param("rating", "5")
                                 .param("content", "OKOK")
