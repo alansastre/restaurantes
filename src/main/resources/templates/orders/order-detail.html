@@ -140,7 +140,7 @@
         </div>
 
         <!-- Información del usuario (datos ficticios: la entidad User aún no existe) -->
-        <div class="col-md-4">
+        <div class="col-md-4" th:if="${order.user != null}">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-primary text-white">
                     <h5 class="mb-0">
