@@ -40,6 +40,8 @@ public class ReviewSecurityTest {
 
     @Autowired
     MockMvc mockMvc;
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @Test
     void list_anonymous_200() throws Exception {
@@ -82,6 +84,29 @@ public class ReviewSecurityTest {
     }
 
     // post_user_200
+    @Test
+    @DisplayName("POST /reviews siendo ROLE_USER")
+    void post_user_200 () throws Exception {
+        long countBefore = reviewRepository.count();
+        mockMvc.perform(post("/reviews")
+                        .param("title", "OK")
+                        .param("rating", "5")
+                        .with(user("pepe").roles("USER"))
+                        .with(csrf())
+        ).andExpect(status().is3xxRedirection())
+        .andExpect(redirectedUrl("/reviews"));
+        assertEquals(countBefore + 1, reviewRepository.count());
+    }
+    @Test
+    @DisplayName("POST /reviews siendo ANONYMOUS")
+    void post_anonymous_403 () throws Exception {
+        long countBefore = reviewRepository.count();
+        mockMvc.perform(post("/reviews")
+                        .param("title", "OK")
+                        .param("rating", "5")
+                ).andExpect(status().isForbidden()); //403
+        assertEquals(countBefore, reviewRepository.count());
+    }
 
 
 
