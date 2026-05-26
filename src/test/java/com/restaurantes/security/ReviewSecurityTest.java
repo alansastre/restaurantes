@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
@@ -59,6 +60,29 @@ public class ReviewSecurityTest {
     }
     // detail_anonymous_200
     // post_anonymous_401
+
+    // new_user_200
+
+    // Opción 1 para pasar un usuario mock: .with(user("pepe").roles("USER"))
+    @Test
+    void new_user_200 () throws Exception {
+        mockMvc.perform(
+                get("/reviews/new")
+                        .with(user("pepe").roles("USER"))
+                ).andExpect(status().isOk());
+    }
+
+    // Opción 2 para pasar un usuario mock: @WithMockUser
+    @Test
+    @WithMockUser(username = "pepe", roles = {"USER"})
+    void new_user_200_con_anotacion () throws Exception {
+        mockMvc.perform(
+                get("/reviews/new")
+        ).andExpect(status().isOk());
+    }
+
+    // post_user_200
+
 
 
 }

@@ -1,6 +1,18 @@
 
 ## TESTING con SPRING SECURITY
 
+
+* Usuario mock:
+  * opción 1: .with(user("pepe").roles("USER"))
+  * opción 2: @WithMockUser
+
+Usuario real (requieren crear usuario real en setUp o con @Sql)
+
+* opción 1: .with(user(usuarioReal))
+* opción 2: @WithUserDetails("username")
+
+
+
 * ReviewControllerTest
   * createReviewDish
   * createReviewRestaurant
