@@ -57,7 +57,9 @@ class EmployeeRepositoryTest {
     }
     @Test
     void findById() {
-        Optional<Employee> employeeOptional=  repository.findById(1L);
+
+//        Optional<Employee> employeeOptional=  repository.findById(1L);
+        Optional<Employee> employeeOptional=  repository.findById(empleado1.getId());
         assertTrue(employeeOptional.isPresent());
 
         Employee employee = employeeOptional.get();
@@ -115,18 +117,15 @@ class EmployeeRepositoryTest {
 
     @Test
     void deleteById() {
-
-
-
     // comprobar que sí existe el empleado 1: existById
-        assertTrue(repository.existsById(1L));
+        assertTrue(repository.existsById(empleado1.getId()));
         long numeroEmpleadosAntes = repository.count();
 
         // borrarlo: deleteById o delete
-        repository.deleteById(1L);
+        repository.deleteById(empleado1.getId());
 
         // comprobar que NO existe el empleado 1
-        assertFalse(repository.existsById(1L));
+        assertFalse(repository.existsById(empleado1.getId()));
         long numeroEmpleadosDespues = repository.count();
         assertEquals(numeroEmpleadosAntes - 1, numeroEmpleadosDespues);
 
