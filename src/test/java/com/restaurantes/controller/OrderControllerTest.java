@@ -1,15 +1,10 @@
 package com.restaurantes.controller;
 
 
-import com.restaurantes.model.Dish;
-import com.restaurantes.model.Order;
-import com.restaurantes.model.OrderLine;
-import com.restaurantes.model.Restaurant;
+import com.restaurantes.model.*;
 import com.restaurantes.model.enums.OrderStatus;
-import com.restaurantes.repository.DishRepository;
-import com.restaurantes.repository.OrderLineRepository;
-import com.restaurantes.repository.OrderRepository;
-import com.restaurantes.repository.RestaurantRepository;
+import com.restaurantes.model.enums.Role;
+import com.restaurantes.repository.*;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,12 +12,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
+
 /*
 LOGICA DE HACER PEDIDOS EN UN RESTAURANTE
 
@@ -41,7 +40,7 @@ OrderController
      * TODO @GetMapping("orders/{id}/finish")
  */
 @SpringBootTest
-@AutoConfigureMockMvc(addFilters = false) // desactiva Security
+@AutoConfigureMockMvc // desactiva Security
 @Transactional
 public class OrderControllerTest {
 
@@ -50,14 +49,19 @@ public class OrderControllerTest {
     @Autowired DishRepository dishRepo;
     @Autowired OrderRepository orderRepo;
     @Autowired OrderLineRepository orderLineRepo;
+    @Autowired UserRepository userRepo;
+    @Autowired PasswordEncoder passwordEncoder;
 
     Restaurant restaurant;
     Dish ensalada, lentejas, flan;
     Order pedidoJuanito;
     OrderLine lineaEnsalada, lineaLentejas, lineaFlan;
+    User admin;
 
     @BeforeEach
     void setUp() {
+        admin = userRepo.save(User.builder().email("admin@gmail.com").username("admin").password(passwordEncoder.encode("admin")).role(Role.ROLE_ADMIN).build());
+
         restaurant = restaurantRepo.save(Restaurant.builder().name("Restaurante1").build());
         ensalada = dishRepo.save(Dish.builder().name("Ensalada").price(10d).restaurant(restaurant).build());
         lentejas = dishRepo.save(Dish.builder().name("Lentejas").price(15d).restaurant(restaurant).build());
@@ -70,7 +74,7 @@ public class OrderControllerTest {
     @Test
     @DisplayName("GET /orders")
     void list() throws Exception {
-        mockMvc.perform(get("/orders"))
+        mockMvc.perform(get("/orders").with(user(admin)))
                 .andExpect(status().isOk())
                 .andExpect(view().name("orders/order-list"))
                 .andExpect(model().attributeExists("orders"))
@@ -79,7 +83,11 @@ public class OrderControllerTest {
     @Test
     @DisplayName("GET /orders/{id}")
     void detail() throws Exception {
-        mockMvc.perform(get("/orders/" + pedidoJuanito.getId()))
+        mockMvc.perform(
+                    get(
+                            "/orders/" + pedidoJuanito.getId()
+                    ).with(user("pepe").roles("USER"))
+                )
                 .andExpect(status().isOk())
                 .andExpect(view().name("orders/order-detail"))
                 .andExpect(model().attributeExists("order"))
@@ -88,6 +96,8 @@ public class OrderControllerTest {
                 .andExpect(model().attribute("orderLines", hasSize(greaterThanOrEqualTo(2))))
                 .andExpect(model().attribute("dishes", hasSize(greaterThanOrEqualTo(3))));
     }
+
+    @WithMockUser(username = "pepe", roles = {"USER"})
     @Test
     @DisplayName("GET /orders/new?restaurantId={id}")
     void newOrder() throws Exception {
@@ -99,11 +109,13 @@ public class OrderControllerTest {
         .andExpect(model().attributeExists("order"))
         .andExpect(model().attribute("order", hasProperty("restaurant", hasProperty("id", is(restaurant.getId())))));
     }
+
+    @WithMockUser(username = "pepe", roles = {"USER"})
     @Test
     @DisplayName("POST /orders")
     void createOrder() throws Exception{
         mockMvc.perform(
-                post("/orders")
+                post("/orders").with(csrf())
                 .param("tableNumber", "1")
                 .param("numPeople", "2")
                 .param("userSuggestions", "Alergia a todo")
@@ -117,6 +129,8 @@ public class OrderControllerTest {
         assertEquals("Alergia a todo",  creado.getUserSuggestions());
         assertEquals(restaurant.getId(),  creado.getRestaurant().getId());
     }
+
+    @WithMockUser(username = "pepe", roles = {"USER"})
     @Test
     @DisplayName("POST /orders/{orderId}/lines?dishId={id}")
     void createLine() throws Exception{
@@ -124,7 +138,7 @@ public class OrderControllerTest {
         long countLines = orderLineRepo.count();
 
         mockMvc.perform(
-                post("/orders/" + pedidoJuanito.getId() + "/lines")
+                post("/orders/" + pedidoJuanito.getId() + "/lines").with(csrf())
                 .param("dishId", flan.getId().toString())
         ).andExpect(status().is3xxRedirection())
         .andExpect(redirectedUrlPattern("/orders/*"));
@@ -148,6 +162,8 @@ public class OrderControllerTest {
     @Test
     @DisplayName("POST /orders/{orderId}/lines/{lineId}?quantity=2")
     void updateLine() throws Exception{}
+
+    @WithMockUser(username = "pepe", roles = {"USER"})
     @Test
     @DisplayName("GET /orders/{orderId}/finish?tip=0")
     void finishOrder() throws Exception {
