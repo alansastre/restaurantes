@@ -1,5 +1,25 @@
 
+## TESTING con SPRING SECURITY
 
+* ReviewControllerTest
+  * createReviewDish
+  * createReviewRestaurant
+* OrderControllerTest
+  * list
+  * 
+* RestaurantsSecurityTest
+  * list_restaurants_anonymous_200
+  * detail_restaurants_anonymous_200
+  * new_restaurant_anonymous_401
+  * new_restaurant_user_403
+  * new_restaurant_admin_200
+* OrderSecurityTest
+  * list_orders_anonymous_401
+  * list_orders_user_200
+  * list_orders_admin_200
+  * detail_orders_anonymous_401
+  * detail_orders_user_200
+  * detail_orders_admin_200
 
 ### Opción 1:
 

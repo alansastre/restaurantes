@@ -44,13 +44,14 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/dishes").permitAll()
                 .requestMatchers(HttpMethod.GET, "/dishes/*").permitAll()
 
-                .requestMatchers(HttpMethod.GET, "/reviews").permitAll()
-                .requestMatchers(HttpMethod.GET, "/reviews/*").permitAll()
+
                 .requestMatchers(HttpMethod.POST, "/reviews").hasAnyRole("ADMIN", "USER")
                 .requestMatchers(HttpMethod.GET, "/reviews/new").hasAnyRole("ADMIN", "USER")
                 .requestMatchers(HttpMethod.GET, "/reviews/edit/*").hasAnyRole("ADMIN", "USER")
                 .requestMatchers(HttpMethod.GET, "/reviews/disable/*").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/reviews/delete/*").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/reviews").permitAll()
+                .requestMatchers(HttpMethod.GET, "/reviews/*").permitAll()
 
                 .requestMatchers("/orders", "/orders/**").authenticated()
 
