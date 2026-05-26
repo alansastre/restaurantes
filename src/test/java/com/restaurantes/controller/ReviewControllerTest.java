@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
@@ -121,6 +122,7 @@ class ReviewControllerTest {
         assertEquals(restaurant.getId(),  reviewCreated.getRestaurant().getId());
     }
 
+    @WithMockUser(username = "user") // por defecto es ROLE USER
     @Test
     @DisplayName("Navegar hacia la pantalla de formulario de Review para crear una nueva")
     void navigateToNew() throws Exception {
@@ -143,6 +145,7 @@ class ReviewControllerTest {
     }
 
 
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     @Test
     void deleteReview() throws Exception {
 

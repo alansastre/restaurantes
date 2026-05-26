@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -20,6 +21,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -76,7 +78,7 @@ class RestaurantControllerTest {
     }
 
 
-
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     @Test
     void deactivateRestaurant() throws Exception {
         assertTrue(restaurantToDeactivate.getActive());
@@ -102,7 +104,7 @@ class RestaurantControllerTest {
                  .andExpect(status().isOk())
                  .andExpect(view().name("restaurants/restaurant-list"))
                  .andExpect(model().attributeExists("restaurants"))
-                 .andExpect(model().attribute("restaurants", hasSize(7)));
+                 .andExpect(model().attribute("restaurants", hasSize(8)));
     }
     @Test
     void restaurantsEmpty() throws Exception {
@@ -166,7 +168,7 @@ class RestaurantControllerTest {
 
     }
 
-
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     @Test
     void createNewRestaurante() throws Exception {
 
@@ -174,7 +176,7 @@ class RestaurantControllerTest {
         long before = restaurantRepository.count();
 
         // mockmvc perform enviar restaurante nuevo a controller
-        mockMvc.perform(post("/restaurants")
+        mockMvc.perform(post("/restaurants").with(csrf())
                 .param("name", "Restaurante Test")
                 .param("averagePrice", "20.5")
                 .param("foodType", "SPANISH")
@@ -187,11 +189,12 @@ class RestaurantControllerTest {
         assertEquals(before + 1, after);
     }
 
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     @Test
     void editRestaurante() throws Exception{
         Long restaurantId = restaurantToEdit.getId();
         long countBefore = restaurantRepository.count();
-        mockMvc.perform(post("/restaurants")
+        mockMvc.perform(post("/restaurants").with(csrf())
                         .param("id",  restaurantId.toString())
                         .param("name", "editado")
                         .param("averagePrice", "1")
