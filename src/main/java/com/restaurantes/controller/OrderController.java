@@ -9,6 +9,9 @@ import com.restaurantes.repository.OrderLineRepository;
 import com.restaurantes.repository.OrderRepository;
 import com.restaurantes.repository.RestaurantRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import org.springframework.stereotype.Controller;
@@ -19,9 +22,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+// TRACE > DEBUG > INFO > WARN > ERROR
+@Slf4j // proporciona un objeto log en esta clase
 @Controller
 @AllArgsConstructor
 public class OrderController {
+
+    // Logger log = LoggerFactory.getLogger(OrderController.class);
 
     private final OrderRepository orderRepository;
     private final OrderLineRepository orderLineRepository;
@@ -30,6 +37,9 @@ public class OrderController {
 
     @GetMapping("orders")
     public String orders(Model model, @AuthenticationPrincipal User user) {
+//        System.out.println("user: " + user.getId() + " request to order-list");
+        log.info("user: {} request to order-list", user.getId());
+
         if (user.getRole().equals(Role.ROLE_ADMIN))
             model.addAttribute("orders",  orderRepository.findAll());
         else

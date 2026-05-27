@@ -1,22 +1,18 @@
 
 
+Pendiente:
 
-* Spring Security usuarios autenticacion autorizacion
-* Testing con mocks
-
-desarrollo:
-
-* proyectos fixes:
-  * g1: proceso compra, SessionService, Tests
-  * g2: purchase proceso global
-  * g3: ajustes menores
-
+* Testing User Interface (UI Selenium)
 * loggers: log.info, log.warn, log.error
-* advice global
-* imagenes en forms
+* advice global: info global para navbar
+* imágenes en forms: user avatar, dish imageUrl, restaurante imageUrl
 * panel usuarios: user-list, user-detail, user-form solo el ROLE_ADMIN puede acceder y dar de alta y editar usuarios o desactivarlos
 * favoritos: movie, product, house, restaurant
-* API REST @RestController
+* API REST @RestController + Test del API REST con mockMvc json
+* Order-detail: formulario de tarjeta para el pago
+
+
+
 
 
 * Security Config Tests de seguridad en rutas
@@ -30,4 +26,12 @@ desarrollo:
 * estructura presentaciones: 15 minutos
 * ensayo 
 
-* investigar: redirigir tras login hacia donde se estaba por ejempl compra
+* investigar: redirigir tras login hacia donde se estaba por ejempl compra* Spring Security usuarios autenticacion autorizacion
+* Testing con mocks
+
+desarrollo:
+
+* proyectos fixes:
+  * g1: proceso compra, SessionService, Tests
+  * g2: purchase proceso global
+  * g3: ajustes menores

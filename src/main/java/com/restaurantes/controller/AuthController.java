@@ -5,6 +5,7 @@ import com.restaurantes.model.User;
 import com.restaurantes.repository.UserRepository;
 import com.restaurantes.service.UserService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 // controlador para iniciar sesion y/ registrarse crear User en db
+@Slf4j
 @Controller
 @AllArgsConstructor
 public class AuthController {
@@ -28,10 +30,12 @@ public class AuthController {
     @PostMapping("register")
     public String register(@ModelAttribute RegisterForm form, RedirectAttributes redirectAttributes) {
         try {
-            userService.register(form);
+            User user = userService.register(form);
             redirectAttributes.addFlashAttribute("message", "Cuenta creada correctamente, inicia sesión.");
+            log.info("Nuevo usuario registrado con id {}", user.getId());
             return "redirect:/login";
         } catch (Exception e) {
+            log.error("Fallo al registrarse", e);
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             return "redirect:/register";
         }
