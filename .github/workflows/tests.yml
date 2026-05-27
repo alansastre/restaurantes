@@ -7,6 +7,9 @@ name: Tests (manual)
 # desperdiciar minutos de runner en cada push. Lo lanzas cuando quieres
 # validar (antes de una review, al cerrar un sprint, etc.).
 on:
+#  push:
+#    branches:
+#        - main
   workflow_dispatch:
 
 jobs:
@@ -45,3 +48,33 @@ jobs:
 
       - name: Ejecutar *ControllerTest
         run: mvn -B test -Dtest='*ControllerTest'
+
+  service-tests:
+    name: Tests de servicios (Unitarios con mocks)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Java 25 + cache Maven
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+      - name: Ejecutar *ServiceTest
+        run: mvn -B test -Dtest='*ServiceTest'
+
+  security-tests:
+    name: Tests de seguridad (rutas SecurityConfig)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Java 25 + cache Maven
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+      - name: Ejecutar *SecurityTest
+        run: mvn -B test -Dtest='*SecurityTest'
