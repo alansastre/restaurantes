@@ -34,4 +34,22 @@ public class RestaurantSeleniumTest extends BaseSeleniumTest {
 
         assertEquals(baseUrl + "restaurants/" + pizzeria.getId(), driver.getCurrentUrl());
     }
+
+    @Test
+    void restaurantDetail () {
+        driver.get(baseUrl + "restaurants/" +  pizzeria.getId());
+
+        assertEquals("Restaurante " + pizzeria.getId(), driver.findElement(By.tagName("h1")).getText());
+        assertEquals(pizzeria.getName(), driver.findElement(By.id("restaurantName")).getText());
+        assertTrue(driver.findElement(By.id("activeTrue")).getText().contains("Abierto"));
+
+        List<WebElement> dishes = driver.findElements(By.cssSelector("#dishesTable tbody tr"));
+        assertTrue(dishes.size() >= 2);
+        assertTrue(dishes.getFirst().getText().contains(pizza.getName()));
+        assertTrue(dishes.get(1).getText().contains(tiramisu.getName()));
+
+
+        List<WebElement> reviews = driver.findElements(By.cssSelector("#reviewsGrid .card"));
+        assertTrue(reviews.size() >= 2);
+    }
 }

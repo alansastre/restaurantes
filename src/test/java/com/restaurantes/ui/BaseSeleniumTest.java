@@ -2,8 +2,11 @@ package com.restaurantes.ui;
 
 import com.restaurantes.model.Dish;
 import com.restaurantes.model.Restaurant;
+import com.restaurantes.model.Review;
+import com.restaurantes.model.enums.DishType;
 import com.restaurantes.repository.DishRepository;
 import com.restaurantes.repository.RestaurantRepository;
+import com.restaurantes.repository.ReviewRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
@@ -21,6 +24,8 @@ public class BaseSeleniumTest {
     RestaurantRepository restaurantRepo;
     @Autowired
     DishRepository dishRepo;
+    @Autowired
+    ReviewRepository reviewRepo;
 
     String baseUrl;
     WebDriver driver;
@@ -28,13 +33,22 @@ public class BaseSeleniumTest {
     Restaurant pizzeria; // con platos
     Restaurant taberna; // sin platos
     Dish pizza;
+    Dish tiramisu;
+    Review pizzeriaOK;
+    Review pizzeriaMal;
 
     @BeforeEach
     void setUp() {
         // crear datos demo
+        reviewRepo.deleteAll();
+        dishRepo.deleteAll();
         restaurantRepo.deleteAll();
-        pizzeria = restaurantRepo.save(Restaurant.builder().name("Pizzeria Luigi").averagePrice(10.0).active(true).build());
+        pizzeria = restaurantRepo.save(Restaurant.builder().name("Pizzeria Luigi").averagePrice(10.0).active(true).description("Masa artesanal").build());
         taberna = restaurantRepo.save(Restaurant.builder().name("Taberna").averagePrice(20.0).active(false).build());
+        pizza = dishRepo.save(Dish.builder().name("Pizza 4 Quesos").price(12d).type(DishType.MAIN_COURSE).description("pizza bien").restaurant(pizzeria).build());
+        tiramisu = dishRepo.save(Dish.builder().name("Tiramisú Café").price(3d).type(DishType.DESSERT).description("fetén").restaurant(pizzeria).build());
+        pizzeriaOK = reviewRepo.save(Review.builder().title("Pectacular").rating(5).restaurant(pizzeria).content("Asombroso").build());
+        pizzeriaMal = reviewRepo.save(Review.builder().title("Fatal").rating(1).restaurant(pizzeria).content("Nada bien").build());
 
         // inicializar y configuración de driver
         baseUrl = "http://localhost:" + port + "/";
