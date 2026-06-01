@@ -10,7 +10,7 @@
         <h1 class="mb-0">
             <i class="fa-solid fa-utensils text-primary me-2"></i>Platos
         </h1>
-        <span class="badge bg-secondary fs-6"
+        <span id="resultsCount" class="badge bg-secondary fs-6"
               th:text="|${#lists.size(dishes)} platos|">0 platos</span>
     </div>
 
@@ -26,7 +26,7 @@
     </a>
 
     <!-- Grid de platos -->
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3"
+    <div id="dishGrid" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3"
          th:unless="${#lists.isEmpty(dishes)}">
         <div class="col" th:each="dish : ${dishes}">
             <div class="card h-100 shadow-sm border-0">

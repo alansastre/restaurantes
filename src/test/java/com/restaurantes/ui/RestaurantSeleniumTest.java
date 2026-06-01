@@ -61,4 +61,8 @@ public class RestaurantSeleniumTest extends BaseSeleniumTest {
         assertEquals(pizzeriaMal.getContent(), secondReview.findElement(By.cssSelector(".card-text")).getText());
         assertEquals("1/5", secondReview.findElement(By.className("review-rating")).getText());
     }
+
+    // restaurant list filters
+
+    // restaurant form
 }
