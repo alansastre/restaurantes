@@ -64,5 +64,21 @@ public class RestaurantSeleniumTest extends BaseSeleniumTest {
 
     // restaurant list filters
 
-    // restaurant form
+    @Test
+    void restaurantForm(){
+        loginAdmin();
+        driver.get(baseUrl + "restaurants/new");
+        driver.findElement(By.id("name")).sendKeys("restaurantest");
+        driver.findElement(By.id("averagePrice")).sendKeys("20");
+        // driver.findElement(By.id("active")).click(); // ya viene marcado por defecto
+        driver.findElement(By.id("description")).sendKeys("descripcion de restaurante");
+        driver.findElement(By.id("date")).sendKeys("02/06/2027");
+        driver.findElement(By.id("city")).sendKeys("Madrid");
+//        driver.findElement(By.id("foodType")).sendKeys("SPANISH");
+        driver.findElement(By.cssSelector("button[type='submit']")).click();
+        wait.until(driver -> driver.getCurrentUrl().equals(baseUrl + "restaurants"));
+        assertEquals(baseUrl + "restaurants", driver.getCurrentUrl());
+
+
+    }
 }
