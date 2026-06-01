@@ -1,8 +1,10 @@
 package com.restaurantes.ui;
 
+import com.restaurantes.model.Restaurant;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
@@ -74,11 +76,26 @@ public class RestaurantSeleniumTest extends BaseSeleniumTest {
         driver.findElement(By.id("description")).sendKeys("descripcion de restaurante");
         driver.findElement(By.id("date")).sendKeys("02/06/2027");
         driver.findElement(By.id("city")).sendKeys("Madrid");
-//        driver.findElement(By.id("foodType")).sendKeys("SPANISH");
+
+        Select foodTypeSelector = new Select(driver.findElement(By.id("foodType")));
+        foodTypeSelector.selectByValue("SPANISH");
+
+        new Select(driver.findElement(By.id("city"))).selectByValue("Madrid");
+
+        wait.until(driver -> driver.findElement(By.cssSelector("button[type='submit']")).isDisplayed());
         driver.findElement(By.cssSelector("button[type='submit']")).click();
         wait.until(driver -> driver.getCurrentUrl().equals(baseUrl + "restaurants"));
         assertEquals(baseUrl + "restaurants", driver.getCurrentUrl());
 
+        List<WebElement> restaurants = driver.findElements(By.className("card-restaurant"));
 
+        assertTrue(restaurants.stream()
+                .anyMatch(restaurant -> restaurant.getText().contains("restaurantest")));
+
+        assertTrue(restaurants.getLast().getText().contains("restaurantest"));
+
+        Restaurant saved = restaurantRepo.findAll().getLast();
+        assertEquals("restaurantest", saved.getName());
+        assertEquals(20d, saved.getAveragePrice());
     }
 }
