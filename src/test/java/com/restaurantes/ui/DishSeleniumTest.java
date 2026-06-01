@@ -32,5 +32,24 @@ public class DishSeleniumTest extends BaseSeleniumTest {
         assertEquals(baseUrl + "dishes/" + pizza.getId(), driver.getCurrentUrl());
     }
 
-    // dishDetail
+    @Test
+    void dishDetail() {
+        driver.get(baseUrl + "dishes/" +  pizza.getId());
+        assertEquals("Plato " + pizza.getId(), driver.findElement(By.tagName("h1")).getText());
+
+        WebElement dish = driver.findElement(By.id("dishInfoCard"));
+        assertTrue(dish.getText().contains(pizza.getName()));
+        assertTrue(dish.getText().contains(pizza.getPrice().toString().replace(".", ",")));
+        assertTrue(dish.getText().contains("Principales"));
+        assertTrue(dish.getText().contains(pizza.getDescription()));
+        assertTrue(dish.getText().contains(pizza.getRestaurant().getName()));
+
+        List<WebElement> reviews = driver.findElements(By.cssSelector("#reviewsGrid .card"));
+        assertFalse(reviews.isEmpty());
+        WebElement firstReview = reviews.getFirst();
+        assertEquals(pizzaOK.getTitle(), firstReview.findElement(By.tagName("h5")).getText());
+        assertEquals(pizzaOK.getTitle(), firstReview.findElement(By.cssSelector(".card-title")).getText());
+        assertEquals(pizzaOK.getContent(), firstReview.findElement(By.cssSelector(".card-text")).getText());
+        assertEquals("5/5", firstReview.findElement(By.className("review-rating")).getText());
+    }
 }

@@ -38,6 +38,7 @@ public class BaseSeleniumTest {
     Dish tiramisu;
     Review pizzeriaOK;
     Review pizzeriaMal;
+    Review pizzaOK;
 
     @BeforeEach
     void setUp() {
@@ -51,6 +52,7 @@ public class BaseSeleniumTest {
         tiramisu = dishRepo.save(Dish.builder().name("Tiramisú Café").price(3d).type(DishType.DESSERT).description("fetén").restaurant(pizzeria).build());
         pizzeriaOK = reviewRepo.save(Review.builder().title("Pectacular").rating(5).restaurant(pizzeria).content("Asombroso").build());
         pizzeriaMal = reviewRepo.save(Review.builder().title("Fatal").rating(1).restaurant(pizzeria).content("Nada bien").creationDate(LocalDateTime.now().minusDays(1)).build());
+        pizzaOK = reviewRepo.save(Review.builder().title("excelente pizza").rating(5).dish(pizza).content("ok").creationDate(LocalDateTime.now().minusDays(1)).build());
 
         // inicializar y configuración de driver
         baseUrl = "http://localhost:" + port + "/";
