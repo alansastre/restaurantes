@@ -68,8 +68,8 @@ public class DishSeleniumTest extends BaseSeleniumTest {
         wait.until(driver -> driver.findElement(By.cssSelector("button[type='submit']")).isDisplayed());
         driver.findElement(By.cssSelector("button[type='submit']")).click();
 
-        wait.until(driver -> driver.getCurrentUrl().contains(baseUrl + "dishes"));
-        assertTrue(driver.getCurrentUrl().contains("/dishes/"));
+        wait.until(driver -> driver.getCurrentUrl().matches(".*/dishes/\\d+$"));
+        assertTrue(driver.getCurrentUrl().matches(".*/dishes/\\d+$"));
         assertTrue(dishRepo.count() > countBefore);
 
     }
