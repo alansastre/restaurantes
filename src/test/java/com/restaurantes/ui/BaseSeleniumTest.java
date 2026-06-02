@@ -1,15 +1,9 @@
 package com.restaurantes.ui;
 
-import com.restaurantes.model.Dish;
-import com.restaurantes.model.Restaurant;
-import com.restaurantes.model.Review;
-import com.restaurantes.model.User;
+import com.restaurantes.model.*;
 import com.restaurantes.model.enums.DishType;
 import com.restaurantes.model.enums.Role;
-import com.restaurantes.repository.DishRepository;
-import com.restaurantes.repository.RestaurantRepository;
-import com.restaurantes.repository.ReviewRepository;
-import com.restaurantes.repository.UserRepository;
+import com.restaurantes.repository.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
@@ -39,6 +33,8 @@ public class BaseSeleniumTest {
     UserRepository userRepo;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    OrderRepository orderRepo;
 
     String baseUrl;
     WebDriver driver;
@@ -52,6 +48,8 @@ public class BaseSeleniumTest {
     Review pizzeriaMal;
     Review pizzaOK;
     User user, admin;
+    Order orderPizzas;
+
 
     @BeforeEach
     void setUp() {
@@ -76,6 +74,7 @@ public class BaseSeleniumTest {
         pizzeriaOK = reviewRepo.save(Review.builder().title("Pectacular").rating(5).restaurant(pizzeria).content("Asombroso").build());
         pizzeriaMal = reviewRepo.save(Review.builder().title("Fatal").rating(1).restaurant(pizzeria).content("Nada bien").creationDate(LocalDateTime.now().minusDays(1)).build());
         pizzaOK = reviewRepo.save(Review.builder().title("excelente pizza").rating(5).dish(pizza).content("ok").creationDate(LocalDateTime.now().minusDays(1)).build());
+        orderPizzas = orderRepo.save(Order.builder().numPeople(2).tableNumber(1).restaurant(pizzeria).user(user).build());
 
         // inicializar y configuración de driver
         baseUrl = "http://localhost:" + port + "/";
