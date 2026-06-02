@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
@@ -71,11 +72,59 @@ public class ReviewSeleniumTest extends BaseSeleniumTest{
     }
 
     @Test
-    void createReviewRestaurant(){
+    void createReviewRestaurant() {
         loginUser();
+        driver.navigate().to(baseUrl + "restaurants/" + pizzeria.getId());
+
+        WebElement reviewButton = driver.findElement(By.linkText("Escribir reseña"));
+
+        /*
+        el botón "Escribir reseña" está abajo, no visible en el viewport
+        por tanto hay que usar una Action para desplazarse hasta el elemento
+         */
+        new Actions(driver).moveToElement(reviewButton).click().perform();
+
+        wait.until(driver -> driver.getCurrentUrl()
+                .equals(baseUrl + "reviews/new?restaurantId=" + pizzeria.getId()));
+
+        driver.findElement(By.id("title")).sendKeys("Review Test");
+        driver.findElement(By.id("content")).sendKeys("Review Test contenido ok");
+        driver.findElement(By.id("rating")).sendKeys("5");
+        driver.findElement(By.cssSelector("button[type='submit']")).click();
+
+        wait.until(driver -> driver.getCurrentUrl()
+                .equals(baseUrl + "restaurants/" + pizzeria.getId()));
+
+        assertTrue(driver.findElement(By.tagName("main")).getText()
+                .contains("Review Test contenido ok"));
     }
 
     @Test
-    void createReviewDish(){}
+    void createReviewDish(){
+        loginUser();
+        driver.navigate().to(baseUrl + "dishes/" + tiramisu.getId());
+
+        WebElement reviewButton = driver.findElement(By.linkText("Escribir reseña"));
+
+        /*
+        el botón "Escribir reseña" está abajo, no visible en el viewport
+        por tanto hay que usar una Action para desplazarse hasta el elemento
+         */
+        new Actions(driver).moveToElement(reviewButton).click().perform();
+
+        wait.until(driver -> driver.getCurrentUrl()
+                .equals(baseUrl + "reviews/new?dishId=" + tiramisu.getId()));
+
+        driver.findElement(By.id("title")).sendKeys("Review Test");
+        driver.findElement(By.id("content")).sendKeys("Review Test contenido ok");
+        driver.findElement(By.id("rating")).sendKeys("5");
+        driver.findElement(By.cssSelector("button[type='submit']")).click();
+
+        wait.until(driver -> driver.getCurrentUrl()
+                .equals(baseUrl + "dishes/" + tiramisu.getId()));
+
+        assertTrue(driver.findElement(By.tagName("main")).getText()
+                .contains("Review Test contenido ok"));
+    }
 
 }
