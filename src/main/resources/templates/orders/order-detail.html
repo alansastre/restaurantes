@@ -206,7 +206,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="line, iter : ${orderLines}">
+                <tr th:each="line, iter : ${orderLines}" th:id="'orderLine-' + ${line.dish.id}">
                     <td class="ps-3 text-muted" th:text="${iter.count}"></td>
                     <td>
                         <div class="fw-semibold">

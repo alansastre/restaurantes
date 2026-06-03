@@ -38,15 +38,27 @@ public class OrderSeleniumTest extends BaseSeleniumTest {
 
         WebElement pizzaButton = driver.findElement(By.id("addDish-" + pizza.getId()));
         new Actions(driver).moveToElement(pizzaButton).click().perform();// pizza 12 €
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("orderTotalPrice"), "12,00"));
         assertTrue(driver.findElement(By.id("orderTotalPrice")).getText().contains("12,00"));
 
         // agregar plato tiramisu
         WebElement tiramisuButton = driver.findElement(By.id("addDish-" + tiramisu.getId()));
         new Actions(driver).moveToElement(tiramisuButton).click().perform();
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("orderTotalPrice"), "15,00"));
         assertTrue(driver.findElement(By.id("orderTotalPrice")).getText().contains("15,00"));
 
-        // agregar otro plato
-        // aumentar candidad plato
+
+        // AUMENTAR LA CANTIDAD DE UN PLATO
+        String quantityInputSelector = "#orderLine-" + pizza.getId() + " input[name='quantity']";
+        WebElement pizzaQuantityInput = driver.findElement(By.cssSelector(quantityInputSelector));
+        pizzaQuantityInput.clear();
+        pizzaQuantityInput.sendKeys("3");
+        String quantityButtonSelector =  "#orderLine-" + pizza.getId() + " .btn-success";
+        WebElement pizzaQuantityButton = driver.findElement(By.cssSelector(quantityButtonSelector));
+        new Actions(driver).moveToElement(pizzaQuantityButton).click().perform();
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("orderTotalPrice"), "39,00"));
+
+
         // aumentar cantidad otro plato
         // decrementar cantidad plato
         // quitar plato
