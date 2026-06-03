@@ -271,7 +271,7 @@
                         </dd>
                         <dt class="col-7 fs-5 mb-0">Total</dt>
                         <dd class="col-5 text-end fs-5 fw-bold text-success mb-0">
-                            <span th:text="${#numbers.formatDecimal(order.totalPrice, 1, 2)}"></span> €
+                            <span id="orderTotalPrice" th:text="${#numbers.formatDecimal(order.totalPrice, 1, 2)}"></span> €
                         </dd>
                         <dt class="col-7 fs-5 mb-0" th:if="${order.status.name() == 'FINISHED'}">Suma total</dt>
                         <dd class="col-5 text-end fs-5 fw-bold text-success mb-0" th:if="${order.status.name() == 'FINISHED'}">
@@ -311,7 +311,7 @@
     <div th:if="${order.status.name() != 'FINISHED'}">
         <h2 class="mt-4">Selecciona los platos deseados</h2>
 
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div id="dishGrid" class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col" th:each="dish : ${dishes}">
                 <div class="card h-100">
                     <div class="card-body">
@@ -323,7 +323,7 @@
 
                         <form th:action="@{/orders/{id}/lines(id=${order.id})}" method="post">
                             <input type="hidden" name="dishId" th:value="${dish.id}">
-                            <button class="btn btn-sm btn-success">
+                            <button th:id="'addDish-' + ${dish.id}" class="btn btn-sm btn-success">
                                 <i class="fa-solid fa-plus"></i>
                                 Añadir
                             </button>

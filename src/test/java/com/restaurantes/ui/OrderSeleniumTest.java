@@ -3,8 +3,11 @@ package com.restaurantes.ui;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.test.context.jdbc.Sql;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,7 +31,20 @@ public class OrderSeleniumTest extends BaseSeleniumTest {
     void updateOrder() {
         loginUser();
         driver.navigate().to(baseUrl + "orders/" + orderPizzas.getId());
-        // agregar plato
+
+        // agregar plato pizza
+//        List<WebElement> dishButtons = driver.findElements(By.cssSelector("#dishGrid .btn-success"));
+//        WebElement pizzaButton = dishButtons.getFirst();
+
+        WebElement pizzaButton = driver.findElement(By.id("addDish-" + pizza.getId()));
+        new Actions(driver).moveToElement(pizzaButton).click().perform();// pizza 12 €
+        assertTrue(driver.findElement(By.id("orderTotalPrice")).getText().contains("12,00"));
+
+        // agregar plato tiramisu
+        WebElement tiramisuButton = driver.findElement(By.id("addDish-" + tiramisu.getId()));
+        new Actions(driver).moveToElement(tiramisuButton).click().perform();
+        assertTrue(driver.findElement(By.id("orderTotalPrice")).getText().contains("15,00"));
+
         // agregar otro plato
         // aumentar candidad plato
         // aumentar cantidad otro plato
