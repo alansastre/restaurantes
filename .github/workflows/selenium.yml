@@ -24,10 +24,10 @@ jobs:
       - name: Ejecutar tests de Selenium
         run: mvn -B test -Dtest="${{ inputs.test }}"
         # opcional, para ver más detalles
-      - name: Subir reporte de Selenium a GitHub Actions
-        if: always() # Siempre subir el reporte, incluso si los tests fallan
-        uses: actions/upload-artifact@v4
-        with:
-          name: surefire-reports
-          path: '**/target/surefire-reports/'
-          retention-days: 7
+#      - name: Subir reporte de Selenium a GitHub Actions
+#        if: always() # Siempre subir el reporte, incluso si los tests fallan
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: surefire-reports
+#          path: '**/target/surefire-reports/'
+#          retention-days: 7

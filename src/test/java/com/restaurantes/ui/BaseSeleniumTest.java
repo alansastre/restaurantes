@@ -93,22 +93,13 @@ public class BaseSeleniumTest {
         baseUrl = "http://localhost:" + port + "/";
 
         // options para GitHub Actions
+        boolean ci = System.getenv("CI") != null; // GitHub Actions pone CI=True
         ChromeOptions chromeOptions = new ChromeOptions();
-
-        boolean headless = !"false".equals(System.getProperty("selenium.headless"));
-//        boolean headless = Boolean.parseBoolean(System.getProperty("selenium.headless", "true"));
-        if (headless) {
-            chromeOptions.addArguments("--headless=new"); // sin ventana para CI
-        }
-        chromeOptions.addArguments("--no-sandbox");
-        chromeOptions.addArguments("--disable-gpu");
-        chromeOptions.addArguments("--disable-dev-shm-usage");
         chromeOptions.addArguments("--window-size=1920,1080");
-
+        if (ci) {
+            chromeOptions.addArguments("--headless=new", "--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage");
+        }
         driver = new ChromeDriver(chromeOptions);
-//        driver.manage().window().maximize();
-
-        // subimos el timeout para operaciones como login y procesamiento de formularios
         wait = new WebDriverWait(driver, Duration.ofSeconds(30L));
     }
     @AfterEach
