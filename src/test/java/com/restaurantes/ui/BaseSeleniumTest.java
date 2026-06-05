@@ -115,6 +115,6 @@ public class BaseSeleniumTest {
         driver.findElement(By.id("username")).sendKeys(username);
         driver.findElement(By.id("password")).sendKeys(password);
         driver.findElement(By.cssSelector("button[type='submit']")).click();
-        wait.until(driver -> driver.getCurrentUrl().equals(baseUrl + "restaurants"));
+        wait.until(driver -> !driver.getCurrentUrl().contains("/login"));
     }
 }

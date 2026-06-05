@@ -17,6 +17,7 @@ public class OrderSeleniumTest extends BaseSeleniumTest {
     void startOrder() {
         loginUser();
         driver.navigate().to(baseUrl + "restaurants/" + pizzeria.getId());
+        wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Hacer pedido")));
         driver.findElement(By.linkText("Hacer pedido")).click();
         wait.until(ExpectedConditions.urlContains("/orders/new?restaurantId=" + pizzeria.getId()));
         driver.findElement(By.id("tableNumber")).sendKeys("1");
