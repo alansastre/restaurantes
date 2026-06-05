@@ -52,4 +52,18 @@ public class AuthSeleniumTest extends BaseSeleniumTest {
         wait.until(ExpectedConditions.urlContains("/login?logout"));
 
     }
+
+    @Test
+    void registerError() {
+        driver.get(baseUrl + "register");
+        driver.findElement(By.id("username")).sendKeys("testuser");
+        driver.findElement(By.id("email")).sendKeys("testuser@gmail.com");
+        driver.findElement(By.id("password")).sendKeys("abcde");
+        driver.findElement(By.id("passwordConfirm")).sendKeys("edcba");
+        driver.findElement(By.cssSelector("button[type='submit']")).click();
+        wait.until(driver -> driver.getCurrentUrl().equals(baseUrl + "register"));
+
+        assertTrue(driver.findElement(By.id("error")).getText()
+                .contains("Las contraseñas no coinciden"));
+    }
 }
