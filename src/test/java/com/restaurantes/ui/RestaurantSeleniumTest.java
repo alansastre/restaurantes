@@ -84,7 +84,10 @@ public class RestaurantSeleniumTest extends BaseSeleniumTest {
         foodTypeSelector.selectByValue("SPANISH");
         new Select(driver.findElement(By.id("city"))).selectByValue("Madrid");
 
-        wait.until(driver -> driver.findElement(By.cssSelector("button[type='submit']")).isDisplayed());
+        //wait.until(driver -> driver.findElement(By.cssSelector("button[type='submit']")).isDisplayed());
+        new Actions(driver).moveToElement(
+                driver.findElement(By.cssSelector("button[type='submit']"))
+        ).click().perform();
 
         driver.findElement(By.cssSelector("button[type='submit']")).click();
         wait.until(driver -> driver.getCurrentUrl().equals(baseUrl + "restaurants"));

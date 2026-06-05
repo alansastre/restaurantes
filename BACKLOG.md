@@ -2,6 +2,30 @@
 
 Pendiente:
 
+
+* SecuritySeleniumTest (OK)
+  * anonymousTryAccessProtectedPathRedirectToLogin
+  * userTryAccessForbiddenRedirectToErrorPage
+
+* RestaurantSeleniumTest (OK)
+  * editRestaurant
+
+* AuthSeleniumTest (OK)
+  * logout
+  * registerError
+
+* Agregar Job de Selenium en GitHub Actions workflow (OK)
+
+* Agregar SonarCloud (OK)
+
+
+
+
+
+
+
+
+
 * Testing User Interface (UI Selenium)
 * loggers: log.info, log.warn, log.error
 * advice global: info global para navbar
