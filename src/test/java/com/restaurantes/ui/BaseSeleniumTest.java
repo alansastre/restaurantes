@@ -35,6 +35,8 @@ public class BaseSeleniumTest {
     PasswordEncoder passwordEncoder;
     @Autowired
     OrderRepository orderRepo;
+    @Autowired
+    OrderLineRepository orderLineRepo;
 
     String baseUrl;
     WebDriver driver;
@@ -49,11 +51,14 @@ public class BaseSeleniumTest {
     Review pizzaOK;
     User user, admin;
     Order orderPizzas;
+    Order orderConPlatos;
 
 
     @BeforeEach
     void setUp() {
         // crear datos demo
+        orderLineRepo.deleteAll();
+        orderRepo.deleteAll();
         reviewRepo.deleteAll();
         dishRepo.deleteAll();
         restaurantRepo.deleteAll();
@@ -75,6 +80,13 @@ public class BaseSeleniumTest {
         pizzeriaMal = reviewRepo.save(Review.builder().title("Fatal").rating(1).restaurant(pizzeria).content("Nada bien").creationDate(LocalDateTime.now().minusDays(1)).build());
         pizzaOK = reviewRepo.save(Review.builder().title("excelente pizza").rating(5).dish(pizza).content("ok").creationDate(LocalDateTime.now().minusDays(1)).build());
         orderPizzas = orderRepo.save(Order.builder().numPeople(2).tableNumber(1).restaurant(pizzeria).user(user).build());
+
+        orderConPlatos = orderRepo.save(Order.builder().numPeople(2).tableNumber(1).totalPrice(39d).restaurant(pizzeria).user(user).build());
+
+        // lineas de pedido para el test de order finish
+        orderLineRepo.save(OrderLine.builder().dish(pizza).order(orderConPlatos).quantity(3).build());
+        orderLineRepo.save(OrderLine.builder().dish(tiramisu).order(orderConPlatos).quantity(1).build());
+
 
         // inicializar y configuración de driver
         baseUrl = "http://localhost:" + port + "/";

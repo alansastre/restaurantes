@@ -44,4 +44,9 @@ public class Order {
     @ManyToOne
     private User user;
 
+    // para simular el pago
+    private String cardOwner; // titular
+    private String cardNumber; // XXXXYYYYZZZZWWWW
+    private String cardExpirationDate; // MM-YY
+
 }

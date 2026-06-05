@@ -58,14 +58,40 @@ public class OrderSeleniumTest extends BaseSeleniumTest {
         new Actions(driver).moveToElement(pizzaQuantityButton).click().perform();
         wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("orderTotalPrice"), "39,00"));
 
-
-        // aumentar cantidad otro plato
-        // decrementar cantidad plato
         // quitar plato
+        WebElement pizzaRemoveButton = driver.findElement(
+                By.cssSelector("#orderLine-" + pizza.getId() + " .btn-danger")
+        );
+        new Actions(driver).moveToElement(pizzaRemoveButton).click().perform();
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("orderTotalPrice"), "3,00"));
     }
 
     @Test
     void finishOrder() {
         // pagar y finalizar pedido y comprobar que cambia de estado y no deja añadir más platos
+            loginUser();
+            driver.navigate().to(baseUrl + "orders/" + orderConPlatos.getId());
+
+            wait.until(ExpectedConditions.textToBePresentInElementLocated(
+                    By.id("orderTotalPrice"), "39,00"));
+
+            driver.findElement(By.id("cardOwner")).sendKeys("TITULAR TARJETA");
+            driver.findElement(By.id("cardNumber")).sendKeys("1111222233334444");
+            driver.findElement(By.id("cardExpirationDate")).sendKeys("03/30");
+            driver.findElement(By.id("cardSecretCode")).sendKeys("777");
+
+        new Actions(driver).moveToElement(
+                driver.findElement(By.cssSelector("#paymentForm button[type='submit']"))
+        ).click().perform();
+
+            wait.until(ExpectedConditions.textToBe(By.id("orderStatus"), "Finalizado"));
+
+            // extra: comprobar que ya no deja pagar ni agregar platos:
+            assertTrue(driver.findElements(By.id("addDish-" + pizza.getId())).isEmpty());
+            assertTrue(driver.findElements(By.id("cardNumber")).isEmpty());
+            assertTrue(driver.findElements(
+                    By.cssSelector("#orderLine-" + pizza.getId() + " input[name='quantity']"))
+                    .isEmpty());
+
     }
 }
