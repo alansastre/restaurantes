@@ -4,8 +4,11 @@ import com.restaurantes.model.Restaurant;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -97,5 +100,39 @@ public class RestaurantSeleniumTest extends BaseSeleniumTest {
         Restaurant saved = restaurantRepo.findAll().getLast();
         assertEquals("restaurantest", saved.getName());
         assertEquals(20d, saved.getAveragePrice());
+    }
+
+    @Test
+    void editRestaurant() {
+        loginAdmin();
+        driver.get(baseUrl + "restaurants/edit/" + pizzeria.getId());
+
+        // verificar que los inputs están rellenos
+        WebElement nameInput = driver.findElement(By.id("name"));
+        assertEquals("Pizzeria Luigi", nameInput.getAttribute("value"));
+
+        WebElement priceInput = driver.findElement(By.id("averagePrice"));
+        assertEquals("10.0", priceInput.getAttribute("value"));
+
+
+        nameInput.clear();
+        nameInput.sendKeys("Pizzeria Editada");
+
+        WebElement dateInput = driver.findElement(By.id("date"));
+        dateInput.clear();
+        dateInput.sendKeys("02/06/2027");
+//        dateInput.sendKeys("2027-06-02");
+
+
+        new Actions(driver).moveToElement(
+                driver.findElement(By.cssSelector("button[type='submit']"))
+        ).click().perform();
+
+        wait.until(driver -> driver.getCurrentUrl().equals(baseUrl + "restaurants"));
+
+        restaurantRepo.findById(pizzeria.getId()).ifPresent(restaurant -> {
+            assertEquals("Pizzeria Editada", restaurant.getName());
+            assertEquals("2027-06-02", restaurant.getDate().format(DateTimeFormatter.ISO_DATE));
+        });
     }
 }
