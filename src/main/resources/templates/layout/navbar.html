@@ -37,20 +37,20 @@
                 </li>
             </ul>
 
-            <a sec:authorize="!isAuthenticated()" class="btn btn-secondary me-2" th:href="@{/login}">
+            <a id="loginLink" sec:authorize="!isAuthenticated()" class="btn btn-secondary me-2" th:href="@{/login}">
                 <i class="fa-solid fa-sign-in"></i> Login
             </a>
-            <a sec:authorize="!isAuthenticated()" class="btn btn-secondary" th:href="@{/register}">
+            <a id="registerLink" sec:authorize="!isAuthenticated()" class="btn btn-secondary" th:href="@{/register}">
                 <i class="fa-solid fa-circle-user"></i> Registro
             </a>
 
             <span class="text-light me-2" sec:authorize="isAuthenticated()">
                 <i class="fa-solid fa-user"></i>
-                <span sec:authentication="name"></span>
+                <span id="username" sec:authentication="name"></span>
             </span>
 
             <form th:action="@{/logout}" method="post" class="d-inline" sec:authorize="isAuthenticated()">
-                <button class="btn btn-secondary">
+                <button id="logoutButton" class="btn btn-secondary">
                     <i class="fa-solid fa-sign-out"></i> Salir
                 </button>
             </form>
