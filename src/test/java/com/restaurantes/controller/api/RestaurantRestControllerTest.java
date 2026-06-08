@@ -136,4 +136,13 @@ class RestaurantRestControllerTest {
                         .content(restaurantJSON)
         ).andExpect(status().isConflict()); // 409
     }
+
+    @Test
+    void update_complete_OK() throws Exception {
+
+    }
+    @Test
+    void update_NotFound() throws Exception {
+
+    }
 }

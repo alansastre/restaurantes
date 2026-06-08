@@ -41,6 +41,23 @@ public class RestaurantRestController {
     }
 
     // update
+    // actualizar restaurante: actualización completa, si un campo se manda null también se guarda como null o default
+    @PutMapping("{id}")
+    public ResponseEntity<Restaurant> update(@PathVariable Long id, @RequestBody Restaurant restaurant) {
+        Restaurant existing = restaurantRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant " + id + " not found")
+        );
+        existing.setName(restaurant.getName());
+        existing.setAveragePrice(restaurant.getAveragePrice());
+        existing.setNumberEmployees(restaurant.getNumberEmployees());
+        existing.setFoodType(restaurant.getFoodType());
+        existing.setActive(restaurant.getActive());
+        // como alternativa se podría usar DTOs y mappers
+        // existing.setStartDate(restaurant.getStartDate()); // conservar fecha original
+        return ResponseEntity.ok(restaurantRepository.save(existing));
+    }
+
+
 
     // update partial
 
