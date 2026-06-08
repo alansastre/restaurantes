@@ -50,4 +50,20 @@ class RestaurantRestControllerTest {
                 .andExpect(jsonPath("$[?(@.name == 'Restaurante Test 1')].averagePrice", contains(10.99)))
                 .andExpect(jsonPath("$[?(@.name == 'Restaurante Test 1')].foodType", contains(FoodType.SPANISH.name())));
     }
+
+    @Test
+    void findOne_OK() throws Exception{
+        mockMvc.perform(get("/api/v1/restaurants/" +  restaurant.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(restaurant.getId()))
+                .andExpect(jsonPath("$.name").value(restaurant.getName()))
+                .andExpect(jsonPath("$.foodType").value(restaurant.getFoodType().name()));
+    }
+
+    @Test
+    void findOne_NotFound() throws Exception{
+        mockMvc.perform(get("/api/v1/restaurants/99999"))
+                .andExpect(status().isNotFound());
+    }
 }
