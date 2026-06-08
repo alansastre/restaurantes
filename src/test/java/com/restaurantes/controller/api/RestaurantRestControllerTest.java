@@ -35,6 +35,7 @@ class RestaurantRestControllerTest {
                 .name("Restaurante Test 1")
                 .averagePrice(10.99)
                 .foodType(FoodType.SPANISH)
+                .numberEmployees(20)
                 .build());
     }
 
@@ -139,10 +140,44 @@ class RestaurantRestControllerTest {
 
     @Test
     void update_complete_OK() throws Exception {
+        // no ponemos numberEmployees para verificar que el PUT lo cambia de 20 a null
+        String restaurantJSON = """
+                {
+                  "name": "Restaurante Test 1 EDITADO",
+                  "averagePrice": 9999,
+                  "foodType": "JAPANESE",
+                  "active": false
+               }
+               """;
 
+        mockMvc.perform(
+                        put("/api/v1/restaurants/" + restaurant.getId())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(restaurantJSON)
+                ).andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(restaurant.getId()))
+                .andExpect(jsonPath("$.name").value("Restaurante Test 1 EDITADO"))
+                .andExpect(jsonPath("$.averagePrice").value(9999.0))
+                .andExpect(jsonPath("$.foodType").value(FoodType.JAPANESE.name()))
+                .andExpect(jsonPath("$.active").value(false))
+                .andExpect(jsonPath("$.numberEmployees").value(nullValue()));
     }
+
     @Test
     void update_NotFound() throws Exception {
+        String restaurantJSON = """
+                {
+                  "name": "Restaurante Test 1 EDITADO",
+                  "averagePrice": 9999,
+                  "foodType": "JAPANESE",
+                  "active": false
+               }
+               """;
 
+        mockMvc.perform(
+                        put("/api/v1/restaurants/999")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(restaurantJSON)
+                ).andExpect(status().isNotFound());
     }
 }
