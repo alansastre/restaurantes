@@ -11,7 +11,7 @@ public class ApiExceptionAdvice {
 
     @ExceptionHandler(value = {DataIntegrityViolationException.class})
     public ResponseEntity<String> handleInternalServerError(Exception ex) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflicto al guardar.");
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflicto.");
     }
 
 }

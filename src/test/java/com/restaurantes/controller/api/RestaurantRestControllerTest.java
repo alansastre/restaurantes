@@ -201,4 +201,16 @@ class RestaurantRestControllerTest {
                 .andExpect(jsonPath("$.active").value(true))
                 .andExpect(jsonPath("$.numberEmployees").value(20));
     }
+
+    @Test
+    void deleteRestaurant() throws Exception {
+
+        mockMvc.perform(delete("/api/v1/restaurants/" + restaurant.getId()))
+                .andExpect(status().isNoContent()); // 204
+
+        // faltaría probar el 409 conflict si hay platos apuntando a restaurant
+//        mockMvc.perform(delete("/api/v1/restaurants/" + restaurant2.getId()))
+//                .andExpect(status().isConflict()); // 409
+    }
+
 }
