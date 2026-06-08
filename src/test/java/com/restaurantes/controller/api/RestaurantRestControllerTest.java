@@ -66,4 +66,74 @@ class RestaurantRestControllerTest {
         mockMvc.perform(get("/api/v1/restaurants/99999"))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    void create_OK() throws Exception {
+        String restaurantJSON = """
+                {
+                  "id": null,
+                  "name": "NUEVO RESTAURANTE",
+                  "description": "NUEVO RESTAURANTE",
+                  "numberEmployees": 10,
+                  "date": "2026-06-08",
+                  "city": "MADRID",
+                  "averagePrice": 19,
+                  "active": true,
+                  "foodType": "SPANISH"
+               }
+               """;
+
+        mockMvc.perform(
+                post("/api/v1/restaurants")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(restaurantJSON)
+        ).andExpect(status().isCreated())
+        .andExpect(header().exists("Location"))
+        .andExpect(jsonPath("$.id").exists())
+        .andExpect(jsonPath("$.name").value("NUEVO RESTAURANTE"));
+    }
+
+    @Test
+    void create_BadRequest() throws Exception {
+        String restaurantJSON = """
+                {
+                  "id": 1,
+                  "name": "NUEVO RESTAURANTE",
+                  "description": "NUEVO RESTAURANTE",
+                  "numberEmployees": 10,
+                  "date": "2026-06-08",
+                  "city": "MADRID",
+                  "averagePrice": 19,
+                  "active": true,
+                  "foodType": "SPANISH"
+               }
+               """;
+        mockMvc.perform(
+                    post("/api/v1/restaurants")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(restaurantJSON)
+            ).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void create_NameUnique() throws Exception {
+        String restaurantJSON = """
+                {
+                  "id": null,
+                  "name": "Restaurante Test 1",
+                  "description": "NUEVO RESTAURANTE",
+                  "numberEmployees": 10,
+                  "date": "2026-06-08",
+                  "city": "MADRID",
+                  "averagePrice": 19,
+                  "active": true,
+                  "foodType": "SPANISH"
+               }
+               """;
+        mockMvc.perform(
+                post("/api/v1/restaurants")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(restaurantJSON)
+        ).andExpect(status().isConflict()); // 409
+    }
 }
