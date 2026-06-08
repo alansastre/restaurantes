@@ -18,6 +18,8 @@ Pendiente:
 
 * Agregar SonarCloud (OK)
 
+* API REST + Testing API REST
+
 
 
 

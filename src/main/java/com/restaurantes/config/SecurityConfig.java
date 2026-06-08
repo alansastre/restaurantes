@@ -22,13 +22,16 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         // permitir h2-console
-        http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"));
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**", "/api/v1/**"));
         http.headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
 
         // proteger rutas:
         http.authorizeHttpRequests(
                 auth -> auth
-                .requestMatchers("/register", "/login", "/css/**", "/webjars/**", "/images/**").permitAll()
+                .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .requestMatchers("/api/v1/**").permitAll()
+                .requestMatchers("/error", "/login", "/register", "/uploads/**", "/css/**", "/images/**", "/webjars/**").permitAll()
 
                 .requestMatchers(HttpMethod.GET, "/restaurants/deactivate/*").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/restaurants/new").hasRole("ADMIN")
