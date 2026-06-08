@@ -180,4 +180,25 @@ class RestaurantRestControllerTest {
                                 .content(restaurantJSON)
                 ).andExpect(status().isNotFound());
     }
+
+    @Test
+    void patchPartial_OK() throws Exception{
+        String restaurantJSON = """
+                {
+                  "averagePrice": 9999
+               }
+               """;
+
+        mockMvc.perform(
+                        patch("/api/v1/restaurants/" + restaurant.getId())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(restaurantJSON)
+                ).andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(restaurant.getId()))
+                .andExpect(jsonPath("$.name").value("Restaurante Test 1"))
+                .andExpect(jsonPath("$.averagePrice").value(9999.0))
+                .andExpect(jsonPath("$.foodType").value(FoodType.SPANISH.name()))
+                .andExpect(jsonPath("$.active").value(true))
+                .andExpect(jsonPath("$.numberEmployees").value(20));
+    }
 }

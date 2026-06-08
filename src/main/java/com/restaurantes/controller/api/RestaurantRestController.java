@@ -58,8 +58,20 @@ public class RestaurantRestController {
     }
 
 
-
     // update partial
+    @PatchMapping("{id}")
+    public ResponseEntity<Restaurant> partialUpdate(@PathVariable Long id, @RequestBody Restaurant restaurant) {
+        Restaurant existing = restaurantRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant " + id + " not found")
+        );
+        if (restaurant.getName() != null) existing.setName(restaurant.getName());
+        if (restaurant.getAveragePrice() != null) existing.setAveragePrice(restaurant.getAveragePrice());
+        if (restaurant.getNumberEmployees() != null) existing.setNumberEmployees(restaurant.getNumberEmployees());
+        if (restaurant.getFoodType() != null) existing.setFoodType(restaurant.getFoodType());
+        if (restaurant.getActive() != null) existing.setActive(restaurant.getActive());
+
+        return ResponseEntity.ok(restaurantRepository.save(existing));
+    }
 
     // delete
 }
