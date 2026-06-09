@@ -49,6 +49,27 @@ public class DishRestController {
         return ResponseEntity.created(URI.create("/api/v1/dishes/" + saved.getId())).body(saved);
     }
 
+    @PutMapping("dishes/{id}")
+    public ResponseEntity<Dish> update(
+            @PathVariable Long id,
+            @RequestBody Dish dish)
+    {
+        Dish existing = dishRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Dish " + id + " not found")
+        );
+        existing.setName(dish.getName());
+        existing.setPrice(dish.getPrice());
+        existing.setDescription(dish.getDescription());
+        existing.setType(dish.getType());
+        existing.setActive(dish.getActive());
+        existing.setRestaurant(resolveRestaurant(dish));
+        existing.setImageUrl(dish.getImageUrl());
+        // como alternativa se podría usar DTOs y mappers
+        // existing.setStartDate(restaurant.getStartDate()); // conservar fecha original
+        return ResponseEntity.ok(dishRepository.save(existing));
+    }
+
+
     private Restaurant resolveRestaurant(Dish dish) {
         if (dish.getRestaurant() == null || dish.getRestaurant().getId() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Restaurant id must be set");

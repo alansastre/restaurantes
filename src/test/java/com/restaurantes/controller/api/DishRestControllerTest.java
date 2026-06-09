@@ -154,4 +154,37 @@ public class DishRestControllerTest {
                 .andExpect(jsonPath("$.description").value("nuevoplato"))
                 .andExpect(jsonPath("$.restaurant.id").value(restaurant1.getId()));
     }
+
+
+    @Test
+    void update_complete_OK() throws Exception {
+        // no ponemos price para verificar que el PUT lo cambia a null
+        String dishJSON = String.format("""
+                    {
+                      "id": %d,
+                      "name": "Plato1 editado",
+                      "description": "Plato1 editado",
+                      "active": false,
+                      "imageUrl": "/images/plato.png",
+                      "type": "DESSERT",
+                      "restaurant": {
+                        "id": %d
+                      }
+                    }
+               """, plato1.getId(), restaurant2.getId());
+
+        mockMvc.perform(
+                        put("/api/v1/dishes/" + plato1.getId())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(dishJSON)
+                ).andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(plato1.getId()))
+                .andExpect(jsonPath("$.name").value("Plato1 editado"))
+                .andExpect(jsonPath("$.description").value("Plato1 editado"))
+                .andExpect(jsonPath("$.price").value(nullValue()))
+                .andExpect(jsonPath("$.type").value(DishType.DESSERT.name()))
+                .andExpect(jsonPath("$.active").value(false))
+                .andExpect(jsonPath("$.imageUrl").value("/images/plato.png"))
+                .andExpect(jsonPath("$.restaurant.id").value(restaurant2.getId()));
+    }
 }
