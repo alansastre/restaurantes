@@ -103,7 +103,16 @@ public class DishRestControllerTest {
 
     @Test
     void findById() throws Exception{
-
+        mockMvc.perform(get("/api/v1/dishes/" +  plato1.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(plato1.getId()))
+                .andExpect(jsonPath("$.name").value(plato1.getName()))
+                .andExpect(jsonPath("$.type").value(plato1.getType().name()))
+                .andExpect(jsonPath("$.description").value(plato1.getDescription()))
+                .andExpect(jsonPath("$.price").value(plato1.getPrice()))
+                .andExpect(jsonPath("$.active").value(plato1.getActive()))
+                .andExpect(jsonPath("$.restaurant.name").value(plato1.getRestaurant().getName()));
     }
 
     @Test // carta
