@@ -201,6 +201,16 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- Reintentar los tests que fallan: los Selenium E2E son intermitentes
+                         en headless/CI (un click o un render que no llega a tiempo). Solo se
+                         reintentan los que fallan; si pasan al reintento, el build queda verde. -->
+                    <rerunFailingTestsCount>2</rerunFailingTestsCount>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

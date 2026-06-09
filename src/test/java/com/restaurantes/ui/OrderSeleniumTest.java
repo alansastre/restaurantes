@@ -2,6 +2,7 @@ package com.restaurantes.ui;
 
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -76,10 +77,16 @@ public class OrderSeleniumTest extends BaseSeleniumTest {
             wait.until(ExpectedConditions.textToBePresentInElementLocated(
                     By.id("orderTotalPrice"), "39,00"));
 
-            driver.findElement(By.id("cardOwner")).sendKeys("TITULAR TARJETA");
-            driver.findElement(By.id("cardNumber")).sendKeys("1111222233334444");
-            driver.findElement(By.id("cardExpirationDate")).sendKeys("03/30");
-            driver.findElement(By.id("cardSecretCode")).sendKeys("777");
+            // Rellenar la tarjeta por valor (no tecleando): en headless CI sendKeys pierde
+            // a veces el primer caracter y la validacion del numero (\d{16}) falla, dejando
+            // el pedido en PENDING. Fijar el value es determinista en cualquier entorno.
+            wait.until(ExpectedConditions.elementToBeClickable(By.id("cardOwner")));
+            ((JavascriptExecutor) driver).executeScript(
+                    "document.getElementById('cardOwner').value = arguments[0];" +
+                    "document.getElementById('cardNumber').value = arguments[1];" +
+                    "document.getElementById('cardExpirationDate').value = arguments[2];" +
+                    "document.getElementById('cardSecretCode').value = arguments[3];",
+                    "TITULAR TARJETA", "1111222233334444", "03/30", "777");
 
         new Actions(driver).moveToElement(
                 driver.findElement(By.cssSelector("#paymentForm button[type='submit']"))
