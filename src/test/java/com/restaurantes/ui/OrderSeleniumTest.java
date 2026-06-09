@@ -1,6 +1,5 @@
 package com.restaurantes.ui;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -12,7 +11,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
 public class OrderSeleniumTest extends BaseSeleniumTest {
 
     @Test
@@ -26,7 +24,7 @@ public class OrderSeleniumTest extends BaseSeleniumTest {
         driver.findElement(By.id("numPeople")).sendKeys("2");
         driver.findElement(By.id("userSuggestions")).sendKeys("al fondo a la derecha");
         driver.findElement(By.cssSelector("button[type='submit']")).click();
-        wait.until(ExpectedConditions.urlContains("/orders/"));
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.tagName("h1"), "Pedido #"));
         assertTrue(driver.findElement(By.tagName("h1")).getText().contains("Pedido #"));
     }
 

@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @ExtendWith(ScreenshotOnFailure.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -98,6 +99,11 @@ public class BaseSeleniumTest {
         boolean ci = System.getenv("CI") != null; // GitHub Actions pone CI=True
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--window-size=1920,1080");
+        // Fijar el locale del navegador a es-ES. En CI (Ubuntu) Chrome arranca en en-US,
+        // lo que cambia el formateo de decimales (coma vs punto) y como interpreta el
+        // <input type="date"> al teclear (dd/MM vs MM/dd). Asi local y CI se comportan igual.
+        chromeOptions.addArguments("--lang=es-ES");
+        chromeOptions.setExperimentalOption("prefs", Map.of("intl.accept_languages", "es-ES"));
         if (ci) {
             chromeOptions.addArguments("--headless=new", "--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage");
         }

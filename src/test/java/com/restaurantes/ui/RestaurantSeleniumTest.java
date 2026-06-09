@@ -1,7 +1,6 @@
 package com.restaurantes.ui;
 
 import com.restaurantes.model.Restaurant;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -13,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-@Disabled
+
 public class RestaurantSeleniumTest extends BaseSeleniumTest {
 
     @Test
@@ -90,7 +89,6 @@ public class RestaurantSeleniumTest extends BaseSeleniumTest {
                 driver.findElement(By.cssSelector("button[type='submit']"))
         ).click().perform();
 
-        driver.findElement(By.cssSelector("button[type='submit']")).click();
         wait.until(driver -> driver.getCurrentUrl().equals(baseUrl + "restaurants"));
         assertEquals(baseUrl + "restaurants", driver.getCurrentUrl());
 

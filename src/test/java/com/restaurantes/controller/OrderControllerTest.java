@@ -7,7 +7,6 @@ import com.restaurantes.model.enums.Role;
 import com.restaurantes.repository.*;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +39,6 @@ OrderController
      * TODO @PostMapping("orders/{orderId}/lines/{lineId}") quantity=4
      * TODO @GetMapping("orders/{id}/finish")
  */
-@Disabled
 @SpringBootTest
 @AutoConfigureMockMvc // desactiva Security
 @Transactional
@@ -167,12 +165,16 @@ public class OrderControllerTest {
 
     @WithMockUser(username = "pepe", roles = {"USER"})
     @Test
-    @DisplayName("GET /orders/{orderId}/finish?tip=0")
+    @DisplayName("POST /orders/{orderId}/finish")
     void finishOrder() throws Exception {
 
         mockMvc.perform(
-                get("/orders/" + pedidoJuanito.getId() + "/finish")
+                post("/orders/" + pedidoJuanito.getId() + "/finish").with(csrf())
                 .param("tip", "1.34")
+                .param("cardOwner", "Juanito Perez")
+                .param("cardNumber", "1111222233334444")
+                .param("cardExpirationDate", "03/30")
+                .param("cardSecretCode", "777")
         ).andExpect(status().is3xxRedirection())
         .andExpect(redirectedUrl("/orders/" + pedidoJuanito.getId()));
 
