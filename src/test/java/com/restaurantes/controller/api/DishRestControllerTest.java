@@ -126,4 +126,32 @@ public class DishRestControllerTest {
                 .andExpect(jsonPath("$[?(@.restaurant.id == " + restaurant1.getId() + ")]", hasSize(2)))
                 .andExpect(jsonPath("$[?(@.name == 'plato3')]", hasSize(0)));
     }
+
+    @Test
+    void create_OK() throws Exception {
+        String dishJSON = String.format("""
+                {
+                  "name": "nuevoplato",
+                  "description": "nuevoplato",
+                  "price": 13.3,
+                  "active": true,
+                  "imageUrl": "string",
+                  "type": "STARTER",
+                  "restaurant": {
+                    "id": %d
+                  }
+                }
+               """, restaurant1.getId());
+
+        mockMvc.perform(
+                        post("/api/v1/dishes")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(dishJSON)
+                ).andExpect(status().isCreated())
+                .andExpect(header().exists("Location"))
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.name").value("nuevoplato"))
+                .andExpect(jsonPath("$.description").value("nuevoplato"))
+                .andExpect(jsonPath("$.restaurant.id").value(restaurant1.getId()));
+    }
 }
