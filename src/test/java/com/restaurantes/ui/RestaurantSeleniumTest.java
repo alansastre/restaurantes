@@ -3,6 +3,7 @@ package com.restaurantes.ui;
 import com.restaurantes.model.Restaurant;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
@@ -77,7 +78,11 @@ public class RestaurantSeleniumTest extends BaseSeleniumTest {
         driver.findElement(By.id("averagePrice")).sendKeys("20");
         // driver.findElement(By.id("active")).click(); // ya viene marcado por defecto
         driver.findElement(By.id("description")).sendKeys("descripcion de restaurante");
-        driver.findElement(By.id("date")).sendKeys("02/06/2027");
+        // El <input type="date"> guarda/envia el valor en ISO yyyy-MM-dd en cualquier SO;
+        // lo fijamos por valor para no depender de como Chrome interpreta el tecleo
+        // (Linux usa el locale del SO -> MM/dd y rompe la fecha en CI).
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].value = '2027-06-02';", driver.findElement(By.id("date")));
 //        driver.findElement(By.id("city")).sendKeys("Madrid");
 
         Select foodTypeSelector = new Select(driver.findElement(By.id("foodType")));
@@ -120,10 +125,10 @@ public class RestaurantSeleniumTest extends BaseSeleniumTest {
         nameInput.clear();
         nameInput.sendKeys("Pizzeria Editada");
 
+        // Fijar la fecha por su valor ISO (independiente del locale del SO/navegador).
         WebElement dateInput = driver.findElement(By.id("date"));
-        dateInput.clear();
-        dateInput.sendKeys("02/06/2027");
-//        dateInput.sendKeys("2027-06-02");
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].value = '2027-06-02';", dateInput);
 
 
         new Actions(driver).moveToElement(

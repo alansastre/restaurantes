@@ -99,9 +99,10 @@ public class BaseSeleniumTest {
         boolean ci = System.getenv("CI") != null; // GitHub Actions pone CI=True
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--window-size=1920,1080");
-        // Fijar el locale del navegador a es-ES. En CI (Ubuntu) Chrome arranca en en-US,
-        // lo que cambia el formateo de decimales (coma vs punto) y como interpreta el
-        // <input type="date"> al teclear (dd/MM vs MM/dd). Asi local y CI se comportan igual.
+        // Forzar es-ES en el navegador -> Accept-Language es-ES -> el servidor formatea los
+        // decimales con coma igual en local y en CI. (El <input type="date"> NO se controla
+        // con esto en Linux: usa el locale del SO; por eso su fecha se fija por valor ISO
+        // en el propio test, no tecleando.)
         chromeOptions.addArguments("--lang=es-ES");
         chromeOptions.setExperimentalOption("prefs", Map.of("intl.accept_languages", "es-ES"));
         if (ci) {
