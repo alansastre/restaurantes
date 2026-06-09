@@ -3,6 +3,7 @@ package com.restaurantes.controller.api;
 import com.restaurantes.model.Dish;
 import com.restaurantes.model.Restaurant;
 import com.restaurantes.model.enums.DishType;
+import com.restaurantes.model.enums.FoodType;
 import com.restaurantes.repository.DishRepository;
 import com.restaurantes.repository.RestaurantRepository;
 import jakarta.transaction.Transactional;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.*;
@@ -41,12 +43,12 @@ public class DishRestControllerTest {
     void setUp() {
         restaurant1 = restaurantRepo.save(
                 Restaurant.builder()
-                        .name("resturante1")
+                        .name("restaurante1")
                         .build()
         );
         restaurant2 = restaurantRepo.save(
                 Restaurant.builder()
-                        .name("resturante2")
+                        .name("restaurante2")
                         .build()
         );
         plato1 = dishRepo.save(
@@ -84,6 +86,19 @@ public class DishRestControllerTest {
     @Test
     void findAll() throws Exception{
 
+        mockMvc.perform(
+                get("/api/v1/dishes")
+        ).andExpect(status().isOk())
+    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+    .andExpect(jsonPath("$").isArray())
+    .andExpect(jsonPath("$", hasSize(greaterThanOrEqualTo(3))))
+//                .andExpect(jsonPath("$[0].name", is("Restaurante Test 1")))
+    .andExpect(jsonPath("$[?(@.name == 'plato1')]", hasSize(1)))
+    .andExpect(jsonPath("$[?(@.name == 'plato1')].price", contains(10.00)))
+    .andExpect(jsonPath("$[?(@.name == 'plato1')].type", contains(DishType.MAIN_COURSE.name())))
+    .andExpect(jsonPath("$[?(@.name == 'plato1')].restaurant.name", contains("restaurante1")))
+    .andExpect(jsonPath("$[?(@.name == 'plato2')].restaurant.name", contains("restaurante1")))
+    .andExpect(jsonPath("$[?(@.name == 'plato3')].restaurant.name", contains("restaurante2")));
     }
 
     @Test
