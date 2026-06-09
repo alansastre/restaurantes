@@ -187,4 +187,26 @@ public class DishRestControllerTest {
                 .andExpect(jsonPath("$.imageUrl").value("/images/plato.png"))
                 .andExpect(jsonPath("$.restaurant.id").value(restaurant2.getId()));
     }
+
+    @Test
+    void patchPartial_OK() throws Exception{
+        String dishJSON = """
+                {
+                  "price": 9999
+               }
+               """;
+
+        mockMvc.perform(
+                        patch("/api/v1/dishes/" + plato1.getId())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(dishJSON)
+                ).andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(plato1.getId()))
+                .andExpect(jsonPath("$.name").value(plato1.getName()))
+                .andExpect(jsonPath("$.type").value(plato1.getType().name()))
+                .andExpect(jsonPath("$.description").value(plato1.getDescription()))
+                .andExpect(jsonPath("$.price").value(9999d))
+                .andExpect(jsonPath("$.active").value(plato1.getActive()))
+                .andExpect(jsonPath("$.restaurant.name").value(plato1.getRestaurant().getName()));
+    }
 }
