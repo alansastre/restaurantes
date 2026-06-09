@@ -209,4 +209,11 @@ public class DishRestControllerTest {
                 .andExpect(jsonPath("$.active").value(plato1.getActive()))
                 .andExpect(jsonPath("$.restaurant.name").value(plato1.getRestaurant().getName()));
     }
+
+    @Test
+    void deleteDish() throws Exception {
+
+        mockMvc.perform(delete("/api/v1/dishes/" + plato1.getId()))
+                .andExpect(status().isNoContent()); // 204
+    }
 }

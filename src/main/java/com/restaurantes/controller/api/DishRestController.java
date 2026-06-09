@@ -88,6 +88,19 @@ public class DishRestController {
         return ResponseEntity.ok(dishRepository.save(existing));
     }
 
+    @DeleteMapping("dishes/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT) // 204
+    public void delete(@PathVariable Long id) {
+        if(!dishRepository.existsById(id))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Dish " + id + " not found");
+
+        // OrderLine y Review pueden apuntar a Dish, error de integridad referencial db --> 409
+        // reviewRepository.deleteByDishId
+        // orderLineRepository.deleteByDishId
+        dishRepository.deleteById(id);
+        // dish.setActive(false)   dishRepository.save(dish)
+    }
+
 
     private Restaurant resolveRestaurant(Dish dish) {
         if (dish.getRestaurant() == null || dish.getRestaurant().getId() == null) {
