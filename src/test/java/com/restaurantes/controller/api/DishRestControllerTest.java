@@ -117,6 +117,13 @@ public class DishRestControllerTest {
 
     @Test // carta
     void findByRestaurant() throws Exception{
-
+        mockMvc.perform(
+                        get("/api/v1/restaurants/" +  restaurant1.getId() + "/dishes")
+                ).andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$[*].restaurant.name", everyItem(is("restaurante1"))))
+                .andExpect(jsonPath("$[?(@.restaurant.id == " + restaurant1.getId() + ")]", hasSize(2)))
+                .andExpect(jsonPath("$[?(@.name == 'plato3')]", hasSize(0)));
     }
 }

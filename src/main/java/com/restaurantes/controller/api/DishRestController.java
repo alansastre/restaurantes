@@ -34,4 +34,9 @@ public class DishRestController {
         );
     }
 
+    @GetMapping("restaurants/{id}/dishes")
+    public List<Dish> findByRestaurant(@PathVariable Long id) {
+        return dishRepository.findByRestaurant_Id(id);
+    }
+
 }
