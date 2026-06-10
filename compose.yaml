@@ -1,0 +1,34 @@
+# PostgreSQL 18 para el perfil "prod" de restaurantes-testing.
+#
+# Uso:
+#   docker compose up -d          # levanta la base de datos
+#   docker compose down           # la para (conserva los datos en el volumen)
+#   docker compose down -v        # la para y BORRA los datos
+#
+# Luego arranca la app contra esta BD:
+#   ./mvnw spring-boot:run -Dspring-boot.run.profiles=prod
+#
+# NOTA: usa el puerto 5432. Si tienes levantado el postgres de restaurantes-java
+# (mismo puerto), para uno antes de levantar el otro:  docker compose down
+services:
+  postgres:
+    image: postgres:18
+    container_name: restaurantes-testing-postgres
+    environment:
+      POSTGRES_DB: restaurantes
+      POSTGRES_USER: restaurantes
+      POSTGRES_PASSWORD: restaurantes
+    ports:
+      - "5432:5432"
+    volumes:
+      # PostgreSQL 18 cambio la ubicacion de los datos a /var/lib/postgresql/18/docker,
+      # por eso el volumen se monta en /var/lib/postgresql (antes era .../data).
+      - restaurantes-testing-pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U restaurantes -d restaurantes"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  restaurantes-testing-pgdata:
