@@ -35,9 +35,10 @@ public class Employee {
     @Column(name = "active")
     private Boolean active;
 
-    // Tipo de empleado: JUNIOR o SENIOR con enum
+    // Tipo de empleado: JUNIOR o SENIOR. Sin columnDefinition de motor concreto:
+    // Hibernate genera varchar + check (level in ('JUNIOR','SENIOR')), portable a H2 y PostgreSQL.
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM('JUNIOR', 'SENIOR') DEFAULT 'SENIOR'")
+    @Column(length = 20)
     private WorkLevel level = WorkLevel.SENIOR;
 
     private LocalDate startDate = LocalDate.now(); // 2026-04-13

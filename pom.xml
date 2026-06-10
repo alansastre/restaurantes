@@ -60,6 +60,33 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Driver JDBC de PostgreSQL: lo usa el perfil 'prod' (compose.yaml) y Testcontainers. -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- ===== Testcontainers: PostgreSQL real en los tests de integracion =====
+             Versiones gestionadas por el BOM de Spring Boot (Testcontainers 2.0.x).
+             OJO TC 2.0: los artefactos llevan prefijo 'testcontainers-'
+             (antes eran org.testcontainers:postgresql / :junit-jupiter). -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-testcontainers</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers-postgresql</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers-junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- WebJars: Bootstrap y Font Awesome (versión gestionada por Maven) -->
         <dependency>
             <groupId>org.webjars.npm</groupId>

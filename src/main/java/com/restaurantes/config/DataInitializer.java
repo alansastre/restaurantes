@@ -29,7 +29,10 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("HOLA DESDE DATA INITIALIZER");
 
-        // if (restaurantRepo.count() > 0) return;
+        // Idempotencia: no resembrar si ya hay datos. Clave para el perfil prod (PostgreSQL
+        // persistente): sin esta guarda, cada arranque duplicaria los datos demo.
+        // En dev (H2 create-drop) la BD esta vacia en cada arranque, asi que siembra igualmente.
+        if (restaurantRepo.count() > 0) return;
 
         // restaurantes:
         var res1 = restaurantRepo.save(Restaurant.builder().name("Burguer King").foodType(FoodType.SPANISH).averagePrice(12.50).build());
