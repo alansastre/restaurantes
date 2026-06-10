@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="~{layout/head :: head('Listado Platos')}"></head>
-<body class="d-flex flex-column min-vh-100 bg-light">
+<body class="d-flex flex-column min-vh-100 bg-body-tertiary">
 <nav th:replace="~{layout/navbar :: navbar}"></nav>
 <main class="container flex-grow-1 my-4">
 
@@ -30,7 +30,7 @@
          th:unless="${#lists.isEmpty(dishes)}">
         <div class="col" th:each="dish : ${dishes}">
             <div class="card h-100 shadow-sm border-0">
-                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <div class="card-header bg-body-tertiary d-flex justify-content-between align-items-center">
                             <span th:switch="${dish.type}">
                                 <span class="badge bg-success" th:case="${T(com.restaurantes.model.enums.DishType).STARTER}">
                                     <i class="fa-solid fa-leaf me-1"></i>Entrantes
@@ -58,7 +58,7 @@
                     </p>
                 </div>
 
-                <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                <div class="card-footer bg-body-tertiary d-flex justify-content-between align-items-center">
                     <small class="text-muted text-truncate me-2" th:if="${dish.restaurant != null}">
                         <i class="fa-solid fa-store text-danger me-1"></i>
                         <a th:href="@{/restaurants/{id}(id=${dish.restaurant.id})}"
