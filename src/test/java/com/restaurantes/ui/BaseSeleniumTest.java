@@ -105,9 +105,9 @@ public class BaseSeleniumTest {
         // en el propio test, no tecleando.)
         chromeOptions.addArguments("--lang=es-ES");
         chromeOptions.setExperimentalOption("prefs", Map.of("intl.accept_languages", "es-ES"));
-        if (ci) {
+//        if (ci) {
             chromeOptions.addArguments("--headless=new", "--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage");
-        }
+//        }
         driver = new ChromeDriver(chromeOptions);
         wait = new WebDriverWait(driver, Duration.ofSeconds(30L));
     }
@@ -116,6 +116,17 @@ public class BaseSeleniumTest {
         if (driver != null) {
             driver.quit();
         }
+        // Limpiar la BD compartida al terminar. Estos tests NO son @Transactional (servidor
+        // real en otro hilo), asi que lo que commitean en el @BeforeEach persiste en la H2 en
+        // memoria y contaminaria a los tests MockMvc que corran despues (su deleteAll() de
+        // restaurantes chocaria con la FK de dishes/reviews/orders del ultimo Selenium).
+        // Borramos en orden FK-safe (hijos primero), igual que en setUp.
+        orderLineRepo.deleteAll();
+        orderRepo.deleteAll();
+        reviewRepo.deleteAll();
+        dishRepo.deleteAll();
+        restaurantRepo.deleteAll();
+        userRepo.deleteAll();
     }
 
 

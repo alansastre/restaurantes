@@ -41,18 +41,17 @@ class RestaurantControllerTest {
 
     Restaurant restaurantToDeactivate;
     Restaurant restaurantToEdit;
-
+Restaurant restaurant1, restaurant2, restaurant3, restaurant4, restaurant5, restaurant6;
     @BeforeEach
     void setUp() {
-        restaurantRepository.deleteAll();
-        restaurantRepository.saveAll(List.of(
-           Restaurant.builder().name("KFC").averagePrice(15.5).foodType(FoodType.SPANISH).build(),
-           Restaurant.builder().name("MacDonals Burguer").averagePrice(8.5).foodType(FoodType.SPANISH).build(),
-           Restaurant.builder().name("BurguerKing").averagePrice(7.5).foodType(FoodType.SPANISH).build(),
-           Restaurant.builder().name("Tagliatella Pizza").averagePrice(29.99).foodType(FoodType.SPANISH).build(),
-           Restaurant.builder().name("Sitio Pijo").averagePrice(60.5).foodType(FoodType.JAPANESE).build(),
-           Restaurant.builder().name("Sitio Ultra Pijo").averagePrice(80.5).foodType(FoodType.MEXICAN).build()
-        ));
+//        restaurantRepository.deleteAll();
+        restaurant1 = restaurantRepository.save(Restaurant.builder().name("KFC").averagePrice(15.5).foodType(FoodType.SPANISH).build());
+        restaurant2 =restaurantRepository.save( Restaurant.builder().name("MacDonals Burguer").averagePrice(8.5).foodType(FoodType.SPANISH).build());
+        restaurant3 =restaurantRepository.save(Restaurant.builder().name("BurguerKing").averagePrice(7.5).foodType(FoodType.SPANISH).build());
+        restaurant4 =restaurantRepository.save(Restaurant.builder().name("Tagliatella Pizza").averagePrice(29.99).foodType(FoodType.SPANISH).build());
+        restaurant5 =restaurantRepository.save(Restaurant.builder().name("Sitio Pijo").averagePrice(60.5).foodType(FoodType.JAPANESE).build());
+        restaurant6 =restaurantRepository.save(Restaurant.builder().name("Sitio Ultra Pijo").averagePrice(80.5).foodType(FoodType.MEXICAN).build());
+
         restaurantToDeactivate = restaurantRepository.save(
                 Restaurant.builder().active(true).averagePrice(90d).name("El bar de Moe").build()
         );
@@ -146,9 +145,9 @@ class RestaurantControllerTest {
     void restaurantDetailWithDishes() throws Exception {
 
         // Crear platos y asignarlos a dos restaurantes
-        List<Restaurant> restaurants = restaurantRepository.findAll();
-        Restaurant restaurant1 = restaurants.get(0);
-        Restaurant restaurant2 = restaurants.get(1);
+//        List<Restaurant> restaurants = restaurantRepository.findAll();
+//        Restaurant restaurant1 = restaurants.get(0);
+//        Restaurant restaurant2 = restaurants.get(1);
 
         dishRepository.saveAll(List.of(
                 Dish.builder().name("Plato 1").restaurant(restaurant1).build(),
