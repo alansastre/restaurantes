@@ -9,15 +9,18 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RestaurantPOMSeleniumTest extends BaseSeleniumTest {
 
     @Test
-    void listadoTest() {
+    void listYdetailTest() {
         RestaurantListPage list = new RestaurantListPage(driver, wait, baseUrl).open();
-
         assertEquals("Bienvenido a la lista de restaurantes", list.getH1Title());
         assertTrue(list.getResultsListCount().contains("resultado"));
         assertTrue(list.hasRestaurant(pizzeria.getName()));
         assertFalse(list.isCreateRestaurantButtonVisible());
 
-        RestaurantDetailPage detail = list.openFirstRestaurant();
 
+        RestaurantDetailPage detail = list.openFirstRestaurant();
+        assertEquals("Restaurante " + pizzeria.getId(), detail.getH1Title());
+        assertEquals(pizzeria.getName(), detail.getRestaurantName());
+        assertTrue(detail.isActiveTrue());
+        assertTrue(detail.hasDish(pizza.getName()));
     }
 }
