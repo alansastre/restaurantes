@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### SonarQube local ###
+# Token generado por sonar/provision.* (no debe subirse al repo)
+sonar/token.txt

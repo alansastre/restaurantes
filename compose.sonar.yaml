@@ -1,0 +1,60 @@
+# SonarQube Community LOCAL para ver cobertura y quality gate SIN tocar SonarCloud/CI.
+# Levanta SonarQube en http://localhost:9000 con su PROPIA base de datos.
+#
+# Es un archivo SEPARADO de compose.yaml (el Postgres de la app), por eso:
+#   - su Postgres NO expone el 5432 (es interno) -> no choca con tu compose.yaml
+#   - usa su propio "project name" y volumenes -> no se mezclan
+#
+# Uso (desde la raiz del repo, C:\dev\adecco-26\restaurantes-testing):
+#   docker compose -f compose.sonar.yaml up -d     # levanta Sonar (~1-2 min en arrancar la 1a vez)
+#   .\sonar\provision.ps1                           # crea quality gate flexible + token (UNA vez)
+#   .\sonar\analyze.ps1                             # corre tests+cobertura y sube el analisis
+#   # abre http://localhost:9000  (admin / admin)
+#   docker compose -f compose.sonar.yaml down       # para (conserva datos en volumenes)
+#   docker compose -f compose.sonar.yaml down -v    # para y BORRA datos (empezar de cero)
+name: restaurantes-sonar
+services:
+  sonarqube:
+    image: sonarqube:community
+    container_name: restaurantes-sonarqube
+    restart: unless-stopped
+    depends_on:
+      sonar-db:
+        condition: service_healthy
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://sonar-db:5432/sonar
+      SONAR_JDBC_USERNAME: sonar
+      SONAR_JDBC_PASSWORD: sonar
+    ports:
+      - "9000:9000"
+    volumes:
+      - sonar_data:/opt/sonarqube/data
+      - sonar_extensions:/opt/sonarqube/extensions
+      - sonar_logs:/opt/sonarqube/logs
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+
+  sonar-db:
+    image: postgres:16
+    container_name: restaurantes-sonar-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar
+      POSTGRES_DB: sonar
+    # SIN 'ports': la BD de Sonar es interna -> no choca con tu Postgres de la app (5432)
+    volumes:
+      - sonar_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sonar -d sonar"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  sonar_data:
+  sonar_extensions:
+  sonar_logs:
+  sonar_db_data:
