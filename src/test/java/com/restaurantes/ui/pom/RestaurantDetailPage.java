@@ -17,7 +17,7 @@ public class RestaurantDetailPage extends BasePage {
     private static final By EDIT_BUTTON = By.linkText("Editar");
 
 
-    protected RestaurantDetailPage(WebDriver driver, WebDriverWait wait, String baseUrl) {
+    public RestaurantDetailPage(WebDriver driver, WebDriverWait wait, String baseUrl) {
         super(driver, wait, baseUrl);
     }
 
