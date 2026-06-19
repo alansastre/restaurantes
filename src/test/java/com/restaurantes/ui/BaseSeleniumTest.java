@@ -42,9 +42,9 @@ public class BaseSeleniumTest {
     @Autowired
     OrderLineRepository orderLineRepo;
 
-    String baseUrl;
-    WebDriver driver;
-    WebDriverWait wait;
+    protected String baseUrl;
+    protected WebDriver driver;
+    protected WebDriverWait wait;
 
     Restaurant pizzeria; // con platos
     Restaurant taberna; // sin platos
@@ -105,9 +105,11 @@ public class BaseSeleniumTest {
         // en el propio test, no tecleando.)
         chromeOptions.addArguments("--lang=es-ES");
         chromeOptions.setExperimentalOption("prefs", Map.of("intl.accept_languages", "es-ES"));
-//        if (ci) {
+        chromeOptions.addArguments("--force-device-scale-factor=1", "--start-maximized");
+
+        if (ci) {
             chromeOptions.addArguments("--headless=new", "--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage");
-//        }
+        }
         driver = new ChromeDriver(chromeOptions);
         wait = new WebDriverWait(driver, Duration.ofSeconds(30L));
     }
