@@ -1,0 +1,519 @@
+{
+  "id": "6a993c17-284c-48e4-a07e-08d7987ead53",
+  "version": "3.0",
+  "name": "restaurants",
+  "url": "http://www.google.com",
+  "urls": [
+    "http://www.google.com"
+  ],
+  "plugins": [],
+  "suites": [
+    {
+      "id": "3c036512-23f3-4f19-b02d-3b3ece730664",
+      "name": "New Suite",
+      "parallel": false,
+      "persistSession": false,
+      "tests": [
+        "142cbd2a-3a0c-434e-8b32-f221d3eec635"
+      ],
+      "timeout": 30000
+    }
+  ],
+  "tests": [
+    {
+      "id": "142cbd2a-3a0c-434e-8b32-f221d3eec635",
+      "name": "RestaurantList",
+      "commands": [
+        {
+          "command": "open",
+          "target": "http://localhost:8080/restaurants",
+          "value": "",
+          "id": "3802aff5-6f5b-44a1-8027-ed2b60e1b7f5"
+        },
+        {
+          "command": "assertText",
+          "target": "css=h1",
+          "value": "Bienvenido a la lista de restaurantes",
+          "id": "8428f05d-ce6e-4fc3-b519-a2ef9f5ba7ea",
+          "fallbackTargets": [
+            [
+              "css=.d-flex > .mb-0",
+              "css:finder"
+            ],
+            [
+              "xpath=//h1[contains(.,'Bienvenido a la lista de restaurantes')]",
+              "xpath:innerText"
+            ]
+          ]
+        },
+        {
+          "command": "assertText",
+          "target": "id=resultsCount",
+          "value": "4 resultados",
+          "id": "9dd3e4a5-506c-4675-8049-dd12ec134afb",
+          "fallbackTargets": [
+            [
+              "id=resultsCount",
+              "id"
+            ],
+            [
+              "css=#resultsCount",
+              "css:finder"
+            ],
+            [
+              "xpath=(//span[@id='resultsCount'])[1]",
+              "xpath:attributes"
+            ],
+            [
+              "xpath=//span[contains(.,'4 resultados')]",
+              "xpath:innerText"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "722aaaa0-e0e9-43e0-a29e-f133ac009290",
+      "name": "RestaurantDetail",
+      "commands": [
+        {
+          "id": "338e7bcb-7c91-45c8-9ed6-e33eb9b4046b",
+          "command": "open",
+          "target": "/",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "c5b0cfbb-27ea-4711-a568-4f81bef90ead",
+      "name": "List2",
+      "commands": [
+        {
+          "id": "57c46399-ccc9-4d2b-a939-167aa7f99cf4",
+          "command": "open",
+          "target": "http://localhost:8080/restaurants",
+          "value": ""
+        },
+        {
+          "command": "click",
+          "target": "linkText=Ver",
+          "value": "",
+          "insertBeforeLastCommand": false,
+          "frameLocation": "root",
+          "winHandleId": "root",
+          "id": "402369dc-9635-45c3-80bc-bd7d90263091",
+          "targets": [
+            [
+              "linkText=Ver",
+              "linkText"
+            ],
+            [
+              "css=.col:nth-child(1) .btn",
+              "css:finder"
+            ],
+            [
+              "xpath=(//a[contains(@href, '/restaurants/1')])[1]",
+              "xpath:href"
+            ],
+            [
+              "xpath=//a[contains(.,' Ver')]",
+              "xpath:innerText"
+            ]
+          ]
+        },
+        {
+          "command": "click",
+          "target": "css=.justify-content-between",
+          "value": "",
+          "insertBeforeLastCommand": false,
+          "frameLocation": "root",
+          "winHandleId": "root",
+          "id": "d061e801-ad1c-465a-af6d-938e6c913e07",
+          "targets": [
+            [
+              "css=.justify-content-between",
+              "css:finder"
+            ]
+          ]
+        },
+        {
+          "command": "click",
+          "target": "linkText=Ver",
+          "value": "",
+          "insertBeforeLastCommand": false,
+          "frameLocation": "root",
+          "winHandleId": "root",
+          "id": "11569092-99df-4a91-b6b3-8354801528cd",
+          "targets": [
+            [
+              "linkText=Ver",
+              "linkText"
+            ],
+            [
+              "css=tr:nth-child(1) .btn",
+              "css:finder"
+            ],
+            [
+              "xpath=(//div[@id='dishesTable']/table/tbody/tr/td[8]/a)[1]",
+              "xpath:idRelative"
+            ],
+            [
+              "xpath=(//a[contains(@href, '/dishes/1')])[1]",
+              "xpath:href"
+            ],
+            [
+              "xpath=//a[contains(.,' Ver')]",
+              "xpath:innerText"
+            ]
+          ]
+        },
+        {
+          "command": "click",
+          "target": "css=.navbar-toggler-icon",
+          "value": "",
+          "insertBeforeLastCommand": false,
+          "frameLocation": "root",
+          "winHandleId": "root",
+          "id": "39f4fc5c-708d-4ab1-8bad-cdbe870788b2",
+          "targets": [
+            [
+              "css=.navbar-toggler-icon",
+              "css:finder"
+            ]
+          ]
+        },
+        {
+          "command": "click",
+          "target": "id=loginLink",
+          "value": "",
+          "insertBeforeLastCommand": false,
+          "frameLocation": "root",
+          "winHandleId": "root",
+          "id": "1e09fd0c-853e-49f2-a3f5-3cae79018bb1",
+          "targets": [
+            [
+              "id=loginLink",
+              "id"
+            ],
+            [
+              "linkText=Login",
+              "linkText"
+            ],
+            [
+              "css=#loginLink",
+              "css:finder"
+            ],
+            [
+              "xpath=(//a[@id='loginLink'])[1]",
+              "xpath:attributes"
+            ],
+            [
+              "xpath=(//div[@id='mainNav']/a)[1]",
+              "xpath:idRelative"
+            ],
+            [
+              "xpath=(//a[contains(@href, '/login')])[1]",
+              "xpath:href"
+            ],
+            [
+              "xpath=//a[contains(.,' Login')]",
+              "xpath:innerText"
+            ]
+          ]
+        },
+        {
+          "command": "click",
+          "target": "id=username",
+          "value": "",
+          "insertBeforeLastCommand": false,
+          "frameLocation": "root",
+          "winHandleId": "root",
+          "id": "9ccfe194-d86a-444b-b1ae-d3ac54696943",
+          "targets": [
+            [
+              "id=username",
+              "id"
+            ],
+            [
+              "name=username",
+              "name"
+            ],
+            [
+              "css=#username",
+              "css:finder"
+            ],
+            [
+              "xpath=(//input[@id='username'])[1]",
+              "xpath:attributes"
+            ]
+          ]
+        },
+        {
+          "command": "type",
+          "target": "id=username",
+          "value": "user",
+          "insertBeforeLastCommand": false,
+          "frameLocation": "root",
+          "winHandleId": "root",
+          "id": "fbc473b2-3080-4ccf-a71f-4213a2b55c36",
+          "targets": [
+            [
+              "id=username",
+              "id"
+            ],
+            [
+              "name=username",
+              "name"
+            ],
+            [
+              "css=#username",
+              "css:finder"
+            ],
+            [
+              "xpath=(//input[@id='username'])[1]",
+              "xpath:attributes"
+            ]
+          ]
+        },
+        {
+          "command": "type",
+          "target": "id=password",
+          "value": "user",
+          "insertBeforeLastCommand": false,
+          "frameLocation": "root",
+          "winHandleId": "root",
+          "id": "640dd875-a125-4708-ac87-1b0642c8b98c",
+          "targets": [
+            [
+              "id=password",
+              "id"
+            ],
+            [
+              "name=password",
+              "name"
+            ],
+            [
+              "css=#password",
+              "css:finder"
+            ],
+            [
+              "xpath=(//input[@id='password'])[1]",
+              "xpath:attributes"
+            ]
+          ]
+        },
+        {
+          "command": "click",
+          "target": "css=.btn",
+          "value": "",
+          "insertBeforeLastCommand": false,
+          "frameLocation": "root",
+          "winHandleId": "root",
+          "id": "6f59e0e9-441d-460c-a480-38ffdb100005",
+          "targets": [
+            [
+              "css=.btn",
+              "css:finder"
+            ],
+            [
+              "xpath=(//button[@type='submit' and text()='Entrar'])[1]",
+              "xpath:attributes"
+            ],
+            [
+              "xpath=//button[contains(.,'Entrar')]",
+              "xpath:innerText"
+            ]
+          ]
+        },
+        {
+          "command": "click",
+          "target": "linkText=Ver",
+          "value": "",
+          "insertBeforeLastCommand": false,
+          "frameLocation": "root",
+          "winHandleId": "root",
+          "id": "f7176ddc-726f-41b5-8829-037a7a21d9e2",
+          "targets": [
+            [
+              "linkText=Ver",
+              "linkText"
+            ],
+            [
+              "css=.col:nth-child(1) .btn",
+              "css:finder"
+            ],
+            [
+              "xpath=(//a[contains(@href, '/restaurants/1')])[1]",
+              "xpath:href"
+            ],
+            [
+              "xpath=//a[contains(.,' Ver')]",
+              "xpath:innerText"
+            ]
+          ]
+        },
+        {
+          "command": "click",
+          "target": "linkText=Hacer pedido",
+          "value": "",
+          "insertBeforeLastCommand": false,
+          "frameLocation": "root",
+          "winHandleId": "root",
+          "id": "0487f27b-aeb3-4144-a0df-2f466cd37d66",
+          "targets": [
+            [
+              "linkText=Hacer pedido",
+              "linkText"
+            ],
+            [
+              "css=.btn:nth-child(3)",
+              "css:finder"
+            ],
+            [
+              "xpath=(//a[contains(@href, '/orders/new?restaurantId=1')])[1]",
+              "xpath:href"
+            ],
+            [
+              "xpath=//a[contains(.,' Hacer pedido')]",
+              "xpath:innerText"
+            ]
+          ]
+        },
+        {
+          "command": "click",
+          "target": "id=tableNumber",
+          "value": "",
+          "insertBeforeLastCommand": false,
+          "frameLocation": "root",
+          "winHandleId": "root",
+          "id": "e84a2668-04c5-4fa6-97c9-175eff5d5cac",
+          "targets": [
+            [
+              "id=tableNumber",
+              "id"
+            ],
+            [
+              "name=tableNumber",
+              "name"
+            ],
+            [
+              "css=#tableNumber",
+              "css:finder"
+            ],
+            [
+              "xpath=(//input[@id='tableNumber'])[1]",
+              "xpath:attributes"
+            ]
+          ]
+        },
+        {
+          "command": "type",
+          "target": "id=tableNumber",
+          "value": "1",
+          "insertBeforeLastCommand": false,
+          "frameLocation": "root",
+          "winHandleId": "root",
+          "id": "70f8fffd-729b-4528-a186-71eb5938dc16",
+          "targets": [
+            [
+              "id=tableNumber",
+              "id"
+            ],
+            [
+              "name=tableNumber",
+              "name"
+            ],
+            [
+              "css=#tableNumber",
+              "css:finder"
+            ],
+            [
+              "xpath=(//input[@id='tableNumber'])[1]",
+              "xpath:attributes"
+            ]
+          ]
+        },
+        {
+          "command": "type",
+          "target": "id=numPeople",
+          "value": "1",
+          "insertBeforeLastCommand": false,
+          "frameLocation": "root",
+          "winHandleId": "root",
+          "id": "9d0b97a3-f71e-47f8-b09c-ebf78353b3b1",
+          "targets": [
+            [
+              "id=numPeople",
+              "id"
+            ],
+            [
+              "name=numPeople",
+              "name"
+            ],
+            [
+              "css=#numPeople",
+              "css:finder"
+            ],
+            [
+              "xpath=(//input[@id='numPeople'])[1]",
+              "xpath:attributes"
+            ]
+          ]
+        },
+        {
+          "command": "type",
+          "target": "id=userSuggestions",
+          "value": "1",
+          "insertBeforeLastCommand": false,
+          "frameLocation": "root",
+          "winHandleId": "root",
+          "id": "d0e7a9d8-6728-48b1-97f1-88470316500d",
+          "targets": [
+            [
+              "id=userSuggestions",
+              "id"
+            ],
+            [
+              "name=userSuggestions",
+              "name"
+            ],
+            [
+              "css=#userSuggestions",
+              "css:finder"
+            ],
+            [
+              "xpath=(//textarea[@id='userSuggestions'])[1]",
+              "xpath:attributes"
+            ]
+          ]
+        },
+        {
+          "command": "click",
+          "target": "css=.btn-success",
+          "value": "",
+          "insertBeforeLastCommand": false,
+          "frameLocation": "root",
+          "winHandleId": "root",
+          "id": "a41669a3-911c-4ae7-b7d3-85c0b18f344b",
+          "targets": [
+            [
+              "css=.btn-success",
+              "css:finder"
+            ],
+            [
+              "xpath=//button[contains(.,' Guardar')]",
+              "xpath:innerText"
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "snapshot": {
+    "dependencies": {},
+    "tests": [],
+    "jest": {
+      "extraGlobals": []
+    }
+  }
+}
